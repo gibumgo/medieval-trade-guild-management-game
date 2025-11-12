@@ -6,4 +6,7 @@ object ErrorMessage {
 
     const val CAPACITY_OVER_ERROR = "최대 용량을 초과했습니다."
     const val CAPACITY_MAX_ERROR = "최대 용량이 음수일 수 없습니다"
+
+    const val WEIGHT_ERROR = "무게는 음수일 수 없습니다"
+
 }
