@@ -2,28 +2,28 @@ package scripts.domain
 
 import kotlin.Int
 
-data class Capacity private constructor(val current: Int, val max: Int) {
+data class Capacity private constructor(val current: Weight, val max: Weight) {
     init {
-        validMaxLength(max)
         validOverCapacity(current, max)
     }
 
-    private fun validOverCapacity(current: Int, max: Int) {
-        require(current in MIN_CAPACITY..max) { ErrorMessage.CAPACITY_OVER_ERROR }
+    private fun validOverCapacity(current: Weight, max: Weight) {
+        require(current.isInRange(max)) { ErrorMessage.CAPACITY_OVER_ERROR }
     }
 
-    private fun validMaxLength(max: Int) {
-        require(max >= MIN_CAPACITY) { ErrorMessage.CAPACITY_MAX_ERROR }
-    }
+    fun remaining(): Weight = max.minus(current)
 
-    fun remaining(): Int = max - current
-    fun isFull(): Boolean = current >= max
+    fun isFull(): Boolean = current.isOver(max)
 
     companion object {
         private const val MIN_CAPACITY = 0
 
-        public fun of(current: Int, max: Int): Capacity {
-            return Capacity(current,max)
+        fun of(current: Int, max: Int): Capacity {
+            return Capacity(Weight.of(current), Weight.of(max))
+        }
+
+        fun of(current: Weight, max: Weight): Capacity {
+            return Capacity(current, max)
         }
     }
 }

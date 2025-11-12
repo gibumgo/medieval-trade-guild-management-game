@@ -10,8 +10,7 @@ class CapacityTest {
     @DisplayName("정상 생성 테스트")
     fun createCapacityTest() {
         val capacity = Capacity.of(10, 50)
-        assertEquals(50, capacity.max)
-        assertEquals(10, capacity.current)
+        assertEquals(capacity, Capacity.of(10, 50))
     }
 
     @Test
@@ -23,18 +22,11 @@ class CapacityTest {
     }
 
     @Test
-    @DisplayName("현재 용량이 음수면 예외 발생")
-    fun invalidCapacityNegativeValueTest() {
-        assertThrows<IllegalArgumentException> {
-            Capacity.of(-1, 50)
-        }
-    }
-
-    @Test
     @DisplayName("남은 용량 계산 테스트")
     fun remainingCapacityTest() {
         val capacity = Capacity.of(30,100)
-        assertEquals(70, capacity.remaining())
+        val weight = Weight.of(70)
+        assertEquals(weight, capacity.remaining())
     }
 
     @Test

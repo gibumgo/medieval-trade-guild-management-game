@@ -21,6 +21,12 @@ value class Weight private constructor(val weight: Int) {
 
     fun isZero(): Boolean = weight == INITIAL_LEGHT
 
+    fun isOver(max: Weight): Boolean {
+        return weight >= max.weight
+    }
+
+    fun isInRange(max: Weight): Boolean = weight in INITIAL_LEGHT..max.weight
+
     companion object {
         private val INITIAL_LEGHT = 0
 
