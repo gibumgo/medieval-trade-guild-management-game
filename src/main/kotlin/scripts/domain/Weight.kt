@@ -11,6 +11,16 @@ value class Weight private constructor(val weight: Int) {
         require(weight >= INITIAL_LEGHT) { ErrorMessage.WEIGHT_ERROR }
     }
 
+    fun plus(other: Weight): Weight {
+        return Weight(weight + other.weight)
+    }
+
+    fun minus(other: Weight): Weight {
+        return Weight(weight - other.weight)
+    }
+
+    fun isZero(): Boolean = weight == INITIAL_LEGHT
+
     companion object {
         private val INITIAL_LEGHT = 0
 

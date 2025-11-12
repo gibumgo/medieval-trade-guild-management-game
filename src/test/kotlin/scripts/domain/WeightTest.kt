@@ -29,4 +29,30 @@ class WeightTest {
         }
     }
 
+    @Test
+    @DisplayName("plus 연산 테스트")
+    fun plusTest() {
+        val w1 = Weight.of(5)
+        val w2 = Weight.of(3)
+        val result = w1.plus(w2)
+        assertEquals(8, result.weight)
+    }
+
+    @Test
+    @DisplayName("minus 연산 테스트")
+    fun minusTest() {
+        val w1 = Weight.of(10)
+        val w2 = Weight.of(4)
+        val result = w1.minus(w2)
+        assertEquals(6, result.weight)
+    }
+
+    @Test
+    @DisplayName("minus 연산 후 0이 되는 경우")
+    fun minusToZeroTest() {
+        val w1 = Weight.of(5)
+        val w2 = Weight.of(5)
+        val result = w1.minus(w2)
+        assertTrue(result.isZero())
+    }
 }
