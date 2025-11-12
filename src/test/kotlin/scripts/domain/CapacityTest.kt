@@ -29,4 +29,21 @@ class CapacityTest {
             Capacity.of(-1, 50)
         }
     }
+
+    @Test
+    @DisplayName("남은 용량 계산 테스트")
+    fun remainingCapacityTest() {
+        val capacity = Capacity.of(30,100)
+        assertEquals(70, capacity.remaining())
+    }
+
+    @Test
+    @DisplayName("가득 찬 상태 확인 테스트")
+    fun isFullTest() {
+        val fullCapacity = Capacity.of(20,20)
+        val notFullCapacity = Capacity.of(10,20)
+
+        assertTrue(fullCapacity.isFull())
+        assertFalse(notFullCapacity.isFull())
+    }
 }

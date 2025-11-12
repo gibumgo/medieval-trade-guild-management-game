@@ -16,6 +16,8 @@ data class Capacity private constructor(val current: Int, val max: Int) {
         require(max >= MIN_CAPACITY) { ErrorMessage.CAPACITY_MAX_ERROR }
     }
 
+    fun remaining(): Int = max - current
+    fun isFull(): Boolean = current >= max
 
     companion object {
         private const val MIN_CAPACITY = 0
