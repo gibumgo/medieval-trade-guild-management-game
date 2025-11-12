@@ -1,7 +1,7 @@
 package scripts.domain
 
-class ReputationPoint private constructor(val point : Int) {
-    private val MIN_AMOUNT = 0
+@JvmInline
+value class ReputationPoint private constructor(val point : Int) {
 
     init {
         validMoneyAmount(this.point)
@@ -12,6 +12,8 @@ class ReputationPoint private constructor(val point : Int) {
     }
 
     companion object {
+        private val MIN_AMOUNT = 0
+
         fun of(amount: Int): ReputationPoint {
             return ReputationPoint(amount);
         }

@@ -1,8 +1,7 @@
 package scripts.domain
 
-class Gold private constructor(val amount: Int) {
-    private val MIN_AMOUNT = 0
-
+@JvmInline
+value class Gold private constructor(val amount: Int) {
     init {
         validMoneyAmount(this.amount)
     }
@@ -12,6 +11,8 @@ class Gold private constructor(val amount: Int) {
     }
 
     companion object {
+        private val MIN_AMOUNT: Int = 0
+
          fun of(amount: Int): Gold {
             return Gold(amount);
         }
