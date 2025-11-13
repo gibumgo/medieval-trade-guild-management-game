@@ -1,7 +1,7 @@
 package scripts.domain
 
 @JvmInline
-value class ReputationPoint private constructor(val point : Int) {
+value class ReputationPoint private constructor(val point: Int) {
 
     init {
         validMoneyAmount(this.point)
@@ -9,6 +9,10 @@ value class ReputationPoint private constructor(val point : Int) {
 
     private fun validMoneyAmount(point: Int) {
         require(point > MIN_AMOUNT) { ErrorMessage.REPUTATION_POINT_ERROR }
+    }
+
+    fun isAffordable(otherPoint: ReputationPoint): Boolean {
+        return point >= otherPoint.point
     }
 
     companion object {

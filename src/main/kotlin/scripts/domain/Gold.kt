@@ -10,6 +10,8 @@ value class Gold private constructor(val amount: Int) {
         require(amount > MIN_AMOUNT) { ErrorMessage.MONEY_ERROR }
     }
 
+    fun isAffordable(otherGold: Gold): Boolean = amount >= otherGold.amount
+
     companion object {
         private val MIN_AMOUNT: Int = 0
 
