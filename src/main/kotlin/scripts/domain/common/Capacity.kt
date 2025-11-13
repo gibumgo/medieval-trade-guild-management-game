@@ -1,5 +1,6 @@
-package scripts.domain
+package scripts.domain.common
 
+import scripts.domain.ErrorMessage
 import kotlin.Int
 
 data class Capacity private constructor(val current: Weight, val max: Weight) {

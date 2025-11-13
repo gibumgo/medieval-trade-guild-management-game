@@ -1,4 +1,6 @@
-package scripts.domain
+package scripts.domain.common
+
+import scripts.domain.ErrorMessage
 
 data class InventoryItem private constructor(val item: Item, val quantity: Int) {
     init {

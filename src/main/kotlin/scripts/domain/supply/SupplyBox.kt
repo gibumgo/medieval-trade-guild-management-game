@@ -1,8 +1,8 @@
 package scripts.domain.supply
 
-import scripts.domain.Gold
-import scripts.domain.InventoryItem
-import scripts.domain.ReputationPoint
+import scripts.domain.common.Gold
+import scripts.domain.common.InventoryItem
+import scripts.domain.common.ReputationPoint
 
 class SupplyBox(
     val type: SupplyBoxType,

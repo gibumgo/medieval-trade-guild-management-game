@@ -1,4 +1,4 @@
-package scripts.domain
+package scripts.domain.common
 
 data class Item private constructor(val name: String, val weight: Weight) {
 

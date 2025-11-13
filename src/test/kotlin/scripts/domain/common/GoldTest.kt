@@ -1,9 +1,10 @@
-package scripts.domain
+package scripts.domain.common
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import scripts.domain.ErrorMessage
 
 class GoldTest {
     @Test

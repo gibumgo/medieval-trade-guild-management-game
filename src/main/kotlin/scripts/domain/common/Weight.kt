@@ -1,4 +1,6 @@
-package scripts.domain
+package scripts.domain.common
+
+import scripts.domain.ErrorMessage
 
 @JvmInline
 value class Weight private constructor(val weight: Int) {

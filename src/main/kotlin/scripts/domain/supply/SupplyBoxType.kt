@@ -1,7 +1,7 @@
 package scripts.domain.supply
 
-import scripts.domain.Gold
-import scripts.domain.ReputationPoint
+import scripts.domain.common.Gold
+import scripts.domain.common.ReputationPoint
 
 enum class SupplyBoxType(cost: Int, minReputationPoint: Int) {
     BASIC(500, 0),
