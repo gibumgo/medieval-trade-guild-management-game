@@ -18,4 +18,21 @@ enum class SupplyBoxType(cost: Int, minReputationPoint: Int) {
         val hasReputation = playerReputation.isAffordable(minReputationPoint)
         return hasGold && hasReputation
     }
+
+    companion object {
+        private const val SELECTION_START_NUMBER = 1
+        private const val INDEX_OFFSET = 1
+
+        fun from(selectNumber: Int): SupplyBoxType {
+            val SupplyBoxTypes = entries.toList()
+            validNumber(selectNumber, SupplyBoxTypes)
+            return SupplyBoxTypes[selectNumber - INDEX_OFFSET]
+        }
+
+        private fun validNumber(selectNumber: Int, SupplyBoxTypes: List<SupplyBoxType>) {
+            require(selectNumber in SELECTION_START_NUMBER..SupplyBoxTypes.size) {
+                "유효하지 않은 선택 번호입니다: $selectNumber"
+            }
+        }
+    }
 }
