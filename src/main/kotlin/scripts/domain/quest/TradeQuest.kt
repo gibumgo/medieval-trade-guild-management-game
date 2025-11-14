@@ -6,7 +6,7 @@ import scripts.domain.Inventory.InventoryItem
 import scripts.domain.common.ReputationPoint
 import scripts.domain.common.Reward
 
-class DeliveryQuest(
+class TradeQuest(
     val city: City,
     val requiredItems: List<InventoryItem>,
     val gold: Gold,
@@ -14,6 +14,6 @@ class DeliveryQuest(
 ) {
 
     fun grant(): Reward {
-        return Reward.Companion.of(gold, reputation)
+        return Reward.of(gold, reputation)
     }
 }
