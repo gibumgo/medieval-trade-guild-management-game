@@ -9,7 +9,7 @@ value class Gold private constructor(val amount: Int) {
     }
 
     private fun validMoneyAmount(amount: Int) {
-        require(amount > MIN_AMOUNT) { ErrorMessage.MONEY_ERROR }
+        require(amount >= MIN_AMOUNT) { ErrorMessage.MONEY_ERROR }
     }
 
     fun minus(other: Gold): Gold = Gold(amount - other.amount)

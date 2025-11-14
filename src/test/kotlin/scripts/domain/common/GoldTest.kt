@@ -15,19 +15,10 @@ class GoldTest {
     }
 
     @Test
-    @DisplayName("0 이하 금액 입력시 예외 발생")
-    fun invalidTest() {
-        val exception = assertThrows<IllegalArgumentException>  {
-            Gold.of(0)
-        }
-        assertEquals(ErrorMessage.MONEY_ERROR, exception.message)
-    }
-
-    @Test
     @DisplayName("음수 금액 입력시 예외 발생")
     fun createMoneyNegativeTest() {
         val exception = assertThrows<IllegalArgumentException>  {
-            Gold.of(-50)
+            Gold.of(-1)
         }
         assertEquals(ErrorMessage.MONEY_ERROR, exception.message)
     }
