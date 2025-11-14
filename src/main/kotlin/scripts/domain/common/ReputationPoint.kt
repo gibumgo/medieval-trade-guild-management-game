@@ -17,11 +17,17 @@ value class ReputationPoint private constructor(val point: Int) {
         return point >= otherPoint.point
     }
 
+    fun increase(otherPoint: ReputationPoint) = ReputationPoint(point + otherPoint.point)
+
     companion object {
         private val MIN_AMOUNT = 0
 
         fun of(amount: Int): ReputationPoint {
             return ReputationPoint(amount);
+        }
+
+        fun empty(): ReputationPoint {
+            return ReputationPoint(MIN_AMOUNT);
         }
     }
 }
