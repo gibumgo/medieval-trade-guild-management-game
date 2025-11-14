@@ -10,7 +10,7 @@ value class ReputationPoint private constructor(val point: Int) {
     }
 
     private fun validMoneyAmount(point: Int) {
-        require(point > MIN_AMOUNT) { ErrorMessage.REPUTATION_POINT_ERROR }
+        require(point >= MIN_AMOUNT) { ErrorMessage.REPUTATION_POINT_ERROR }
     }
 
     fun isAffordable(otherPoint: ReputationPoint): Boolean {

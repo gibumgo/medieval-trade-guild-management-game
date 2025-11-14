@@ -9,8 +9,8 @@ enum class SupplyBoxType(cost: Int, minReputationPoint: Int) {
     ROYAL(3000, 30),
     LEGENDARY(5000, 50);
 
-    val cost: Gold = Gold.Companion.of(cost);
-    val minReputationPoint: ReputationPoint = ReputationPoint.Companion.of(minReputationPoint);
+    val cost: Gold = Gold.of(cost);
+    val minReputationPoint: ReputationPoint = ReputationPoint.of(minReputationPoint);
 
 
     fun canPurchase(playerGold: Gold, playerReputation: ReputationPoint): Boolean {

@@ -4,14 +4,25 @@ import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.common.InventoryItem
 import scripts.domain.common.ReputationPoint
+import scripts.domain.supply.SupplyBoxType
 
-class player (
+class Player(
     var gold: Gold,
     var reputationPoint: ReputationPoint,
     var capacity: Capacity,
-    inventory : List<InventoryItem>
-){
-    private val inventoryItem : MutableList<InventoryItem> = inventory.toMutableList()
+    var inventory: List<InventoryItem>
+) {
+    private val inventoryItem: MutableList<InventoryItem> = inventory.toMutableList()
 
-    fun pay(amount : Gold) : Gold = gold.minus(amount)
+    fun pay(amount: Gold){
+        this.gold = gold.minus(amount)
+    }
+
+    fun canAffordSupplyBox(boxType: SupplyBoxType): Boolean {
+        return boxType.canPurchase(gold, reputationPoint)
+    }
+
+    fun addItems(rewards: List<InventoryItem>) {
+        this.inventoryItem.addAll(rewards)
+    }
 }
