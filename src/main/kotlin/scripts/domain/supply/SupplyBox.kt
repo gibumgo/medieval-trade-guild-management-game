@@ -1,6 +1,7 @@
 package scripts.domain.supply
 
 import scripts.domain.common.InventoryItem
+import scripts.domain.common.Reward
 import scripts.domain.player.Player
 
 class SupplyBox(
@@ -15,11 +16,8 @@ class SupplyBox(
         return player.canAffordSupplyBox(type)
     }
 
-    fun purchaseBy(player: Player): List<InventoryItem> {
+    fun purchaseBy(player: Player): Reward {
         require(canBePurchasedBy(player)) { "구매 불가" }
-        player.pay(type.cost)
-        val rewards = generateRewards()
-        player.addItems(rewards)
-        return rewards
+        return Reward.of(generateRewards())
     }
 }
