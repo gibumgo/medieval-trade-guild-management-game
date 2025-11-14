@@ -1,5 +1,6 @@
 package scripts.domain.player
 
+import scripts.domain.Inventory.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Inventory.InventoryItem
@@ -11,10 +12,9 @@ class Player(
     var gold: Gold,
     var reputationPoint: ReputationPoint,
     var capacity: Capacity,
-    var inventory: List<InventoryItem> = emptyList(),
+    var inventory: Inventory,
     var caravans: List<Caravan> = emptyList()
 ) {
-    private val inventoryItems: MutableList<InventoryItem> = inventory.toMutableList()
     private val playerCaravans: MutableList<Caravan> = caravans.toMutableList()
 
     fun pay(amount: Gold) {
@@ -26,7 +26,7 @@ class Player(
     }
 
     fun addItems(rewards: List<InventoryItem>) {
-        this.inventoryItems.addAll(rewards)
+        this.inventory.addAll(rewards)
     }
 
     fun addGold(otherGold: Gold) {
@@ -35,5 +35,9 @@ class Player(
 
     fun increaseReputation(otherPoint: ReputationPoint) {
         this.reputationPoint = reputationPoint.increase(otherPoint)
+    }
+
+    fun hasItems(requiredItems: List<InventoryItem>): Boolean {
+        return inventory.hasItems(requiredItems)
     }
 }

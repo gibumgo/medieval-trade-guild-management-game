@@ -18,6 +18,15 @@ data class InventoryItem private constructor(val item: Item, val quantity: Int) 
 
     fun isSameItem(other: InventoryItem) = this.item == other.item
 
+    fun increase(amount: Int): InventoryItem {
+        return InventoryItem(this.item, this.quantity + amount)
+    }
+
+    fun decrease(amount: Int): InventoryItem {
+        require(quantity >= amount) { "재고 부족: $item" }
+        return InventoryItem(this.item, this.quantity - amount)
+    }
+
     companion object {
         private val MIN_AMOUNT: Int = 0
 
