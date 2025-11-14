@@ -25,4 +25,11 @@ class Player(
     fun addItems(rewards: List<InventoryItem>) {
         this.inventoryItem.addAll(rewards)
     }
+
+    fun addGold(otherGold: Gold) {
+        this.gold = this.gold.plus(otherGold)
+    }
+    fun increaseReputation(otherPoint: ReputationPoint) {
+        this.reputationPoint = reputationPoint.increase(otherPoint)
+    }
 }
