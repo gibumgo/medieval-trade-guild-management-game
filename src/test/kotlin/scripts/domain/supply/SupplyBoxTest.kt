@@ -34,11 +34,12 @@ class SupplyBoxTest {
     @Test
     @DisplayName("골드 충분 시 박스 구매 성공")
     fun purchaseSuccessTest() {
-        val rewards = box.purchaseBy(player)
+        val reward = box.purchaseBy(player)
+        assertEquals(1000, player.gold.amount)
 
-        assertEquals(2, rewards[0].quantity)
-        assertEquals("밀", rewards[0].item.name)
-        assertEquals(500, player.gold.amount)
+        assertEquals(1, reward.items.size)
+        assertEquals("밀", reward.items[0].item.name)
+        assertEquals(2, reward.items[0].quantity)
     }
 
     @Test
