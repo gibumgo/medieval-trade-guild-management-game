@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
-import scripts.domain.common.InventoryItem
+import scripts.domain.Inventory.InventoryItem
 import scripts.domain.common.Item
 import scripts.domain.common.ReputationPoint
 import scripts.domain.player.Player

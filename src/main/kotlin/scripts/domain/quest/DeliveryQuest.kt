@@ -1,8 +1,8 @@
-package scripts.domain
+package scripts.domain.quest
 
 import scripts.domain.common.City
 import scripts.domain.common.Gold
-import scripts.domain.common.InventoryItem
+import scripts.domain.Inventory.InventoryItem
 import scripts.domain.common.ReputationPoint
 import scripts.domain.common.Reward
 
@@ -14,6 +14,6 @@ class DeliveryQuest(
 ) {
 
     fun grant(): Reward {
-        return Reward.of(gold, reputation)
+        return Reward.Companion.of(gold, reputation)
     }
 }

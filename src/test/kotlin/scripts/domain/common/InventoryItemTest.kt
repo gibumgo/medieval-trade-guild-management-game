@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import scripts.domain.Inventory.InventoryItem
 
 class InventoryItemTest {
     private lateinit var baseItem: Item

@@ -1,5 +1,6 @@
 package scripts.domain.common
 
+import scripts.domain.Inventory.InventoryItem
 import scripts.domain.player.Player
 
 data class Reward private constructor(

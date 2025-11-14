@@ -1,6 +1,6 @@
 package scripts.domain.supply
 
-import scripts.domain.common.InventoryItem
+import scripts.domain.Inventory.InventoryItem
 import scripts.domain.common.Reward
 import scripts.domain.player.Player
 
