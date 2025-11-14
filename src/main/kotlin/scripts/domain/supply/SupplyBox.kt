@@ -12,12 +12,12 @@ class SupplyBox(
         return rewards
     }
 
-    fun canBePurchasedBy(player: Player): Boolean {
-        return player.canAffordSupplyBox(type)
+    fun purchaseBy(player: Player): Reward {
+        validPurchase(player)
+        return Reward.of(generateRewards())
     }
 
-    fun purchaseBy(player: Player): Reward {
-        require(canBePurchasedBy(player)) { "구매 불가" }
-        return Reward.of(generateRewards())
+    private fun validPurchase(player: Player) {
+        require(player.canAffordSupplyBox(type)) { "구매 불가" }
     }
 }
