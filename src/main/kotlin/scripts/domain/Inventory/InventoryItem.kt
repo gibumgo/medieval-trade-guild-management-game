@@ -12,6 +12,12 @@ data class InventoryItem private constructor(val item: Item, val quantity: Int) 
         require(quantity >= MIN_AMOUNT) { ErrorMessage.QUANTITY_ERROR }
     }
 
+    fun hasQuantity(otherItem : InventoryItem): Boolean{
+        return isSameItem(otherItem) && quantity >= otherItem.quantity
+    }
+
+    fun isSameItem(other: InventoryItem) = this.item == other.item
+
     companion object {
         private val MIN_AMOUNT: Int = 0
 
