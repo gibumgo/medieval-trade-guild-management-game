@@ -29,6 +29,10 @@ class Player(
         this.inventory.addAll(rewards)
     }
 
+    fun removeItems(requiredItems: List<InventoryItem>) {
+        inventory.removeItems(requiredItems)
+    }
+
     fun addGold(otherGold: Gold) {
         this.gold = this.gold.plus(otherGold)
     }
