@@ -5,6 +5,7 @@ import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Inventory.InventoryItem
 import scripts.domain.caravan.Caravan
+import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.ReputationPoint
 import scripts.domain.supply.SupplyBoxType
 
@@ -43,5 +44,15 @@ class Player(
 
     fun hasItems(requiredItems: List<InventoryItem>): Boolean {
         return inventory.hasItems(requiredItems)
+    }
+
+    fun availableCaravanMaxSpeed(): Int {
+        return caravans
+            .filter { it.currentStatus() == CaravanStatus.READY }
+            .maxOfOrNull { it.speed } ?: MIN_SPEED
+    }
+
+    companion object {
+        private const val MIN_SPEED = 1
     }
 }
