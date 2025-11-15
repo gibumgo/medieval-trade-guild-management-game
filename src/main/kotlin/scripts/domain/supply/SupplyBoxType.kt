@@ -3,11 +3,15 @@ package scripts.domain.supply
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
 
-enum class SupplyBoxType(cost: Int, minReputationPoint: Int) {
-    BASIC(500, 0),
-    ADVANCED(1500, 10),
-    ROYAL(3000, 30),
-    LEGENDARY(5000, 50);
+enum class SupplyBoxType(
+    name: String,
+    cost: Int,
+    minReputationPoint: Int
+) {
+    BASIC("기본 보급 상자", 500, 0),
+    ADVANCED("고급 보급 상자", 1500, 10),
+    ROYAL("왕실 보급 상자", 3000, 30),
+    LEGENDARY("전설 보급 상자", 5000, 50);
 
     val cost: Gold = Gold.of(cost);
     val minReputationPoint: ReputationPoint = ReputationPoint.of(minReputationPoint);
