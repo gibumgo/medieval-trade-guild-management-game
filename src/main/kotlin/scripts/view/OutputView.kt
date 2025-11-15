@@ -37,6 +37,12 @@ class OutputView {
         println()
     }
 
+    fun printUpdatedInventory(status: PlayerDTO) {
+        println("업데이트된 재고:")
+        printItems(status.inventory)
+        println("- 골드(G): ${status.gold}")
+    }
+
     fun printQuestSelection(quests: List<TradeQuestDTO>) {
         println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
         print(" > ")
