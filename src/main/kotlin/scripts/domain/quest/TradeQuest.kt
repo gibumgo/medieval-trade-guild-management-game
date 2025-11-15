@@ -26,4 +26,9 @@ class TradeQuest(
         player.removeItems(requiredItems)
         return Reward.of(gold, reputation)
     }
+
+    fun calculateDuration(player: Player): Int {
+        val speed = player.availableCaravanMaxSpeed()
+        return city.calculateTravelTime(speed)
+    }
 }
