@@ -12,14 +12,17 @@ class TradeQuest(
     val requiredItems: List<InventoryItem>,
     val gold: Gold,
     val reputation: ReputationPoint,
+    var status: QuestStatus
 ) {
 
     fun isAvailableFor(player: Player): Boolean {
+        status = QuestStatus.ACTIVE
         return player.hasItems(requiredItems)
     }
 
     fun complete(player: Player) : Reward{
         require(isAvailableFor(player)) { "퀘스트 조건을 만족하지 않습니다." }
+        status = QuestStatus.COMPLETED
         player.removeItems(requiredItems)
         return Reward.of(gold, reputation)
     }
