@@ -1,4 +1,4 @@
-package scripts.domain.caravan
+package scripts.dto
 
 data class CaravanDTO(
     val name: String,

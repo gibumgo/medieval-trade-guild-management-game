@@ -1,8 +1,4 @@
-package scripts.domain.player
-
-import scripts.domain.Inventory.InventoryItemDTO
-import scripts.domain.caravan.CaravanDTO
-
+package scripts.dto
 
 data class PlayerDTO(
     val gold: Int,

@@ -1,6 +1,4 @@
-package scripts.domain.quest
-
-import scripts.domain.Inventory.InventoryItemDTO
+package scripts.dto
 
 data class TradeQuestDTO(
     val city: String,

@@ -1,4 +1,4 @@
-package scripts.domain.Inventory
+package scripts.dto
 
 data class InventoryItemDTO(
     val name: String,
