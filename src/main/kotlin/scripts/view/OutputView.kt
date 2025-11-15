@@ -24,6 +24,18 @@ class OutputView {
         printItems(inventory)
     }
 
+    fun printSupplyBoxPurchase() {
+        println("길드 관리관이 찾아왔습니다.")
+        println("“오늘도 행운을 빕니다. 무작위 보급 상자를 하나 구입하시겠습니까?”")
+        print("구입하시겠습니까? (Y/N) > ")
+    }
+
+    fun printSupplyBoxResult(items: List<InventoryItemDTO>) {
+        println("보급 상자를 열었습니다!")
+        println("획득:")
+        printDetailedItems(items)
+        println()
+    }
 
     fun printQuestSelection(quests: List<TradeQuestDTO>) {
         println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
