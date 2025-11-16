@@ -3,6 +3,7 @@ package scripts.domain.quest
 import scripts.domain.common.City
 import scripts.domain.common.Gold
 import scripts.domain.Inventory.InventoryItem
+import scripts.domain.caravan.Caravan
 import scripts.domain.common.ReputationPoint
 import scripts.domain.common.Reward
 import scripts.domain.player.Player
@@ -16,18 +17,25 @@ class TradeQuest(
 ) {
 
     fun isAvailableFor(player: Player): Boolean {
+        require(player.hasItems(requiredItems)) { "수락 불가" }
         status = QuestStatus.ACTIVE
         return player.hasItems(requiredItems)
     }
 
-    fun complete(player: Player) : Reward{
-        require(isAvailableFor(player)) { "퀘스트 조건을 만족하지 않습니다." }
-        status = QuestStatus.COMPLETED
+    fun assignTo(player: Player, caravan: Caravan): AssignedQuest {
+        this.status = QuestStatus.ACCEPTED
         player.removeItems(requiredItems)
+        return AssignedQuest.of(this, caravan)
+    }
+
+    fun calculateDurationBy(speed: Int): Int = city.calculateTravelTime(speed)
+
+    fun complete(): Reward {
+        status = QuestStatus.COMPLETED
         return Reward.of(gold, reputation)
     }
 
-    fun calculateDuration(player: Player): Int {
+    fun calculateMaxDuration(player: Player): Int {
         val speed = player.availableCaravanMaxSpeed()
         return city.calculateTravelTime(speed)
     }

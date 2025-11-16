@@ -18,7 +18,7 @@ object TradeQuestMapper {
             requiredItems = quest.requiredItems.map { InventoryItemMapper.toDTO(it) },
             rewardGold = quest.gold.amount,
             rewardReputation = quest.reputation.point,
-            durationDays = quest.calculateDuration(player)
+            durationDays = quest.calculateMaxDuration(player)
         )
     }
 }

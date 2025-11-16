@@ -2,7 +2,6 @@ package scripts.domain.quest
 
 import scripts.domain.caravan.Caravan
 import scripts.domain.common.Reward
-import scripts.domain.player.Player
 
 class AssignedQuest private constructor(
     val quest: TradeQuest,
@@ -18,7 +17,7 @@ class AssignedQuest private constructor(
     }
 
     fun totalDays(): Int {
-        return caravan.calculateDistance(quest);
+        return caravan.travelDaysFor(quest);
     }
 
     companion object {
