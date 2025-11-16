@@ -87,6 +87,25 @@ class OutputView {
         println("\n-----------------")
     }
 
+    fun printDaySummary(
+        day: Int,
+        goldChange: Int,
+        currentGold: Int,
+        specialEvent: String? = null
+    ) {
+        println("\n-----------------")
+        println("=== Day $day ===")
+        println("창고 유지비 및 급료 지출: ${if (goldChange >= 0) "+" else ""}$goldChange 골드")
+        println("현재 골드 : $currentGold 골드")
+        if (!specialEvent.isNullOrBlank()) {
+            println(specialEvent)
+        } else {
+            println("특별한 사건은 없었습니다.")
+        }
+        println("\n하루를 종료합니다.")
+        print("계속하려면 Enter 키를 누르세요 (0 = 종료)")
+    }
+
     private fun printItems(items: List<InventoryItemDTO>) {
         when {
             items.isEmpty() -> println("없음")
