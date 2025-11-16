@@ -119,6 +119,7 @@
 - [ ] isYesInput input 수락함수 다른 키 입력 리펙토링 하기 (메세지, 키입력 값, input,outputView 재사용 편하게)
 - [ ] AssignedQuest 예외처리 (상태값에 따라)
 - [ ] 창고 유지비, 행상대 급료 지출 기능 구체화
+- [ ] 행상대 COMPLETED 상태 필요한지 확인하기
 
 ### 입출력 요구사항
 
