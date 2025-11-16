@@ -23,4 +23,12 @@ class Caravan(
     fun travelDaysFor(quest: TradeQuest): Int {
         return quest.calculateDurationBy(this.speed)
     }
+
+    fun finishTrip() {
+        this.status = CaravanStatus.COMPLETED
+    }
+
+    fun resetToReady() {
+        this.status = CaravanStatus.READY
+    }
 }
