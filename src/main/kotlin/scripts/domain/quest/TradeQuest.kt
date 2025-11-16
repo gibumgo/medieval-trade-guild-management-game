@@ -23,7 +23,7 @@ class TradeQuest(
     }
 
     fun assignTo(player: Player, caravan: Caravan): AssignedQuest {
-        this.status = QuestStatus.ACCEPTED
+        this.status = QuestStatus.IN_PROGRESS
         player.removeItems(requiredItems)
         return AssignedQuest.of(this, caravan)
     }
@@ -31,8 +31,15 @@ class TradeQuest(
     fun calculateDurationBy(speed: Int): Int = city.calculateTravelTime(speed)
 
     fun complete(): Reward {
-        status = QuestStatus.COMPLETED
         return Reward.of(gold, reputation)
+    }
+
+    fun transitionToCompleted() {
+        status = QuestStatus.COMPLETED
+    }
+
+    fun isCompleted(): Boolean {
+        return this.status == QuestStatus.COMPLETED
     }
 
     fun calculateMaxDuration(player: Player): Int {
