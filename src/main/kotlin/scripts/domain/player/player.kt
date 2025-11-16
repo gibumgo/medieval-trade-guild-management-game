@@ -7,6 +7,7 @@ import scripts.domain.Inventory.InventoryItem
 import scripts.domain.caravan.Caravan
 import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.ReputationPoint
+import scripts.domain.common.Reward
 import scripts.domain.supply.SupplyBoxType
 
 class Player(
@@ -16,8 +17,6 @@ class Player(
     var inventory: Inventory,
     var caravans: List<Caravan> = emptyList()
 ) {
-    private val playerCaravans: MutableList<Caravan> = caravans.toMutableList()
-
     fun pay(amount: Gold) {
         this.gold = gold.minus(amount)
     }
@@ -40,6 +39,18 @@ class Player(
 
     fun increaseReputation(otherPoint: ReputationPoint) {
         this.reputationPoint = reputationPoint.increase(otherPoint)
+    }
+
+    fun earnReward(reward: Reward) {
+        reward.applyTo(this)
+    }
+
+    fun availableCaravans(): List<Caravan> {
+        return this.caravans.filter { it.isReady() }
+    }
+
+    fun currentGold(): Int {
+        return gold.amount
     }
 
     fun hasItems(requiredItems: List<InventoryItem>): Boolean {
