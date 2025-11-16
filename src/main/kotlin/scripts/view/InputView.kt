@@ -5,7 +5,7 @@ import camp.nextstep.edu.missionutils.Console
 
 class InputView {
     fun isYesInput(): Boolean {
-        return Console.readLine().trim().uppercase() == "Y"
+        return Console.readLine().trim().equals("Y", ignoreCase = true)
     }
 
     fun inputSelectNumber(): Int {
@@ -20,7 +20,6 @@ class InputView {
             }
             if (input.toInt() == 0) {
                 println("프로그램을 종료합니다.")
-                Console.close()
             }
             println("엔터만 눌러주세요. (0 = 종료)")
         }

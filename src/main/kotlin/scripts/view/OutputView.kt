@@ -59,7 +59,7 @@ class OutputView {
         }
     }
 
-    fun printQuestSelection(quests: List<TradeQuestDTO>) {
+    fun printQuestSelection() {
         println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
         print(" > ")
     }
