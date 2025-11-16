@@ -8,6 +8,11 @@ data class Reward private constructor(
     val reputation: ReputationPoint,
     val items: List<InventoryItem>
 ) {
+    fun applyTo(player: Player) {
+        player.addGold(gold)
+        player.increaseReputation(reputation)
+        player.addItems(items)
+    }
 
     companion object {
         fun of(gold: Gold, point: ReputationPoint): Reward = Reward(gold, point, emptyList())
