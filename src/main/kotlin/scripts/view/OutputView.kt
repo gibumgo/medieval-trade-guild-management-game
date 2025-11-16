@@ -70,6 +70,6 @@ class OutputView {
     }
 
     private fun printDetailedItems(items: List<InventoryItemDTO>): String {
-        return items.joinToString(separator = ", ") { "${it.name} ${it.quantity}" }
+        return items.joinToString(separator = ", ") { "${it.name} ${it.quantity}개" }
     }
 }
