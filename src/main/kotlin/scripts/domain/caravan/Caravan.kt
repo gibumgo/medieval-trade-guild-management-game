@@ -10,7 +10,7 @@ class Caravan(
     val speed: Int,
     val maxCapacity: Weight,
     val maintenanceCost: Gold,
-    private var status: CaravanStatus
+    var status: CaravanStatus
 ) {
     fun currentStatus(): CaravanStatus = status
 
