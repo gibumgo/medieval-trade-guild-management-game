@@ -1,6 +1,8 @@
 package scripts.view
 
 import scripts.domain.time.GameTime
+import scripts.dto.AssignedQuestDTO
+import scripts.dto.CaravanDTO
 import scripts.dto.InventoryItemDTO
 import scripts.dto.PlayerDTO
 import scripts.dto.TradeQuestDTO
@@ -60,6 +62,29 @@ class OutputView {
     fun printQuestSelection(quests: List<TradeQuestDTO>) {
         println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
         print(" > ")
+    }
+
+    fun printAvailableCaravans(caravans: List<CaravanDTO>) {
+        println()
+        println("배정할 행상대를 선택하세요")
+        caravans.forEachIndexed { index, caravan ->
+            println("[${index + 1}] ${caravan.name}의 행상대")
+        }
+        print("> ")
+    }
+
+    fun printAssignedQuestProgress(assignedQuest: AssignedQuestDTO) {
+        println()
+        println(" ${assignedQuest.caravan.name} 가(이) ${assignedQuest.quest.city} 로 출정합니다.")
+        println()
+        println("출발 중...")
+        println()
+        println("행상대: ${assignedQuest.caravan.name}")
+        println("진행: Day ${assignedQuest.progressDay}/${assignedQuest.totalDays} (${assignedQuest.caravan.status})")
+        println("목적지: ${assignedQuest.quest.city}")
+        println("물품: ${printDetailedItems(assignedQuest.quest.requiredItems)}")
+        println("보상: ${assignedQuest.quest.rewardGold}골드")
+        println("\n-----------------")
     }
 
     private fun printItems(items: List<InventoryItemDTO>) {
