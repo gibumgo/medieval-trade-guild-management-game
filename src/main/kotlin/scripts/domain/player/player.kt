@@ -48,7 +48,7 @@ class Player(
 
     fun availableCaravanMaxSpeed(): Int {
         return caravans
-            .filter { it.currentStatus() == CaravanStatus.READY }
+            .filter { it.isReady() }
             .maxOfOrNull { it.speed } ?: MIN_SPEED
     }
 

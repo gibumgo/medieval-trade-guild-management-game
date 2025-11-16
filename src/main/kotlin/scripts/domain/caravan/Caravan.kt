@@ -12,4 +12,6 @@ class Caravan(
     private var status: CaravanStatus
 ){
     fun currentStatus(): CaravanStatus = status
+
+    fun isReady(): Boolean = status == CaravanStatus.READY
 }
