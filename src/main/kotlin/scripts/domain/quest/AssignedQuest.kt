@@ -8,16 +8,24 @@ class AssignedQuest private constructor(
     val caravan: Caravan,
     var progressDay: Int,
 ) {
-    fun complete(): Reward {
-        return quest.complete()
-    }
-
-    fun progress() {
-        this.progressDay += progressDay
+    fun progressOneDay() {
+        progressDay += 1
     }
 
     fun totalDays(): Int {
         return caravan.travelDaysFor(quest);
+    }
+
+    fun completed(): Reward {
+        quest.transitionToCompleted()
+        caravan.finishTrip()
+        return quest.complete()
+    }
+
+    fun isCompleted(): Boolean = quest.isCompleted()
+
+    fun resetToReady() {
+        caravan.resetToReady()
     }
 
     companion object {
