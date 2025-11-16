@@ -117,6 +117,7 @@
 - [ ] supplyBoxType -> SupplyBoxSelector 헬퍼 클래스로 불리할지 고민하기
 - [ ] player.pay(type.cost) 수정하기 -> 타입별 값을 꺼내와야 하는 지 의문
 - [ ] isYesInput input 수락함수 다른 키 입력 리펙토링 하기 (메세지, 키입력 값, input,outputView 재사용 편하게)
+- [ ] AssignedQuest 예외처리 (상태값에 따라)
 
 ### 입출력 요구사항
 
