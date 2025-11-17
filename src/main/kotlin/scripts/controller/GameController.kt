@@ -25,6 +25,7 @@ import scripts.domain.supply.SupplyBoxType
 import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
+import scripts.service.PlayerStatusService
 import scripts.view.InputView
 import scripts.view.OutputView
 
@@ -45,30 +46,6 @@ class GameController(
         gameTime = TurnBasedGameTime()
 
 
-        val caravan1 = Caravan(
-            name = "로반의 행상대",
-            leader = "로반",
-            speed = 3,
-            maxCapacity = Weight.of(100),
-            maintenanceCost = Gold.of(0),
-            status = CaravanStatus.READY,
-        )
-
-        val caravan2 = Caravan(
-            name = "리아의 행상대",
-            leader = "리아",
-            speed = 2,
-            maxCapacity = Weight.of(80),
-            maintenanceCost = Gold.of(15),
-            status = CaravanStatus.READY
-        )
-        player = Player(
-            Gold.of(10000),
-            ReputationPoint.of(0),
-            Capacity.of(0, 100),
-            Inventory(listOf(initItem).toMutableList()),
-            mutableListOf(caravan1, caravan2),
-        )
         initInventory.addAll(listOf(initItem))
         while (true) {
             dailyRoutine()
@@ -82,11 +59,11 @@ class GameController(
     private fun dailyRoutine() {
         outputView.printCurrentDay(gameTime)
 
-        val testPlayerDTO = PlayerMapper.toDTO(player)
-        val testItemsDTO = listOf(InventoryItemMapper.toDTO(initItem))
+        val player = PlayerStatusService().status()
+        val playerDTO = PlayerMapper.toDTO(player)
 
-        outputView.printPlayerStatus(testPlayerDTO)
-        outputView.printInventory(testItemsDTO)
+        outputView.printPlayerStatus(playerDTO)
+        outputView.printInventory(playerDTO.inventory)
 
         handleSupplyBoxPurchase(player)
         handleQuestAssignment(player)
