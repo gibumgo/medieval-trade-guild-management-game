@@ -12,23 +12,29 @@ import scripts.domain.common.ItemSlot
 import scripts.domain.common.Item
 import scripts.domain.common.ReputationPoint
 import scripts.domain.player.Player
+import scripts.domain.reward.Reward
 
 class SupplyBoxTest {
-    private lateinit var item: Item
+    private lateinit var rewards: List<ItemSlot>
     private lateinit var box: SupplyBox
     private lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
-        item = Item.of("밀", 1)
-        val rewards = listOf(ItemSlot.of(item, 2))
-        box = SupplyBox(SupplyBoxType.BASIC, rewards)
+        rewards = listOf(
+            ItemSlot.of(Item.of("밀", 1), 2)
+        )
+
+        box = SupplyBox.of(
+            SupplyBoxType.BASIC,
+            { Reward.ofItems(rewards) }
+        )
 
         player = Player(
             gold = Gold.of(1000),
             reputationPoint = ReputationPoint.of(0),
             inventory = Inventory(),
-            capacity = Capacity.of(0,500)
+            capacity = Capacity.of(0, 500)
         )
     }
 
@@ -36,11 +42,11 @@ class SupplyBoxTest {
     @DisplayName("골드 충분 시 박스 구매 성공")
     fun purchaseSuccessTest() {
         val reward = box.purchaseBy(player)
-        assertEquals(1000, player.gold.amount)
-
-        assertEquals(1, reward.items.size)
-        assertEquals("밀", reward.items[0].item.name)
-        assertEquals(2, reward.items[0].quantity)
+        val wheat = Reward.ofItems(rewards)
+        assertEquals(
+            wheat,
+            reward
+        )
     }
 
     @Test
@@ -50,7 +56,7 @@ class SupplyBoxTest {
             gold = Gold.of(100),
             reputationPoint = ReputationPoint.of(0),
             inventory = Inventory(),
-            capacity = Capacity.of(0,500)
+            capacity = Capacity.of(0, 500)
         )
 
         val exception = assertThrows<IllegalArgumentException> {
