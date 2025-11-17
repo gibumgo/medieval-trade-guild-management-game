@@ -7,7 +7,7 @@ import scripts.domain.Inventory.InventoryItem
 import scripts.domain.caravan.Caravan
 import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.ReputationPoint
-import scripts.domain.common.Reward
+import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBoxType
 
 class Player(

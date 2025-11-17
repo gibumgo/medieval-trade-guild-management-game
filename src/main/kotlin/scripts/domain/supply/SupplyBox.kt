@@ -1,7 +1,7 @@
 package scripts.domain.supply
 
 import scripts.domain.Inventory.InventoryItem
-import scripts.domain.common.Reward
+import scripts.domain.reward.Reward
 import scripts.domain.player.Player
 
 class SupplyBox(

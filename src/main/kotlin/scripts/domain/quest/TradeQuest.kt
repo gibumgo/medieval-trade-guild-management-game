@@ -5,7 +5,7 @@ import scripts.domain.common.Gold
 import scripts.domain.Inventory.InventoryItem
 import scripts.domain.caravan.Caravan
 import scripts.domain.common.ReputationPoint
-import scripts.domain.common.Reward
+import scripts.domain.reward.Reward
 import scripts.domain.player.Player
 
 class TradeQuest(

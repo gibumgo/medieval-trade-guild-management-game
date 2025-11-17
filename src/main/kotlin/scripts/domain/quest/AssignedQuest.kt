@@ -1,7 +1,7 @@
 package scripts.domain.quest
 
 import scripts.domain.caravan.Caravan
-import scripts.domain.common.Reward
+import scripts.domain.reward.Reward
 
 class AssignedQuest private constructor(
     val quest: TradeQuest,
