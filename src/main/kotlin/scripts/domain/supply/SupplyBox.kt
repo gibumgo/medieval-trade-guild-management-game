@@ -1,23 +1,26 @@
 package scripts.domain.supply
 
-import scripts.domain.Inventory.InventoryItem
 import scripts.domain.reward.Reward
 import scripts.domain.player.Player
+import scripts.domain.reward.RewardGenerator
 
-class SupplyBox(
-    val type: SupplyBoxType,
-    val rewards: List<InventoryItem>
+class SupplyBox private constructor(
+    private val type: SupplyBoxType,
+    private val rewardGenerator: RewardGenerator
 ) {
-    private fun generateRewards(): List<InventoryItem> {
-        return rewards
-    }
 
     fun purchaseBy(player: Player): Reward {
         validPurchase(player)
-        return Reward.ofItems(generateRewards())
+        return rewardGenerator.generate()
     }
 
     private fun validPurchase(player: Player) {
         require(player.canAffordSupplyBox(type)) { "구매 불가" }
+    }
+
+    companion object {
+        fun of(type: SupplyBoxType, rewardGenerator: RewardGenerator): SupplyBox {
+            return SupplyBox(type, rewardGenerator)
+        }
     }
 }
