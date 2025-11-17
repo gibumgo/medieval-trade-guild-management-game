@@ -14,7 +14,7 @@ class SupplyBox(
 
     fun purchaseBy(player: Player): Reward {
         validPurchase(player)
-        return Reward.of(generateRewards())
+        return Reward.ofItems(generateRewards())
     }
 
     private fun validPurchase(player: Player) {

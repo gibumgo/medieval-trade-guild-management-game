@@ -30,7 +30,7 @@ class TradeQuest(
     fun calculateDurationBy(speed: Int): Int = city.calculateTravelTime(speed)
 
     fun complete(): Reward {
-        return Reward.of(gold, reputation)
+        return Reward.ofQuestReward(gold, reputation)
     }
 
     fun transitionToCompleted() {
