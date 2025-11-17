@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import scripts.domain.Inventory.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Inventory.InventoryItem
@@ -26,7 +27,7 @@ class SupplyBoxTest {
         player = Player(
             gold = Gold.of(1000),
             reputationPoint = ReputationPoint.of(0),
-            inventory = emptyList(),
+            inventory = Inventory(),
             capacity = Capacity.of(0,500)
         )
     }
@@ -48,7 +49,7 @@ class SupplyBoxTest {
         val poorPlayer = Player(
             gold = Gold.of(100),
             reputationPoint = ReputationPoint.of(0),
-            inventory = emptyList(),
+            inventory = Inventory(),
             capacity = Capacity.of(0,500)
         )
 
