@@ -11,7 +11,7 @@ object PlayerMapper {
             reputation = player.reputationPoint.point,
             capacityMax = player.capacity.max.weight,
             capacityUsed = player.capacity.current.weight,
-            inventory = player.inventory.items.map { InventoryItemMapper.toDTO(it) },
+            inventory = player.inventory.items.map { ItemSlotMapper.toDTO(it) },
             caravans = player.caravans.map { CaravanMapper.toDTO(it) }
         )
     }

@@ -2,11 +2,11 @@ package scripts.controller
 
 import camp.nextstep.edu.missionutils.Console
 import scripts.application.mapper.CaravanMapper
-import scripts.application.mapper.InventoryItemMapper
+import scripts.application.mapper.ItemSlotMapper
 import scripts.application.mapper.PlayerMapper
 import scripts.application.mapper.TradeQuestMapper
 import scripts.domain.Inventory.Inventory
-import scripts.domain.Inventory.InventoryItem
+import scripts.domain.common.ItemSlot
 import scripts.domain.common.City
 import scripts.domain.common.Gold
 import scripts.domain.common.Item
@@ -17,6 +17,7 @@ import scripts.domain.player.Player
 import scripts.domain.quest.AssignedQuest
 import scripts.domain.quest.QuestStatus
 import scripts.domain.quest.TradeQuest
+import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBox
 import scripts.domain.supply.SupplyBoxType
 import scripts.domain.time.GameTime
@@ -37,7 +38,7 @@ class GameController(
     private val assignedQuests: MutableList<AssignedQuest> = mutableListOf()
     private val WAREHOUSE_COST_PER_DAY = 50
     private val TOTAL_CARAVAN_SALARY_PER_DAY = 100
-    private val initItem: InventoryItem = InventoryItem.of(Item.of("밀", 1), 10)
+    private val initItem: ItemSlot = ItemSlot.of(Item.of("밀", 1), 10)
     private val initInventory: Inventory = Inventory()
 
 
@@ -73,13 +74,13 @@ class GameController(
         outputView.printSupplyBoxPurchase(supplyBoxType)
 
 
-        val wheat = InventoryItem.of(Item.of("밀", 1), 10)
-        val availableItems = listOf(wheat)
+        val wheat = ItemSlot.of(Item.of("밀", 1), 10)
+        val availableItems: Reward = Reward.ofItems(listOf(wheat))
 
         if (inputView.isYesInput()) {
-            val supplyBox = SupplyBox(SupplyBoxType.BASIC, availableItems)
+            val supplyBox = SupplyBox.of(SupplyBoxType.BASIC){ availableItems }
 
-            val availableItemsDTOList = listOf(InventoryItemMapper.toDTO(wheat))
+            val availableItemsDTOList = listOf(ItemSlotMapper.toDTO(wheat))
 
             outputView.printSupplyBoxResult(availableItemsDTOList)
             val rewardtest = supplyBox.purchaseBy(player)
@@ -89,10 +90,10 @@ class GameController(
     }
 
     private fun handleQuestAssignment(player: Player) {
-        val wheat = InventoryItem.of(Item.of("밀", 1), 10)
-        val wood = InventoryItem.of(Item.of("목재", 1), 5)
-        val spice = InventoryItem.of(Item.of("향료", 1), 2)
-        val iron = InventoryItem.of(Item.of("철", 1), 20)  // 플레이어가 부족해서 수행 불가
+        val wheat = ItemSlot.of(Item.of("밀", 1), 10)
+        val wood = ItemSlot.of(Item.of("목재", 1), 5)
+        val spice = ItemSlot.of(Item.of("향료", 1), 2)
+        val iron = ItemSlot.of(Item.of("철", 1), 20)  // 플레이어가 부족해서 수행 불가
 
         val quest1 = TradeQuest(
             city = City("북부 도시", 3),

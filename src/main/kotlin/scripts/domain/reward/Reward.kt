@@ -1,6 +1,6 @@
 package scripts.domain.reward
 
-import scripts.domain.Inventory.InventoryItem
+import scripts.domain.common.ItemSlot
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
 import scripts.domain.player.Player
@@ -8,7 +8,7 @@ import scripts.domain.player.Player
 data class Reward private constructor(
     private val gold: Gold,
     private val reputation: ReputationPoint,
-    private val items: List<InventoryItem>
+    private val items: List<ItemSlot>
 ) {
     fun applyTo(player: Player) {
         player.addGold(gold)
@@ -20,7 +20,7 @@ data class Reward private constructor(
         fun of(
             gold: Gold,
             point: ReputationPoint,
-            items: List<InventoryItem>
+            items: List<ItemSlot>
         ): Reward = Reward(gold, point, items.toList())
 
         fun ofQuestReward(
@@ -29,7 +29,7 @@ data class Reward private constructor(
         ): Reward = Reward(gold, point, emptyList())
 
         fun ofItems(
-            items: List<InventoryItem>
+            items: List<ItemSlot>
         ): Reward = Reward(Gold.Companion.empty(), ReputationPoint.Companion.empty(), items.toList())
     }
 }

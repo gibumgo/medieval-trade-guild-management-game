@@ -3,7 +3,7 @@ package scripts.view
 import scripts.domain.time.GameTime
 import scripts.dto.AssignedQuestDTO
 import scripts.dto.CaravanDTO
-import scripts.dto.InventoryItemDTO
+import scripts.dto.ItemSlotDTO
 import scripts.dto.PlayerDTO
 import scripts.dto.SupplyBoxDTO
 import scripts.dto.TradeQuestDTO
@@ -22,7 +22,7 @@ class OutputView {
         println("보유 행상대: ${playerDTO.caravans.size}대")
     }
 
-    fun printInventory(inventoryDTO : List<InventoryItemDTO>) {
+    fun printInventory(inventoryDTO : List<ItemSlotDTO>) {
         println("현재 보유 재고:")
         printItems(inventoryDTO)
     }
@@ -38,7 +38,7 @@ class OutputView {
         print("(번호 선택, 0 = 모두 거절) > ")
     }
 
-    fun printSupplyBoxResult(items: List<InventoryItemDTO>) {
+    fun printSupplyBoxResult(items: List<ItemSlotDTO>) {
         println("보급 상자를 열었습니다!")
         println("획득: ${printDetailedItems(items)}")
         println()
@@ -111,14 +111,14 @@ class OutputView {
         print("계속하려면 Enter 키를 누르세요 (0 = 종료)")
     }
 
-    private fun printItems(items: List<InventoryItemDTO>) {
+    private fun printItems(items: List<ItemSlotDTO>) {
         when {
             items.isEmpty() -> println("없음")
             else -> items.forEach { println("- ${it.name}: ${it.quantity}") }
         }
     }
 
-    private fun printDetailedItems(items: List<InventoryItemDTO>): String {
+    private fun printDetailedItems(items: List<ItemSlotDTO>): String {
         return items.joinToString(separator = ", ") { "${it.name} ${it.quantity}개" }
     }
 }

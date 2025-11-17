@@ -2,7 +2,7 @@ package scripts.domain.quest
 
 import scripts.domain.common.City
 import scripts.domain.common.Gold
-import scripts.domain.Inventory.InventoryItem
+import scripts.domain.common.ItemSlot
 import scripts.domain.caravan.Caravan
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
@@ -10,7 +10,7 @@ import scripts.domain.player.Player
 
 class TradeQuest(
     val city: City,
-    val requiredItems: List<InventoryItem>,
+    val requiredItems: List<ItemSlot>,
     val gold: Gold,
     val reputation: ReputationPoint,
     var status: QuestStatus

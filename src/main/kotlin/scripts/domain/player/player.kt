@@ -3,9 +3,8 @@ package scripts.domain.player
 import scripts.domain.Inventory.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
-import scripts.domain.Inventory.InventoryItem
+import scripts.domain.common.ItemSlot
 import scripts.domain.caravan.Caravan
-import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBoxType
@@ -25,11 +24,11 @@ class Player(
         return boxType.canPurchase(gold, reputationPoint)
     }
 
-    fun addItems(rewards: List<InventoryItem>) {
+    fun addItems(rewards: List<ItemSlot>) {
         this.inventory.addAll(rewards)
     }
 
-    fun removeItems(requiredItems: List<InventoryItem>) {
+    fun removeItems(requiredItems: List<ItemSlot>) {
         inventory.removeItems(requiredItems)
     }
 
@@ -53,7 +52,7 @@ class Player(
         return gold.amount
     }
 
-    fun hasItems(requiredItems: List<InventoryItem>): Boolean {
+    fun hasItems(requiredItems: List<ItemSlot>): Boolean {
         return inventory.hasItems(requiredItems)
     }
 

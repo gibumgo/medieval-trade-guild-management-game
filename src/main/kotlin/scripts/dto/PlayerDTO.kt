@@ -5,6 +5,6 @@ data class PlayerDTO(
     val reputation: Int,
     val capacityMax: Int,
     val capacityUsed: Int,
-    val inventory: List<InventoryItemDTO>,
+    val inventory: List<ItemSlotDTO>,
     val caravans: List<CaravanDTO>
 )

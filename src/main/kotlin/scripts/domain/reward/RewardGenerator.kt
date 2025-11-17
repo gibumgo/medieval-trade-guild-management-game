@@ -1,5 +1,5 @@
 package scripts.domain.reward
 
-interface RewardGenerator {
+fun interface RewardGenerator {
     fun generate(): Reward
 }

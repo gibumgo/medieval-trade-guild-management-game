@@ -1,41 +1,43 @@
 package scripts.domain.Inventory
 
-class Inventory(
-     val items: MutableList<InventoryItem> = mutableListOf()
-) {
-    fun allItems(): List<InventoryItem> = items.toList()
+import scripts.domain.common.ItemSlot
 
-    fun hasItems(requiredItems: List<InventoryItem>): Boolean =
+class Inventory(
+     val items: MutableList<ItemSlot> = mutableListOf()
+) {
+    fun allItems(): List<ItemSlot> = items.toList()
+
+    fun hasItems(requiredItems: List<ItemSlot>): Boolean =
         requiredItems.all { hasItem(it) }
 
-    private fun hasItem(required: InventoryItem): Boolean =
+    private fun hasItem(required: ItemSlot): Boolean =
         items.any { it.hasQuantity(required) }
 
-    fun addAll(newItems: List<InventoryItem>) {
+    fun addAll(newItems: List<ItemSlot>) {
         newItems.forEach { newItem ->
             addOrIncreaseItem(newItem)
         }
     }
 
-    private fun addOrIncreaseItem(newItem: InventoryItem) {
+    private fun addOrIncreaseItem(newItem: ItemSlot) {
         findItem(newItem)?.let { increaseItem(it, newItem.quantity) } ?: addNewItem(newItem)
     }
 
-    private fun increaseItem(existingItem: InventoryItem, amount: Int) {
+    private fun increaseItem(existingItem: ItemSlot, amount: Int) {
         val updated = existingItem.increase(amount)
         replaceItem(existingItem, updated)
     }
 
-    private fun addNewItem(newItem: InventoryItem) {
+    private fun addNewItem(newItem: ItemSlot) {
         items.add(newItem)
     }
 
-    private fun replaceItem(oldItem: InventoryItem, newItem: InventoryItem) {
+    private fun replaceItem(oldItem: ItemSlot, newItem: ItemSlot) {
         items.remove(oldItem)
         items.add(newItem)
     }
 
-    fun removeItems(requiredItems: List<InventoryItem>) {
+    fun removeItems(requiredItems: List<ItemSlot>) {
         requiredItems.forEach { required ->
             val currentItem = items.find { it.isSameItem(required) }
                 ?: throw IllegalArgumentException("재고 없음: ${required.item}")
@@ -45,6 +47,6 @@ class Inventory(
         }
     }
 
-    private fun findItem(item: InventoryItem): InventoryItem? =
+    private fun findItem(item: ItemSlot): ItemSlot? =
         items.find { it.isSameItem(item) }
 }

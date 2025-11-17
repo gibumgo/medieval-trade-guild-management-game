@@ -1,13 +1,19 @@
 package scripts
 
 import scripts.controller.GameController
+import scripts.service.PlayerStatusService
+import scripts.service.SupplyService
 import scripts.view.InputView
 import scripts.view.OutputView
 
 fun main() {
-    val InputView: InputView = InputView()
-    val OutputView: OutputView = OutputView()
-    val gameController = GameController(InputView, OutputView)
+
+    val gameController = GameController(
+        inputView = InputView(),
+        outputView = OutputView(),
+        playerStatusService = PlayerStatusService(),
+        supplyService = SupplyService()
+    )
 
     gameController.run()
 }

@@ -1,12 +1,13 @@
 package scripts.domain.supply
 
+import scripts.domain.common.ItemSlot
 import scripts.domain.reward.Reward
 import scripts.domain.player.Player
 import scripts.domain.reward.RewardGenerator
 
 class SupplyBox private constructor(
-    private val type: SupplyBoxType,
-    private val rewardGenerator: RewardGenerator
+    val type: SupplyBoxType,
+    val rewardGenerator: RewardGenerator
 ) {
 
     fun purchaseBy(player: Player): Reward {

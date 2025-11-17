@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertThrows
 import scripts.domain.Inventory.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
-import scripts.domain.Inventory.InventoryItem
+import scripts.domain.common.ItemSlot
 import scripts.domain.common.Item
 import scripts.domain.common.ReputationPoint
 import scripts.domain.player.Player
@@ -21,7 +21,7 @@ class SupplyBoxTest {
     @BeforeEach
     fun setUp() {
         item = Item.of("밀", 1)
-        val rewards = listOf(InventoryItem.of(item, 2))
+        val rewards = listOf(ItemSlot.of(item, 2))
         box = SupplyBox(SupplyBoxType.BASIC, rewards)
 
         player = Player(
