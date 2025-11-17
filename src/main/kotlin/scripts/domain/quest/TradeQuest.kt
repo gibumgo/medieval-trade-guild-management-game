@@ -17,7 +17,6 @@ class TradeQuest(
 ) {
 
     fun isAvailableFor(player: Player): Boolean {
-        require(player.hasItems(requiredItems)) { "수락 불가" }
         status = QuestStatus.ACTIVE
         return player.hasItems(requiredItems)
     }

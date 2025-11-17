@@ -70,7 +70,7 @@ class GameController(
             mutableListOf(caravan1, caravan2),
         )
         initInventory.addAll(listOf(initItem))
-        while (player.gold.amount >= 0) {
+        while (true) {
             dailyRoutine()
             if (!inputView.waitForEnterOnly()) break
         }

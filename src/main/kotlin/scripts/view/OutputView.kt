@@ -34,8 +34,7 @@ class OutputView {
 
     fun printSupplyBoxResult(items: List<InventoryItemDTO>) {
         println("보급 상자를 열었습니다!")
-        println("획득:")
-        printDetailedItems(items)
+        println("획득: ${printDetailedItems(items)}")
         println()
     }
 
