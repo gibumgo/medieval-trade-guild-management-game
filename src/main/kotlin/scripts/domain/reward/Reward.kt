@@ -17,6 +17,12 @@ data class Reward private constructor(
     }
 
     companion object {
+        fun of(
+            gold: Gold,
+            point: ReputationPoint,
+            items: List<InventoryItem>
+        ): Reward = Reward(gold, point, items.toList())
+
         fun ofQuestReward(
             gold: Gold,
             point: ReputationPoint
