@@ -1,6 +1,7 @@
-package scripts.domain.mapper
+package scripts.mapper
 
 import scripts.domain.supply.SupplyBox
+import scripts.domain.supply.SupplyBoxType
 import scripts.dto.SupplyBoxDTO
 
 object SupplyBoxMapper {
@@ -9,6 +10,14 @@ object SupplyBoxMapper {
             displayName = supplyBox.type.name,
             price = supplyBox.type.cost.amount,
             minReputation = supplyBox.type.minReputationPoint.point
+        )
+    }
+
+    fun toDTO(supplyBox: SupplyBoxType): SupplyBoxDTO {
+        return SupplyBoxDTO(
+            displayName = supplyBox.name,
+            price = supplyBox.cost.amount,
+            minReputation = supplyBox.minReputationPoint.point
         )
     }
 }

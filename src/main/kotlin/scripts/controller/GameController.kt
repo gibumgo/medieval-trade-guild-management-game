@@ -7,15 +7,12 @@ import scripts.application.mapper.PlayerMapper
 import scripts.application.mapper.TradeQuestMapper
 import scripts.domain.Inventory.Inventory
 import scripts.domain.Inventory.InventoryItem
-import scripts.domain.caravan.Caravan
-import scripts.domain.caravan.CaravanStatus
-import scripts.domain.common.Capacity
 import scripts.domain.common.City
 import scripts.domain.common.Gold
 import scripts.domain.common.Item
 import scripts.domain.common.ReputationPoint
-import scripts.domain.common.Weight
-import scripts.domain.mapper.AssignedQuestMapper
+import scripts.mapper.AssignedQuestMapper
+import scripts.mapper.SupplyBoxMapper
 import scripts.domain.player.Player
 import scripts.domain.quest.AssignedQuest
 import scripts.domain.quest.QuestStatus
@@ -26,15 +23,16 @@ import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
 import scripts.service.PlayerStatusService
+import scripts.service.SupplyService
 import scripts.view.InputView
 import scripts.view.OutputView
 
 class GameController(
     private val inputView: InputView,
-    private val outputView: OutputView
+    private val outputView: OutputView,
+    private val playerStatusService: PlayerStatusService,
 ) {
     private lateinit var gameTime: GameTime
-    private lateinit var player: Player
     private val assignedQuests: MutableList<AssignedQuest> = mutableListOf()
     private val WAREHOUSE_COST_PER_DAY = 50
     private val TOTAL_CARAVAN_SALARY_PER_DAY = 100

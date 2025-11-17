@@ -1,4 +1,4 @@
-package scripts.domain.mapper
+package scripts.mapper
 
 import scripts.application.mapper.TradeQuestMapper
 import scripts.domain.quest.AssignedQuest

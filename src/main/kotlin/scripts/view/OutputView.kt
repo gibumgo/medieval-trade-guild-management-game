@@ -5,6 +5,7 @@ import scripts.dto.AssignedQuestDTO
 import scripts.dto.CaravanDTO
 import scripts.dto.InventoryItemDTO
 import scripts.dto.PlayerDTO
+import scripts.dto.SupplyBoxDTO
 import scripts.dto.TradeQuestDTO
 
 class OutputView {
@@ -21,15 +22,20 @@ class OutputView {
         println("보유 행상대: ${playerDTO.caravans.size}대")
     }
 
-    fun printInventory(inventory: List<InventoryItemDTO>) {
+    fun printInventory(inventoryDTO : List<InventoryItemDTO>) {
         println("현재 보유 재고:")
-        printItems(inventory)
+        printItems(inventoryDTO)
     }
 
-    fun printSupplyBoxPurchase() {
+    fun printSupplyBoxPurchase(supplyBoxDTOs : List<SupplyBoxDTO>) {
         println("길드 관리관이 찾아왔습니다.")
         println("“오늘도 행운을 빕니다. 무작위 보급 상자를 하나 구입하시겠습니까?”")
-        print("구입하시겠습니까? (Y/N) > ")
+        println("선택 가능한 보급 상자:")
+        supplyBoxDTOs.forEachIndexed { index, type ->
+            println("[${index + 1}] ${type.displayName} - 비용 : ${type.price}G, 필요 명성 : ${type.minReputation}")
+            println("-------------------------------------")
+        }
+        print("(번호 선택, 0 = 모두 거절) > ")
     }
 
     fun printSupplyBoxResult(items: List<InventoryItemDTO>) {
