@@ -6,9 +6,9 @@ import scripts.domain.common.ReputationPoint
 import scripts.domain.player.Player
 
 data class Reward private constructor(
-    private val gold: Gold,
-    private val reputation: ReputationPoint,
-    private val items: List<ItemSlot>
+    val gold: Gold,
+    val reputation: ReputationPoint,
+    val items: List<ItemSlot>
 ) {
     fun applyTo(player: Player) {
         player.addGold(gold)
