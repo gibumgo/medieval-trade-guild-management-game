@@ -31,6 +31,7 @@ class GameController(
     private val inputView: InputView,
     private val outputView: OutputView,
     private val playerStatusService: PlayerStatusService,
+    private val supplyService: SupplyService,
 ) {
     private lateinit var gameTime: GameTime
     private val assignedQuests: MutableList<AssignedQuest> = mutableListOf()
@@ -57,7 +58,7 @@ class GameController(
     private fun dailyRoutine() {
         outputView.printCurrentDay(gameTime)
 
-        val player = PlayerStatusService().status()
+        val player = playerStatusService.status()
         val playerDTO = PlayerMapper.toDTO(player)
 
         outputView.printPlayerStatus(playerDTO)
@@ -68,7 +69,10 @@ class GameController(
     }
 
     private fun handleSupplyBoxPurchase(player: Player) {
-        outputView.printSupplyBoxPurchase()
+        val supplyBoxType = supplyService.allSupplyType().map { SupplyBoxMapper.toDTO(it) }
+        outputView.printSupplyBoxPurchase(supplyBoxType)
+
+
         val wheat = InventoryItem.of(Item.of("밀", 1), 10)
         val availableItems = listOf(wheat)
 
