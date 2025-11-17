@@ -5,7 +5,6 @@ import scripts.application.mapper.CaravanMapper
 import scripts.application.mapper.ItemSlotMapper
 import scripts.application.mapper.PlayerMapper
 import scripts.application.mapper.TradeQuestMapper
-import scripts.domain.Inventory.Inventory
 import scripts.domain.common.ItemSlot
 import scripts.domain.common.City
 import scripts.domain.common.Gold
@@ -17,9 +16,6 @@ import scripts.domain.player.Player
 import scripts.domain.quest.AssignedQuest
 import scripts.domain.quest.QuestStatus
 import scripts.domain.quest.TradeQuest
-import scripts.domain.reward.Reward
-import scripts.domain.supply.SupplyBox
-import scripts.domain.supply.SupplyBoxType
 import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
@@ -38,15 +34,11 @@ class GameController(
     private val assignedQuests: MutableList<AssignedQuest> = mutableListOf()
     private val WAREHOUSE_COST_PER_DAY = 50
     private val TOTAL_CARAVAN_SALARY_PER_DAY = 100
-    private val initItem: ItemSlot = ItemSlot.of(Item.of("밀", 1), 10)
-    private val initInventory: Inventory = Inventory()
-
 
     fun run() {
         gameTime = TurnBasedGameTime()
 
 
-        initInventory.addAll(listOf(initItem))
         while (true) {
             dailyRoutine()
             if (!inputView.waitForEnterOnly()) break
@@ -70,23 +62,13 @@ class GameController(
     }
 
     private fun handleSupplyBoxPurchase(player: Player) {
-        val supplyBoxType = supplyService.allSupplyType().map { SupplyBoxMapper.toDTO(it) }
-        outputView.printSupplyBoxPurchase(supplyBoxType)
+        val supplyBoxTypes = supplyService.allSupplyType()
+        outputView.printSupplyBoxPurchase(SupplyBoxMapper.toDTOs(supplyBoxTypes))
 
-
-        val wheat = ItemSlot.of(Item.of("밀", 1), 10)
-        val availableItems: Reward = Reward.ofItems(listOf(wheat))
-
-        if (inputView.isYesInput()) {
-            val supplyBox = SupplyBox.of(SupplyBoxType.BASIC){ availableItems }
-
-            val availableItemsDTOList = listOf(ItemSlotMapper.toDTO(wheat))
-
-            outputView.printSupplyBoxResult(availableItemsDTOList)
-            val rewardtest = supplyBox.purchaseBy(player)
-            player.earnReward(rewardtest)
-            outputView.printUpdatedInventory(PlayerMapper.toDTO(player))
-        }
+        val reward = supplyService.openSupplyBox(inputView.inputSelectNumber(), player)
+        outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(reward))
+        player.earnReward(reward)
+        outputView.printUpdatedInventory(PlayerMapper.toDTO(player))
     }
 
     private fun handleQuestAssignment(player: Player) {

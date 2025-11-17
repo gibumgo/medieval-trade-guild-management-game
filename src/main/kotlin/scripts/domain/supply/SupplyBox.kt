@@ -1,6 +1,5 @@
 package scripts.domain.supply
 
-import scripts.domain.common.ItemSlot
 import scripts.domain.reward.Reward
 import scripts.domain.player.Player
 import scripts.domain.reward.RewardGenerator

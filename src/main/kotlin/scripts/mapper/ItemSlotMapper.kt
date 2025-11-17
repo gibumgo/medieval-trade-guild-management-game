@@ -1,6 +1,7 @@
 package scripts.application.mapper
 
 import scripts.domain.common.ItemSlot
+import scripts.domain.reward.Reward
 import scripts.dto.ItemSlotDTO
 
 
@@ -11,5 +12,9 @@ object ItemSlotMapper {
             weight = item.item.weight.weight,
             quantity = item.quantity,
         )
+    }
+
+    fun toDTO(reward: Reward): List<ItemSlotDTO> {
+        return reward.items.map { toDTO(it) }
     }
 }

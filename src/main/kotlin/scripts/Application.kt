@@ -7,7 +7,6 @@ import scripts.view.InputView
 import scripts.view.OutputView
 
 fun main() {
-
     val gameController = GameController(
         inputView = InputView(),
         outputView = OutputView(),

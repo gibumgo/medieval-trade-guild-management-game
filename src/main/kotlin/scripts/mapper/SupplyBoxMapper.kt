@@ -20,4 +20,8 @@ object SupplyBoxMapper {
             minReputation = supplyBox.minReputationPoint.point
         )
     }
+
+    fun toDTOs(types: List<SupplyBoxType>): List<SupplyBoxDTO> {
+        return types.map { toDTO(it) }
+    }
 }
