@@ -1,4 +1,4 @@
-package scripts.application.mapper
+package scripts.mapper
 
 import scripts.domain.player.Player
 import scripts.domain.quest.TradeQuest
@@ -13,7 +13,7 @@ object TradeQuestMapper {
         return TradeQuestDTO(
             city = quest.city.name,
             status = quest.status.name,
-            requiredItems = quest.requiredItems.map { ItemSlotMapper.toDTO(it) },
+            requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
             rewardGold = quest.gold.amount,
             rewardReputation = quest.reputation.point,
             durationDays = quest.calculateMaxDuration(player)
@@ -27,7 +27,7 @@ object TradeQuestMapper {
         return TradeQuestDTO(
             city = quest.city.name,
             status = quest.status.name,
-            requiredItems = quest.requiredItems.map { ItemSlotMapper.toDTO(it) },
+            requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
             rewardGold = quest.gold.amount,
             rewardReputation = quest.reputation.point,
             durationDays = 0
@@ -36,5 +36,9 @@ object TradeQuestMapper {
 
     fun toDTOs(quests: List<TradeQuest>): List<TradeQuestDTO> {
         return quests.map { toDTO(it) }
+    }
+
+    fun toDTOs(quests: List<TradeQuest>, player: Player): List<TradeQuestDTO> {
+        return quests.map { toDTO(it, player) }
     }
 }

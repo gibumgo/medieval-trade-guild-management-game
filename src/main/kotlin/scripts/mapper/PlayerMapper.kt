@@ -1,4 +1,4 @@
-package scripts.application.mapper
+package scripts.mapper
 
 import scripts.domain.player.Player
 import scripts.dto.PlayerDTO

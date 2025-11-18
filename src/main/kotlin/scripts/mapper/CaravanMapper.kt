@@ -1,4 +1,4 @@
-package scripts.application.mapper
+package scripts.mapper
 
 import scripts.domain.caravan.Caravan
 import scripts.dto.CaravanDTO

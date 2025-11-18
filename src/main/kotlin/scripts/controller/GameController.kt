@@ -1,20 +1,13 @@
 package scripts.controller
 
 import camp.nextstep.edu.missionutils.Console
-import scripts.application.mapper.CaravanMapper
-import scripts.application.mapper.ItemSlotMapper
-import scripts.application.mapper.PlayerMapper
-import scripts.application.mapper.TradeQuestMapper
 import scripts.domain.common.Gold
-import scripts.mapper.AssignedQuestMapper
-import scripts.mapper.SupplyBoxMapper
 import scripts.domain.player.Player
 import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
-import scripts.service.PlayerStatusService
-import scripts.service.QuestService
-import scripts.service.SupplyService
+import scripts.mapper.*
+import scripts.service.*
 import scripts.view.InputView
 import scripts.view.OutputView
 
@@ -66,7 +59,7 @@ class GameController(
     private fun handleQuestAssignment(player: Player) {
         questService.fillerActive(playerStatusService.currentInventory())
         val availableQuests = questService.availableQuest()
-        val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests)
+        val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests, player)
         outputView.printAvailableQuests(questsDTO)
         outputView.printQuestSelection()
         val selectedQuest = questService.selectedQuest(inputView.inputSelectNumber())
