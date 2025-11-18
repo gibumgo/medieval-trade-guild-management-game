@@ -72,50 +72,12 @@ class GameController(
     }
 
     private fun handleQuestAssignment(player: Player) {
-        val wheat = ItemSlot.of(Item.of("밀", 1), 10)
-        val wood = ItemSlot.of(Item.of("목재", 1), 5)
-        val spice = ItemSlot.of(Item.of("향료", 1), 2)
-        val iron = ItemSlot.of(Item.of("철", 1), 20)  // 플레이어가 부족해서 수행 불가
 
-        val quest1 = TradeQuest(
-            city = City("북부 도시", 3),
-            requiredItems = listOf(wheat),
-            gold = Gold.of(120),
-            reputation = ReputationPoint.of(2),
-            status = QuestStatus.INACTIVE
-        )
-
-        val quest2 = TradeQuest(
-            city = City("항구 도시", 5),
-            requiredItems = listOf(wood),
-            gold = Gold.of(70),
-            reputation = ReputationPoint.of(1),
-            status = QuestStatus.INACTIVE
-        )
-
-        val quest3 = TradeQuest(
-            city = City("사막 도시", 10),
-            requiredItems = listOf(spice),
-            gold = Gold.of(200),
-            reputation = ReputationPoint.of(5),
-            status = QuestStatus.INACTIVE
-        )
-
-        // 수행 불가 퀘스트 (플레이어가 철 아이템이 없음)
-        val quest4 = TradeQuest(
-            city = City("산악 도시", 10),
-            requiredItems = listOf(iron),
-            gold = Gold.of(150),
-            reputation = ReputationPoint.of(3),
-            status = QuestStatus.INACTIVE
-        )
-
-        val quests = listOf(quest1, quest2, quest3, quest4)
         val availableQuests = quests.filter { it.isAvailableFor(player) }
         val questsDTO: List<TradeQuestDTO> = availableQuests
             .map { TradeQuestMapper.toDTO(it) }
         val caravans = player.availableCaravans()
-
+        TestItems()
         outputView.printAvailableQuests(questsDTO)
         outputView.printQuestSelection()
         val selectNumber = inputView.inputSelectNumber()
