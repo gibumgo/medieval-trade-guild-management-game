@@ -51,20 +51,24 @@ class OutputView {
     }
 
     fun printAvailableQuests(quests: List<TradeQuestDTO>) {
+        if (quests.isEmpty()) {
+            println("가능한 거래 목록이 없습니다.")
+            return
+        }
         println("오늘의 거래 의뢰서가 도착했습니다.")
         println("주문 의뢰 - 가능한 거래 목록")
-
         quests.forEachIndexed { selectIndex, quest ->
             val items = printDetailedItems(quest.requiredItems)
 
             println("[${selectIndex + 1}] ${quest.city} : $items 납품")
             println("   보상: ${quest.rewardGold}골드 / 명성 +${quest.rewardReputation}")
-            println("   소요 기간: ${quest.durationDays}일")
+            println("   최소 소요 기간: ${quest.durationDays}일")
             println("-------------------------------------")
         }
+        printQuestSelection()
     }
 
-    fun printQuestSelection() {
+    private fun printQuestSelection() {
         println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
         print(" > ")
     }

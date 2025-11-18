@@ -61,7 +61,6 @@ class GameController(
         val availableQuests = questService.availableQuest()
         val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests, player)
         outputView.printAvailableQuests(questsDTO)
-        outputView.printQuestSelection()
         val selectedQuest = questService.selectedQuest(inputView.inputSelectNumber())
 
         val caravans = playerStatusService.availableCaravans()
