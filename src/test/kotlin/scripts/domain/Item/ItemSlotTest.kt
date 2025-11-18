@@ -1,4 +1,4 @@
-package scripts.domain.common
+package scripts.domain.Item
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach

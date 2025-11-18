@@ -5,11 +5,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import scripts.domain.Inventory.Inventory
+import scripts.domain.Item.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
-import scripts.domain.common.ItemSlot
-import scripts.domain.common.Item
+import scripts.domain.Item.ItemSlot
+import scripts.domain.Item.Item
 import scripts.domain.common.ReputationPoint
 import scripts.domain.player.Player
 import scripts.domain.reward.Reward

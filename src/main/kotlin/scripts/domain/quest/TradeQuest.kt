@@ -1,8 +1,9 @@
 package scripts.domain.quest
 
+import scripts.domain.Item.Inventory
 import scripts.domain.common.City
 import scripts.domain.common.Gold
-import scripts.domain.common.ItemSlot
+import scripts.domain.Item.ItemSlot
 import scripts.domain.caravan.Caravan
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
@@ -15,10 +16,14 @@ class TradeQuest(
     val reputation: ReputationPoint,
     var status: QuestStatus
 ) {
-
-    fun isAvailableFor(player: Player): Boolean {
+    fun isAvailableFor(inventoryItems : Inventory): Boolean {
         status = QuestStatus.ACTIVE
-        return player.hasItems(requiredItems)
+        return inventoryItems.hasItems(this.requiredItems)
+    }
+
+    fun isAvailableFor(inventoryItems : List<ItemSlot>): Boolean {
+        status = QuestStatus.ACTIVE
+        return inventoryItems.hasItems(this.requiredItems)
     }
 
     fun assignTo(player: Player, caravan: Caravan): AssignedQuest {

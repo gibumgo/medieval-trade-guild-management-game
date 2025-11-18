@@ -1,6 +1,4 @@
-package scripts.domain.Inventory
-
-import scripts.domain.common.ItemSlot
+package scripts.domain.Item
 
 class Inventory(
      val items: MutableList<ItemSlot> = mutableListOf()

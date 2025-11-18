@@ -1,4 +1,4 @@
-package scripts.domain.common
+package scripts.domain.Item
 
 import scripts.domain.ErrorMessage
 

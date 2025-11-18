@@ -1,6 +1,6 @@
 package scripts.application.mapper
 
-import scripts.domain.common.ItemSlot
+import scripts.domain.Item.ItemSlot
 import scripts.domain.reward.Reward
 import scripts.dto.ItemSlotDTO
 

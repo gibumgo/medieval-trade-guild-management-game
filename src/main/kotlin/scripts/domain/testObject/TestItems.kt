@@ -1,7 +1,7 @@
 package scripts.domain.testObject
 
-import scripts.domain.common.Item
-import scripts.domain.common.ItemSlot
+import scripts.domain.Item.Item
+import scripts.domain.Item.ItemSlot
 
 object TestItems {
     val wheat = listOf(

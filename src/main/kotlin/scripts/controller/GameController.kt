@@ -15,6 +15,7 @@ import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
 import scripts.service.PlayerStatusService
+import scripts.service.QuestService
 import scripts.service.SupplyService
 import scripts.view.InputView
 import scripts.view.OutputView
@@ -24,6 +25,7 @@ class GameController(
     private val outputView: OutputView,
     private val playerStatusService: PlayerStatusService,
     private val supplyService: SupplyService,
+    private val questService: QuestService,
 ) {
     private lateinit var gameTime: GameTime
     private val assignedQuests: MutableList<AssignedQuest> = mutableListOf()
@@ -64,8 +66,7 @@ class GameController(
     }
 
     private fun handleQuestAssignment(player: Player) {
-
-        val availableQuests = TestQuest.quests.filter { it.isAvailableFor(player) }
+        val availableQuests = questService.fillerAvailable(playerStatusService.currentInventory())
         val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests)
         outputView.printAvailableQuests(questsDTO)
         outputView.printQuestSelection()

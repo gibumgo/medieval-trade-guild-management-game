@@ -1,9 +1,9 @@
 package scripts.domain.player
 
-import scripts.domain.Inventory.Inventory
+import scripts.domain.Item.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
-import scripts.domain.common.ItemSlot
+import scripts.domain.Item.ItemSlot
 import scripts.domain.caravan.Caravan
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
@@ -61,6 +61,8 @@ class Player(
             .filter { it.isReady() }
             .maxOfOrNull { it.speed } ?: MIN_SPEED
     }
+
+    fun allItems(): List<ItemSlot> = inventory.allItems()
 
     companion object {
         private const val MIN_SPEED = 1
