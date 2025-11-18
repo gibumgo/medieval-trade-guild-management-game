@@ -22,12 +22,12 @@ class OutputView {
         println("보유 행상대: ${playerDTO.caravans.size}대")
     }
 
-    fun printInventory(inventoryDTO : List<ItemSlotDTO>) {
+    fun printInventory(inventoryDTO: List<ItemSlotDTO>) {
         println("현재 보유 재고:")
         printItems(inventoryDTO)
     }
 
-    fun printSupplyBoxPurchase(supplyBoxDTOs : List<SupplyBoxDTO>) {
+    fun printSupplyBoxPurchase(supplyBoxDTOs: List<SupplyBoxDTO>) {
         println("길드 관리관이 찾아왔습니다.")
         println("“오늘도 행운을 빕니다. 무작위 보급 상자를 하나 구입하시겠습니까?”")
         println("선택 가능한 보급 상자:")
@@ -78,19 +78,38 @@ class OutputView {
         print("> ")
     }
 
-    fun printAssignedQuestProgress(assignedQuest: AssignedQuestDTO) {
+    fun printAssignedQuest(assignedQuest: AssignedQuestDTO) {
         println()
         println(" ${assignedQuest.caravan.name} 가(이) ${assignedQuest.quest.city} 로 출정합니다.")
         println()
         println("출발 중...")
         println()
-        println("행상대: ${assignedQuest.caravan.name}")
-        println("진행: Day ${assignedQuest.progressDay}/${assignedQuest.totalDays} (${assignedQuest.caravan.status})")
-        println("목적지: ${assignedQuest.quest.city}")
-        println("물품: ${printDetailedItems(assignedQuest.quest.requiredItems)}")
-        println("보상: ${assignedQuest.quest.rewardGold}골드")
         println("\n-----------------")
     }
+
+    fun printAssignedQuestProgress(assignedQuests: List<AssignedQuestDTO>) {
+        if (assignedQuests.isEmpty()) {
+            println("현재 진행 중인 퀘스트가 없습니다.")
+            return
+        }
+        println("파견된 상단의 현황")
+        assignedQuests.forEach { assignedQuest -> printQuestStatusDetail(assignedQuest) }
+        println("=======================")
+    }
+
+    private fun printQuestStatusDetail(assignedQuest: AssignedQuestDTO) {
+        println(
+            "[${assignedQuest.caravan.status}]"
+                    + "${assignedQuest.caravan.name} - ${assignedQuest.quest.city}"
+                    + "(남은 일수: ${assignedQuest.totalDays - assignedQuest.progressDay}일)"
+        )
+        println(
+            "보상: ${assignedQuest.quest.rewardGold}G,"
+                    + "+${assignedQuest.quest.rewardReputation} 명성"
+        )
+        println()
+    }
+
 
     fun printDaySummary(
         day: Int,

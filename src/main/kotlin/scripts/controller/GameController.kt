@@ -9,7 +9,6 @@ import scripts.domain.common.Gold
 import scripts.mapper.AssignedQuestMapper
 import scripts.mapper.SupplyBoxMapper
 import scripts.domain.player.Player
-import scripts.domain.quest.AssignedQuest
 import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
@@ -27,7 +26,6 @@ class GameController(
     private val questService: QuestService,
 ) {
     private lateinit var gameTime: GameTime
-    private val assignedQuests: MutableList<AssignedQuest> = mutableListOf()
     private val WAREHOUSE_COST_PER_DAY = 50
     private val TOTAL_CARAVAN_SALARY_PER_DAY = 100
 
@@ -53,6 +51,7 @@ class GameController(
 
         handleSupplyBoxPurchase()
         handleQuestAssignment(playerStatusService.status())
+        endDay(playerStatusService.status())
     }
 
     private fun handleSupplyBoxPurchase() {
@@ -78,18 +77,13 @@ class GameController(
         val caravan = caravans[selectCaravan - 1]
 
         val assignedQuest = selectedQuest.assignTo(player, caravan)
-        outputView.printAssignedQuestProgress(AssignedQuestMapper.toDTO(assignedQuest))
+        outputView.printAssignedQuest(AssignedQuestMapper.toDTO(assignedQuest))
+        outputView.printAssignedQuestProgress(listOf())
+        questService.progressOneDay(assignedQuest)
+        questService.completedQuest(player)
+    }
 
-        assignedQuests.add(assignedQuest)
-        assignedQuests.forEach { assignedQuest -> assignedQuest.progressOneDay() }
-
-        val completedQuests = assignedQuests.filter { it.isCompleted() }
-
-        completedQuests.forEach { aq ->
-            aq.completed().applyTo(player)
-            aq.resetToReady()
-        }
-
+    private fun endDay(player: Player) {
         val dailyCost = WAREHOUSE_COST_PER_DAY + TOTAL_CARAVAN_SALARY_PER_DAY
         player.pay(Gold.of(dailyCost))
 
