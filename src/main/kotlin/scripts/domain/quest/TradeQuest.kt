@@ -1,9 +1,9 @@
 package scripts.domain.quest
 
-import scripts.domain.Item.Inventory
 import scripts.domain.common.City
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
+import scripts.domain.Item.ItemSlots
 import scripts.domain.caravan.Caravan
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
@@ -11,24 +11,23 @@ import scripts.domain.player.Player
 
 class TradeQuest(
     val city: City,
-    val requiredItems: List<ItemSlot>,
+    val requiredItems: ItemSlots,
     val gold: Gold,
     val reputation: ReputationPoint,
     var status: QuestStatus
 ) {
-    fun isAvailableFor(inventoryItems : Inventory): Boolean {
-        status = QuestStatus.ACTIVE
-        return inventoryItems.hasItems(this.requiredItems)
+    fun tryToActivate(inventoryItems: List<ItemSlot>) {
+        if (this.status.isInActive() && hasAllRequiredItems(inventoryItems)) {
+            status = QuestStatus.ACTIVE
+        }
     }
 
-    fun isAvailableFor(inventoryItems : List<ItemSlot>): Boolean {
-        status = QuestStatus.ACTIVE
-        return inventoryItems.hasItems(this.requiredItems)
-    }
+    private fun hasAllRequiredItems(inventoryItems: List<ItemSlot>): Boolean =
+        this.requiredItems.hasItems(inventoryItems)
 
     fun assignTo(player: Player, caravan: Caravan): AssignedQuest {
         this.status = QuestStatus.IN_PROGRESS
-        player.removeItems(requiredItems)
+        player.removeItems(requiredItems.items())
         return AssignedQuest.of(this, caravan)
     }
 
@@ -40,6 +39,10 @@ class TradeQuest(
 
     fun transitionToCompleted() {
         status = QuestStatus.COMPLETED
+    }
+
+    fun isActive(): Boolean {
+        return this.status == QuestStatus.ACTIVE
     }
 
     fun isCompleted(): Boolean {

@@ -13,6 +13,8 @@ class ItemSlots private constructor(val items: List<ItemSlot>) {
     private fun findItem(item: ItemSlot): ItemSlot? =
         items.find { it.isSameItem(item) }
 
+    fun items(): List<ItemSlot> = items.toList()
+
     companion object {
         fun of (items: List<ItemSlot>): ItemSlots{
             return ItemSlots(items)

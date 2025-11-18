@@ -52,6 +52,10 @@ class PlayerStatusService() {
         return reward
     }
 
+    fun currentInventory(): List<ItemSlot> {
+        return player.allItems()
+    }
+
     fun availableCaravans(): List<Caravan> {
         return player.availableCaravans()
     }

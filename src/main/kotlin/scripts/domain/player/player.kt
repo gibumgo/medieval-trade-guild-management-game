@@ -44,6 +44,10 @@ class Player(
         reward.applyTo(this)
     }
 
+    fun availableCaravanMaxSpeed(): Int {
+        return availableCaravans().maxOfOrNull { it.speed } ?: MIN_SPEED
+    }
+
     fun availableCaravans(): List<Caravan> {
         return this.caravans.filter { it.isReady() }
     }
@@ -54,12 +58,6 @@ class Player(
 
     fun hasItems(requiredItems: List<ItemSlot>): Boolean {
         return inventory.hasItems(requiredItems)
-    }
-
-    fun availableCaravanMaxSpeed(): Int {
-        return caravans
-            .filter { it.isReady() }
-            .maxOfOrNull { it.speed } ?: MIN_SPEED
     }
 
     fun allItems(): List<ItemSlot> = inventory.allItems()
