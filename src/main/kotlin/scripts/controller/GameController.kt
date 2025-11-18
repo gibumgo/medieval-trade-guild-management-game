@@ -16,6 +16,7 @@ import scripts.domain.player.Player
 import scripts.domain.quest.AssignedQuest
 import scripts.domain.quest.QuestStatus
 import scripts.domain.quest.TradeQuest
+import scripts.domain.testObject.TestQuest
 import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
@@ -73,25 +74,23 @@ class GameController(
 
     private fun handleQuestAssignment(player: Player) {
 
-        val availableQuests = quests.filter { it.isAvailableFor(player) }
-        val questsDTO: List<TradeQuestDTO> = availableQuests
-            .map { TradeQuestMapper.toDTO(it) }
-        val caravans = player.availableCaravans()
-        TestItems()
+        val availableQuests = TestQuest.quests.filter { it.isAvailableFor(player) }
+        val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests)
         outputView.printAvailableQuests(questsDTO)
         outputView.printQuestSelection()
         val selectNumber = inputView.inputSelectNumber()
         val selectedQuest = availableQuests[selectNumber - 1]
+
+        val caravans = player.availableCaravans()
         val caravansDTO = caravans.map { CaravanMapper.toDTO(it) }
         outputView.printAvailableCaravans(caravansDTO)
         val selectCaravan = inputView.inputSelectNumber()
         val caravan = caravans[selectCaravan - 1]
 
-        val assignedQuestTest = selectedQuest.assignTo(player, caravan)
-        outputView.printAssignedQuestProgress(AssignedQuestMapper.toDTO(assignedQuestTest))
+        val assignedQuest = selectedQuest.assignTo(player, caravan)
+        outputView.printAssignedQuestProgress(AssignedQuestMapper.toDTO(assignedQuest))
 
-        assignedQuests.add(assignedQuestTest)
-        // 퀘스트 진행 및 완료 처리
+        assignedQuests.add(assignedQuest)
         assignedQuests.forEach { assignedQuest -> assignedQuest.progressOneDay() }
 
         val completedQuests = assignedQuests.filter { it.isCompleted() }

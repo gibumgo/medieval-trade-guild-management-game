@@ -33,4 +33,8 @@ object TradeQuestMapper {
             durationDays = 0
         )
     }
+
+    fun toDTOs(quests: List<TradeQuest>): List<TradeQuestDTO> {
+        return quests.map { toDTO(it) }
+    }
 }
