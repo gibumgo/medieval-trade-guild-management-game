@@ -5,9 +5,6 @@ class Inventory(
 ) {
     fun allItems(): List<ItemSlot> = items.toList()
 
-    fun hasItems(requiredItems: List<ItemSlot>): Boolean =
-        requiredItems.all { hasItem(it) }
-
     private fun hasItem(required: ItemSlot): Boolean =
         items.any { it.hasQuantity(required) }
 

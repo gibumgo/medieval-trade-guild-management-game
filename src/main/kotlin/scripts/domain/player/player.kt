@@ -56,10 +56,6 @@ class Player(
         return gold.amount
     }
 
-    fun hasItems(requiredItems: List<ItemSlot>): Boolean {
-        return inventory.hasItems(requiredItems)
-    }
-
     fun allItems(): List<ItemSlot> = inventory.allItems()
 
     companion object {
