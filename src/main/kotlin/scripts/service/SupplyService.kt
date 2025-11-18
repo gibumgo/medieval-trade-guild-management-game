@@ -1,8 +1,6 @@
 package scripts.service
 
-import scripts.domain.player.Player
 import scripts.domain.reward.BasicRewardGenerator
-import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBox
 import scripts.domain.supply.SupplyBoxType
 
@@ -13,11 +11,10 @@ class SupplyService {
         return SupplyBoxType.entries
     }
 
-    fun openSupplyBox(inputIndex: Int, player: Player): Reward {
+    fun openSupplyBox(inputIndex: Int): SupplyBox {
         require(inputIndex in MIN_INDEX_NUMBER..SupplyBoxType.values().size) { "번호 선택이 범위를 벗어났습니다." }
         val type = SupplyBoxType.from(inputIndex)
-        val supplyBox = SupplyBox.of(type, generators[type]!!)
-        return supplyBox.purchaseBy(player)
+        return SupplyBox.of(type, generators[type]!!)
     }
 
     private val generators = mapOf(

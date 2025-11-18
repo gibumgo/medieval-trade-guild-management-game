@@ -8,11 +8,14 @@ import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
 import scripts.domain.common.Weight
 import scripts.domain.player.Player
+import scripts.domain.reward.Reward
+import scripts.domain.supply.SupplyBox
 
 
 class PlayerStatusService() {
+    private val player = initPlayer()
     fun status(): Player {
-        return initPlayer()
+        return player
     }
 
     private fun initPlayer(): Player {
@@ -40,5 +43,15 @@ class PlayerStatusService() {
             Inventory(mutableListOf()),
             mutableListOf(caravan1, caravan2),
         )
+    }
+
+    fun receiveSupplyBox(supplyBox: SupplyBox): Reward {
+        val reward = supplyBox.purchaseBy(player)
+        player.earnReward(reward)
+        return reward
+    }
+
+    fun availableCaravans(): List<Caravan> {
+        return player.availableCaravans()
     }
 }

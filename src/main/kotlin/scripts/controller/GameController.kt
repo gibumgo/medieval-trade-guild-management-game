@@ -46,24 +46,21 @@ class GameController(
     private fun dailyRoutine() {
         outputView.printCurrentDay(gameTime)
 
-        val player = playerStatusService.status()
-        val playerDTO = PlayerMapper.toDTO(player)
-
+        val playerDTO = PlayerMapper.toDTO(playerStatusService.status())
         outputView.printPlayerStatus(playerDTO)
         outputView.printInventory(playerDTO.inventory)
 
-        handleSupplyBoxPurchase(player)
-        handleQuestAssignment(player)
+        handleSupplyBoxPurchase()
+        handleQuestAssignment(playerStatusService.status())
     }
 
-    private fun handleSupplyBoxPurchase(player: Player) {
+    private fun handleSupplyBoxPurchase() {
         val supplyBoxTypes = supplyService.allSupplyType()
         outputView.printSupplyBoxPurchase(SupplyBoxMapper.toDTOs(supplyBoxTypes))
-
-        val reward = supplyService.openSupplyBox(inputView.inputSelectNumber(), player)
+        val supplyBox = supplyService.openSupplyBox(inputView.inputSelectNumber())
+        val reward = playerStatusService.receiveSupplyBox(supplyBox)
         outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(reward))
-        player.earnReward(reward)
-        outputView.printUpdatedInventory(PlayerMapper.toDTO(player))
+        outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.status()))
     }
 
     private fun handleQuestAssignment(player: Player) {
@@ -75,7 +72,7 @@ class GameController(
         val selectNumber = inputView.inputSelectNumber()
         val selectedQuest = availableQuests[selectNumber - 1]
 
-        val caravans = player.availableCaravans()
+        val caravans = playerStatusService.availableCaravans()
         outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
         val selectCaravan = inputView.inputSelectNumber()
         val caravan = caravans[selectCaravan - 1]
