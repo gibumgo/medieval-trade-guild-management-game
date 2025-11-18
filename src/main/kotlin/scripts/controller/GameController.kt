@@ -5,17 +5,11 @@ import scripts.application.mapper.CaravanMapper
 import scripts.application.mapper.ItemSlotMapper
 import scripts.application.mapper.PlayerMapper
 import scripts.application.mapper.TradeQuestMapper
-import scripts.domain.common.ItemSlot
-import scripts.domain.common.City
 import scripts.domain.common.Gold
-import scripts.domain.common.Item
-import scripts.domain.common.ReputationPoint
 import scripts.mapper.AssignedQuestMapper
 import scripts.mapper.SupplyBoxMapper
 import scripts.domain.player.Player
 import scripts.domain.quest.AssignedQuest
-import scripts.domain.quest.QuestStatus
-import scripts.domain.quest.TradeQuest
 import scripts.domain.testObject.TestQuest
 import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
@@ -82,8 +76,7 @@ class GameController(
         val selectedQuest = availableQuests[selectNumber - 1]
 
         val caravans = player.availableCaravans()
-        val caravansDTO = caravans.map { CaravanMapper.toDTO(it) }
-        outputView.printAvailableCaravans(caravansDTO)
+        outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
         val selectCaravan = inputView.inputSelectNumber()
         val caravan = caravans[selectCaravan - 1]
 

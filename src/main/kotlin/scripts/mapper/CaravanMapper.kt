@@ -16,4 +16,8 @@ object CaravanMapper {
             status = caravan.status.name
         )
     }
+
+    fun toDTOs(caravans: List<Caravan>): List<CaravanDTO> {
+        return caravans.map { toDTO(it) }
+    }
 }

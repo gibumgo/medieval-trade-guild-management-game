@@ -30,6 +30,6 @@ data class Reward private constructor(
 
         fun ofItems(
             items: List<ItemSlot>
-        ): Reward = Reward(Gold.Companion.empty(), ReputationPoint.Companion.empty(), items.toList())
+        ): Reward = Reward(Gold.empty(), ReputationPoint.empty(), items.toList())
     }
 }
