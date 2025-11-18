@@ -10,7 +10,6 @@ import scripts.mapper.AssignedQuestMapper
 import scripts.mapper.SupplyBoxMapper
 import scripts.domain.player.Player
 import scripts.domain.quest.AssignedQuest
-import scripts.domain.testObject.TestQuest
 import scripts.domain.time.GameTime
 import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
@@ -66,12 +65,12 @@ class GameController(
     }
 
     private fun handleQuestAssignment(player: Player) {
-        val availableQuests = questService.fillerAvailable(playerStatusService.currentInventory())
+        questService.fillerActive(playerStatusService.currentInventory())
+        val availableQuests = questService.availableQuest()
         val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests)
         outputView.printAvailableQuests(questsDTO)
         outputView.printQuestSelection()
-        val selectNumber = inputView.inputSelectNumber()
-        val selectedQuest = availableQuests[selectNumber - 1]
+        val selectedQuest = questService.selectedQuest(inputView.inputSelectNumber())
 
         val caravans = playerStatusService.availableCaravans()
         outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
