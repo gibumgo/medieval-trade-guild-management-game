@@ -5,7 +5,8 @@ import scripts.domain.Item.ItemSlot
 
 object TestItems {
     val wheat = listOf(
-        ItemSlot.of(Item.of("밀", 1), 10)
+        ItemSlot.of(Item.of("밀", 1), 10),
+        ItemSlot.of(Item.of("목재", 1), 5)
     )
 
     val wood = ItemSlot.of(Item.of("목재", 1), 5)

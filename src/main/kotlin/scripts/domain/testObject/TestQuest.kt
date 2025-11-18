@@ -18,7 +18,7 @@ object TestQuest {
 
     val quest2 = TradeQuest(
         city = City("항구 도시", 5),
-        requiredItems = ItemSlots.of(listOf(TestItems.wood)),
+        requiredItems = ItemSlots.of(TestItems.wheat),
         gold = Gold.of(70),
         reputation = ReputationPoint.of(1),
         status = QuestStatus.INACTIVE
@@ -26,9 +26,9 @@ object TestQuest {
 
     val quest3 = TradeQuest(
         city = City("사막 도시", 10),
-        requiredItems = ItemSlots.of(listOf(TestItems.spice)),
+        requiredItems = ItemSlots.of(listOf(TestItems.wood)),
         gold = Gold.of(200),
-        reputation = ReputationPoint.of(5),
+        reputation = ReputationPoint.of(0),
         status = QuestStatus.INACTIVE
     )
 
