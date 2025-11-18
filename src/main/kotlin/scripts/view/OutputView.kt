@@ -50,6 +50,10 @@ class OutputView {
         println("- 골드(G): ${status.gold}")
     }
 
+    fun printNotSelectedSupplyBox() {
+        println("보급 상자 구매를 거절합니다.")
+    }
+
     fun printAvailableQuests(quests: List<TradeQuestDTO>) {
         if (quests.isEmpty()) {
             println("가능한 거래 목록이 없습니다.")
@@ -77,7 +81,7 @@ class OutputView {
         print(" > ")
     }
 
-    fun printNotSelectedQuests(selectedNumber: Int) {
+    fun printNotSelectedQuests() {
         println("퀘스트 수락을 거절합니다.")
     }
 

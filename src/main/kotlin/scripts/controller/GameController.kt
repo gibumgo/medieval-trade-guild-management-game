@@ -52,7 +52,7 @@ class GameController(
         outputView.printSupplyBoxPurchase(SupplyBoxMapper.toDTOs(supplyBoxTypes))
         val selectedNumber = inputView.inputSelectNumber()
         if (selectedNumber == 0) {
-            println("퀘스트 수락을 거절합니다.")
+            outputView.printNotSelectedSupplyBox()
             return
         }
         val supplyBox = supplyService.openSupplyBox(selectedNumber)
@@ -74,13 +74,11 @@ class GameController(
 
         val selectedNumber = inputView.inputSelectNumber()
         if (selectedNumber == 0) {
-            println("퀘스트 수락을 거절합니다.")
+            outputView.printNotSelectedQuests()
             return
         }
-        outputView.printNotSelectedQuests(selectedNumber)
 
         val selectedQuest = questService.selectedQuest(selectedNumber)
-
 
         val caravans = playerStatusService.availableCaravans()
         outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
