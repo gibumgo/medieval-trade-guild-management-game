@@ -58,19 +58,27 @@ class OutputView {
         println("오늘의 거래 의뢰서가 도착했습니다.")
         println("주문 의뢰 - 가능한 거래 목록")
         quests.forEachIndexed { selectIndex, quest ->
-            val items = printDetailedItems(quest.requiredItems)
-
-            println("[${selectIndex + 1}] ${quest.city} : $items 납품")
-            println("   보상: ${quest.rewardGold}골드 / 명성 +${quest.rewardReputation}")
-            println("   최소 소요 기간: ${quest.durationDays}일")
-            println("-------------------------------------")
+            printQuestStatusDetail(quest, selectIndex)
         }
         printQuestSelection()
+    }
+
+    private fun printQuestStatusDetail(quest: TradeQuestDTO, selectIndex: Int) {
+        val items = printDetailedItems(quest.requiredItems)
+
+        println("[${selectIndex + 1}] ${quest.city} : $items 납품")
+        println("   보상: ${quest.rewardGold}골드 / 명성 +${quest.rewardReputation}")
+        println("   최소 소요 기간: ${quest.durationDays}일")
+        println("-------------------------------------")
     }
 
     private fun printQuestSelection() {
         println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
         print(" > ")
+    }
+
+    fun printNotSelectedQuests(selectedNumber: Int) {
+        println("퀘스트 수락을 거절합니다.")
     }
 
     fun printAvailableCaravans(caravans: List<CaravanDTO>) {
@@ -97,7 +105,9 @@ class OutputView {
             return
         }
         println("파견된 상단의 현황")
-        assignedQuests.forEach { assignedQuest -> printQuestStatusDetail(assignedQuest) }
+        assignedQuests.forEach { assignedQuest ->
+            printQuestStatusDetail(assignedQuest)
+        }
         println("=======================")
     }
 

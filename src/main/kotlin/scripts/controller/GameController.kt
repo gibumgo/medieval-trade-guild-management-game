@@ -50,7 +50,12 @@ class GameController(
     private fun handleSupplyBoxPurchase() {
         val supplyBoxTypes = supplyService.allSupplyType()
         outputView.printSupplyBoxPurchase(SupplyBoxMapper.toDTOs(supplyBoxTypes))
-        val supplyBox = supplyService.openSupplyBox(inputView.inputSelectNumber())
+        val selectedNumber = inputView.inputSelectNumber()
+        if (selectedNumber == 0) {
+            println("퀘스트 수락을 거절합니다.")
+            return
+        }
+        val supplyBox = supplyService.openSupplyBox(selectedNumber)
         val reward = playerStatusService.receiveSupplyBox(supplyBox)
         outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(reward))
         outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.status()))
@@ -59,9 +64,23 @@ class GameController(
     private fun handleQuestAssignment(player: Player) {
         questService.fillerActive(playerStatusService.currentInventory())
         val availableQuests = questService.availableQuest()
+        if (availableQuests.isEmpty()) {
+            outputView.printAvailableQuests(emptyList())
+            return
+        }
+
         val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests, player)
         outputView.printAvailableQuests(questsDTO)
-        val selectedQuest = questService.selectedQuest(inputView.inputSelectNumber())
+
+        val selectedNumber = inputView.inputSelectNumber()
+        if (selectedNumber == 0) {
+            println("퀘스트 수락을 거절합니다.")
+            return
+        }
+        outputView.printNotSelectedQuests(selectedNumber)
+
+        val selectedQuest = questService.selectedQuest(selectedNumber)
+
 
         val caravans = playerStatusService.availableCaravans()
         outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
