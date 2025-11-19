@@ -52,4 +52,24 @@ class PlayerTest {
         player.pay(Gold.of(100))
         assertEquals(900, player.currentGold())
     }
+
+    @Test
+    @DisplayName("보상 획득 시 Gold, Reputation 이 증가하고 아이템이 인벤토리에 추가된다")
+    fun earnRewardTest() {
+        val item = Item.of("밀", 1)
+        val reward = Reward.of(
+            gold = Gold.of(200),
+            point = ReputationPoint.of(3),
+            items = listOf(ItemSlot.of(item, 5))
+        )
+
+        player.earnReward(reward)
+
+        assertEquals(Gold.of(1200), player.playerStatus.gold)
+        assertEquals(ReputationPoint.of(8), player.playerStatus.reputationPoint)
+
+        val items = player.inventory.allItems()
+        assertEquals(1, items.size)
+        assertEquals(ItemSlot.of(item, 5), items.first())
+    }
 }
