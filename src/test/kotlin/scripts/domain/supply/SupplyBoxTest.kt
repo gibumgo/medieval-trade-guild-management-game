@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import scripts.domain.Item.Inventory
+import scripts.domain.player.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot

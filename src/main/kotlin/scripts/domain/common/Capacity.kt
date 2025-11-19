@@ -1,6 +1,7 @@
 package scripts.domain.common
 
 import scripts.domain.ErrorMessage
+import scripts.domain.Item.Weight
 import kotlin.Int
 
 data class Capacity private constructor(val current: Weight, val max: Weight) {
@@ -10,6 +11,10 @@ data class Capacity private constructor(val current: Weight, val max: Weight) {
 
     private fun validOverCapacity(current: Weight, max: Weight) {
         require(current.isInRange(max)) { ErrorMessage.CAPACITY_OVER_ERROR }
+    }
+
+    fun currentUpdate(current: Weight) : Capacity{
+        return of(current, this.max)
     }
 
     fun remaining(): Weight = max.minus(current)

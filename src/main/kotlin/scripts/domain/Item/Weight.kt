@@ -1,4 +1,4 @@
-package scripts.domain.common
+package scripts.domain.Item
 
 import scripts.domain.ErrorMessage
 
@@ -21,6 +21,10 @@ value class Weight private constructor(val weight: Int) {
         return Weight(weight - other.weight)
     }
 
+    fun multiply(other: Int): Weight {
+        return Weight(weight * other)
+    }
+
     fun isZero(): Boolean = weight == INITIAL_LEGHT
 
     fun isOver(max: Weight): Boolean {
@@ -35,6 +39,9 @@ value class Weight private constructor(val weight: Int) {
         fun of(weight: Int): Weight {
             return Weight(weight)
         }
+
+        fun empty(): Weight {
+            return Weight(0)
+        }
     }
 }
-

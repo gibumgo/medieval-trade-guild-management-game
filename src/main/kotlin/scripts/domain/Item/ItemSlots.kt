@@ -12,6 +12,11 @@ class ItemSlots private constructor(
 
     fun allItems(): List<ItemSlot> = items.toList()
 
+    fun totalWeight(): Weight =
+        items.fold(Weight.empty()) { totalWeight, item ->
+            totalWeight.plus(item.weight())
+        }
+
     companion object {
         fun of(items: List<ItemSlot>): ItemSlots {
             return ItemSlots(items)

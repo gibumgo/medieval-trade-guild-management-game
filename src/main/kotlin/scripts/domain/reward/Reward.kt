@@ -1,6 +1,6 @@
 package scripts.domain.reward
 
-import scripts.domain.Item.Inventory
+import scripts.domain.player.Inventory
 import scripts.domain.Item.ItemSlot
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint

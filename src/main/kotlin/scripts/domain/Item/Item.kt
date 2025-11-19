@@ -1,8 +1,7 @@
 package scripts.domain.Item
 
-import scripts.domain.common.Weight
-
 data class Item private constructor(val name: String, val weight: Weight) {
+    fun weight(quantity: Int): Weight = this.weight.multiply(quantity)
 
     companion object {
         fun of(name: String, weight: Weight): Item = Item(name, weight)

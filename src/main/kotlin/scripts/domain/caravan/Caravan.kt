@@ -1,7 +1,7 @@
 package scripts.domain.caravan
 
 import scripts.domain.common.Gold
-import scripts.domain.common.Weight
+import scripts.domain.Item.Weight
 import scripts.domain.quest.TradeQuest
 
 class Caravan(

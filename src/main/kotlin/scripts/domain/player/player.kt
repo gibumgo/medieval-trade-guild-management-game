@@ -1,6 +1,6 @@
 package scripts.domain.player
 
-import scripts.domain.Item.Inventory
+import scripts.domain.player.Inventory
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot

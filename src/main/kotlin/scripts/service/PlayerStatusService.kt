@@ -1,13 +1,13 @@
 package scripts.service
 
-import scripts.domain.Item.Inventory
+import scripts.domain.player.Inventory
 import scripts.domain.caravan.Caravan
 import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.common.ReputationPoint
-import scripts.domain.common.Weight
+import scripts.domain.Item.Weight
 import scripts.domain.player.Player
 import scripts.domain.player.PlayerStatus
 import scripts.domain.reward.Reward

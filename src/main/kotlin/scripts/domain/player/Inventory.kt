@@ -1,12 +1,24 @@
-package scripts.domain.Item
+package scripts.domain.player
+
+import scripts.domain.Item.ItemSlot
+import scripts.domain.Item.ItemSlots
+import scripts.domain.common.Capacity
 
 class Inventory(
-    val items: MutableList<ItemSlot> = mutableListOf()
+    val items: ItemSlots,
+    val capacity: Capacity
 ) {
-    fun allItems(): List<ItemSlot> = items.toList()
+    init {
+        validMaxCapacity()
+    }
 
-    private fun hasItem(required: ItemSlot): Boolean =
-        items.any { it.hasQuantity(required) }
+    private fun validMaxCapacity() {
+        this.capacity.currentUpdate(items.totalWeight())
+    }
+
+    fun allItems(): List<ItemSlot> = items.allItems()
+
+//    private fun hasItems(required: ItemSlot): Boolean = items.hasItems(required)
 
     fun addAll(newItems: List<ItemSlot>) {
         newItems.forEach { newItem ->

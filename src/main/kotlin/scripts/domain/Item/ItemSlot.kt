@@ -26,6 +26,10 @@ data class ItemSlot private constructor(val item: Item, val quantity: Int) {
         return ItemSlot(this.item, this.quantity - amount)
     }
 
+    fun weight(): Weight {
+        return this.item.weight(quantity)
+    }
+
     companion object {
         private val MIN_AMOUNT: Int = 0
 
