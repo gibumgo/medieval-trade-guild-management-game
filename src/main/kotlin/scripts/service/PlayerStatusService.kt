@@ -16,8 +16,12 @@ import scripts.domain.supply.SupplyBox
 
 class PlayerStatusService() {
     private val player = initPlayer()
-    fun status(): Player {
+    fun player(): Player {
         return player
+    }
+
+    fun status(): PlayerStatus {
+        return player.playerStatus
     }
 
     private fun initPlayer(): Player {
@@ -39,7 +43,7 @@ class PlayerStatusService() {
             status = CaravanStatus.READY
         )
         return Player(
-            PlayerStatus.of(10000,0),
+            PlayerStatus.of(10000, 0),
             Capacity.of(0, 100),
             Inventory(mutableListOf()),
             mutableListOf(caravan1, caravan2),
@@ -47,7 +51,7 @@ class PlayerStatusService() {
     }
 
     fun receiveSupplyBox(supplyBox: SupplyBox): Reward {
-        val reward = supplyBox.purchaseBy(player)
+        val reward = supplyBox.purchaseBy(player.playerStatus)
         player.earnReward(reward)
         return reward
     }

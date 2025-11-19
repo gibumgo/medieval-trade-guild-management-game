@@ -1,19 +1,21 @@
 package scripts.domain.reward
 
+import scripts.domain.Item.Inventory
 import scripts.domain.Item.ItemSlot
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.player.Player
+import scripts.domain.player.PlayerStatus
 
 data class Reward private constructor(
     val gold: Gold,
     val reputation: ReputationPoint,
     val items: List<ItemSlot>
 ) {
-    fun applyTo(player: Player) {
-        player.addGold(gold)
-        player.increaseReputation(reputation)
-        player.addItems(items)
+    fun applyTo(playerStatus: PlayerStatus): PlayerStatus =
+        playerStatus.increase(gold, reputation)
+
+    fun applyTo(inventory: Inventory) {
+        inventory.addAll(items)
     }
 
     companion object {

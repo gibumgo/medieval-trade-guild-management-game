@@ -38,13 +38,13 @@ class GameController(
     private fun dailyRoutine() {
         outputView.printCurrentDay(gameTime)
 
-        val playerDTO = PlayerMapper.toDTO(playerStatusService.status())
+        val playerDTO = PlayerMapper.toDTO(playerStatusService.player())
         outputView.printPlayerStatus(playerDTO)
         outputView.printInventory(playerDTO.inventory)
 
         handleSupplyBoxPurchase()
-        handleQuestAssignment(playerStatusService.status())
-        endDay(playerStatusService.status())
+        handleQuestAssignment(playerStatusService.player())
+        endDay(playerStatusService.player())
     }
 
     private fun handleSupplyBoxPurchase() {
@@ -55,10 +55,10 @@ class GameController(
             outputView.printNotSelectedSupplyBox()
             return
         }
-        val supplyBox = supplyService.openSupplyBox(selectedNumber)
+        val supplyBox = supplyService.openSupplyBox(selectedNumber, playerStatusService.status())
         val reward = playerStatusService.receiveSupplyBox(supplyBox)
         outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(reward))
-        outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.status()))
+        outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.player()))
     }
 
     private fun handleQuestAssignment(player: Player) {

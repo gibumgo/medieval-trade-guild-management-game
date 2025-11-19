@@ -32,7 +32,7 @@ class QuestService {
     fun completedQuest(player: Player) {
         val completedQuests = assignedQuests.filter { it.isCompleted() }
         completedQuests.forEach { aq ->
-            aq.completed().applyTo(player)
+            aq.completed().applyTo(player.playerStatus)
             aq.resetToReady()
         }
     }

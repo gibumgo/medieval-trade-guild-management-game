@@ -7,13 +7,16 @@ data class PlayerStatus private constructor(
     val gold: Gold,
     val reputationPoint: ReputationPoint
 ) {
-    fun payGold(amount: Gold): PlayerStatus {
-        return of(this.gold.minus(amount), this.reputationPoint)
-    }
+    fun payGold(amount: Gold) = PlayerStatus(this.gold.minus(amount), this.reputationPoint)
 
-    fun isAffordable(otherGold: Gold, otherPoint: ReputationPoint) : Boolean {
+
+    fun isAffordable(otherGold: Gold, otherPoint: ReputationPoint): Boolean {
         return gold.isAffordable(otherGold) && reputationPoint.isAffordable(otherPoint)
     }
+
+    fun increase(otherGold: Gold, otherPoint: ReputationPoint) =
+        PlayerStatus(this.gold.plus(otherGold), this.reputationPoint.increase(otherPoint))
+
 
     companion object {
         fun of(gold: Gold, reputationPoint: ReputationPoint): PlayerStatus {

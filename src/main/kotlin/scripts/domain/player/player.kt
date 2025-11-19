@@ -5,9 +5,7 @@ import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.caravan.Caravan
-import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
-import scripts.domain.supply.SupplyBoxType
 
 class Player(
     var playerStatus: PlayerStatus,
@@ -16,23 +14,7 @@ class Player(
     var caravans: List<Caravan> = emptyList()
 ) {
     fun pay(amount: Gold) {
-        this.playerStatus = playerStatus.payGold(amount)
-    }
-
-    fun canAffordSupplyBox(boxType: SupplyBoxType): Boolean {
-        return boxType.canPurchase(this.playerStatus)
-    }
-
-    fun addGold(otherGold: Gold) {
-        this.gold = this.gold.plus(otherGold)
-    }
-
-    fun increaseReputation(otherPoint: ReputationPoint) {
-        this.reputationPoint = reputationPoint.increase(otherPoint)
-    }
-
-    fun addItems(rewards: List<ItemSlot>) {
-        this.inventory.addAll(rewards)
+        this.playerStatus = this.playerStatus.payGold(amount)
     }
 
     fun removeItems(requiredItems: List<ItemSlot>) {
@@ -40,7 +22,8 @@ class Player(
     }
 
     fun earnReward(reward: Reward) {
-        reward.applyTo(this)
+        this.playerStatus = reward.applyTo(playerStatus)
+        reward.applyTo(this.inventory)
     }
 
     fun availableCaravanMaxSpeed(): Int {
@@ -52,7 +35,7 @@ class Player(
     }
 
     fun currentGold(): Int {
-        return gold.amount
+        return playerStatus.gold.amount
     }
 
     fun allItems(): List<ItemSlot> = inventory.allItems()

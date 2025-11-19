@@ -7,8 +7,8 @@ object PlayerMapper {
 
     fun toDTO(player: Player): PlayerDTO {
         return PlayerDTO(
-            gold = player.gold.amount,
-            reputation = player.reputationPoint.point,
+            gold = player.playerStatus.gold.amount,
+            reputation = player.playerStatus.reputationPoint.point,
             capacityMax = player.capacity.max.weight,
             capacityUsed = player.capacity.current.weight,
             inventory = player.inventory.items.map { ItemSlotMapper.toDTO(it) },
