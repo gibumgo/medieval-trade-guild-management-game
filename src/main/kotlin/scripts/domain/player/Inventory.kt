@@ -6,14 +6,14 @@ import scripts.domain.common.Capacity
 
 class Inventory(
     var items: ItemSlots,
-    val capacity: Capacity
+    var capacity: Capacity
 ) {
     init {
         validMaxCapacity()
     }
 
     private fun validMaxCapacity() {
-        this.capacity.currentUpdate(items.totalWeight())
+        this.capacity = this.capacity.currentUpdate(items.totalWeight())
     }
 
     fun allItems(): List<ItemSlot> = items.allItems()

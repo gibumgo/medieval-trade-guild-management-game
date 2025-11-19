@@ -9,4 +9,12 @@ enum class QuestStatus(val description: String) {
     fun isInActive(): Boolean {
         return this == INACTIVE
     }
+
+    fun isActive(): Boolean {
+        return this == ACTIVE
+    }
+
+    fun isInProgress(): Boolean {
+        return this == IN_PROGRESS
+    }
 }

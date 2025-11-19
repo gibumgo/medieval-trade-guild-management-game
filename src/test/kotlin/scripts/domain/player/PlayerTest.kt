@@ -13,6 +13,7 @@ import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
+import scripts.domain.quest.ActiveQuests
 import scripts.domain.reward.Reward
 
 class PlayerTest {
@@ -42,7 +43,8 @@ class PlayerTest {
         player = Player(
             playerStatus = PlayerStatus.of(1000, 5),
             inventory = Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
-            caravans = listOf(caravan1, caravan2)
+            caravans = listOf(caravan1, caravan2),
+            ActiveQuests.empty()
         )
     }
 
