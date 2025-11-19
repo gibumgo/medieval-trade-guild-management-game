@@ -10,26 +10,17 @@ import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBoxType
 
 class Player(
-    var gold: Gold,
-    var reputationPoint: ReputationPoint,
+    var playerStatus: PlayerStatus,
     var capacity: Capacity,
     var inventory: Inventory,
     var caravans: List<Caravan> = emptyList()
 ) {
     fun pay(amount: Gold) {
-        this.gold = gold.minus(amount)
+        this.playerStatus = playerStatus.payGold(amount)
     }
 
     fun canAffordSupplyBox(boxType: SupplyBoxType): Boolean {
-        return boxType.canPurchase(gold, reputationPoint)
-    }
-
-    fun addItems(rewards: List<ItemSlot>) {
-        this.inventory.addAll(rewards)
-    }
-
-    fun removeItems(requiredItems: List<ItemSlot>) {
-        inventory.removeItems(requiredItems)
+        return boxType.canPurchase(this.playerStatus)
     }
 
     fun addGold(otherGold: Gold) {
@@ -38,6 +29,14 @@ class Player(
 
     fun increaseReputation(otherPoint: ReputationPoint) {
         this.reputationPoint = reputationPoint.increase(otherPoint)
+    }
+
+    fun addItems(rewards: List<ItemSlot>) {
+        this.inventory.addAll(rewards)
+    }
+
+    fun removeItems(requiredItems: List<ItemSlot>) {
+        inventory.removeItems(requiredItems)
     }
 
     fun earnReward(reward: Reward) {

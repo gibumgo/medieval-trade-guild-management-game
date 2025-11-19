@@ -9,6 +9,7 @@ import scripts.domain.Item.ItemSlot
 import scripts.domain.common.ReputationPoint
 import scripts.domain.common.Weight
 import scripts.domain.player.Player
+import scripts.domain.player.PlayerStatus
 import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBox
 
@@ -38,8 +39,7 @@ class PlayerStatusService() {
             status = CaravanStatus.READY
         )
         return Player(
-            Gold.of(10000),
-            ReputationPoint.of(0),
+            PlayerStatus.of(10000,0),
             Capacity.of(0, 100),
             Inventory(mutableListOf()),
             mutableListOf(caravan1, caravan2),
