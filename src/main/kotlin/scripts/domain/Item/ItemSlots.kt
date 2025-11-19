@@ -24,6 +24,11 @@ class ItemSlots private constructor(
         return ItemSlots(finalItems)
     }
 
+    fun remove(newItem: ItemSlot): ItemSlots {
+        val updatedItems = items.map { it.decreaseSameItem(newItem) }
+        return ItemSlots(updatedItems)
+    }
+
     companion object {
         fun of(items: List<ItemSlot>): ItemSlots {
             return ItemSlots(items)

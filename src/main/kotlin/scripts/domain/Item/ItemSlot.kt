@@ -24,13 +24,11 @@ data class ItemSlot private constructor(val item: Item, val quantity: Int) {
         return this
     }
 
-    fun increase(amount: Int): ItemSlot {
-        return ItemSlot(this.item, this.quantity + amount)
-    }
-
-    fun decrease(amount: Int): ItemSlot {
-        require(quantity >= amount) { "재고 부족: $item" }
-        return ItemSlot(this.item, this.quantity - amount)
+    fun decreaseSameItem(otherItem: ItemSlot): ItemSlot {
+        if (this.isSameItem(otherItem)) {
+            return ItemSlot(this.item, this.quantity - otherItem.quantity)
+        }
+        return this
     }
 
     fun weight(): Weight {

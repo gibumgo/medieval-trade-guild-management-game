@@ -1,7 +1,5 @@
 package scripts.domain.player
 
-import scripts.domain.player.Inventory
-import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.caravan.Caravan
@@ -9,7 +7,6 @@ import scripts.domain.reward.Reward
 
 class Player(
     var playerStatus: PlayerStatus,
-    var capacity: Capacity,
     var inventory: Inventory,
     var caravans: List<Caravan> = emptyList()
 ) {

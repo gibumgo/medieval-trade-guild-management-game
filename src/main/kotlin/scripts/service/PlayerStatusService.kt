@@ -6,7 +6,7 @@ import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
-import scripts.domain.common.ReputationPoint
+import scripts.domain.Item.ItemSlots
 import scripts.domain.Item.Weight
 import scripts.domain.player.Player
 import scripts.domain.player.PlayerStatus
@@ -44,8 +44,7 @@ class PlayerStatusService() {
         )
         return Player(
             PlayerStatus.of(10000, 0),
-            Capacity.of(0, 100),
-            Inventory(mutableListOf()),
+            Inventory(ItemSlots.of(listOf()),Capacity.of(0,1000)),
             mutableListOf(caravan1, caravan2),
         )
     }

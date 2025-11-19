@@ -9,9 +9,9 @@ object PlayerMapper {
         return PlayerDTO(
             gold = player.playerStatus.gold.amount,
             reputation = player.playerStatus.reputationPoint.point,
-            capacityMax = player.capacity.max.weight,
-            capacityUsed = player.capacity.current.weight,
-            inventory = player.inventory.items.map { ItemSlotMapper.toDTO(it) },
+            capacityMax = player.inventory.capacity.max.weight,
+            capacityUsed = player.inventory.capacity.current.weight,
+            inventory = ItemSlotMapper.toDTO(player.inventory.items),
             caravans = player.caravans.map { CaravanMapper.toDTO(it) }
         )
     }
