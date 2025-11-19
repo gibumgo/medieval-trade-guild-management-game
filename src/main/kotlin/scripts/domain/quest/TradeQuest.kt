@@ -18,16 +18,18 @@ class TradeQuest(
 ) {
     fun tryToActivate(inventoryItems: List<ItemSlot>) {
         if (this.status.isInActive() && hasAllRequiredItems(inventoryItems)) {
-            status = QuestStatus.ACTIVE
+            this.status = QuestStatus.ACTIVE
         }
     }
 
-    private fun hasAllRequiredItems(inventoryItems: List<ItemSlot>): Boolean =
-        this.requiredItems.hasItems(inventoryItems)
+    private fun hasAllRequiredItems(inventoryItems: List<ItemSlot>): Boolean {
+        return this.requiredItems.hasItems(inventoryItems) && inventoryItems.isNotEmpty()
+
+    }
 
     fun assignTo(player: Player, caravan: Caravan): AssignedQuest {
         this.status = QuestStatus.IN_PROGRESS
-        player.removeItems(requiredItems.items())
+        player.removeItems(requiredItems.allItems())
         return AssignedQuest.of(this, caravan)
     }
 

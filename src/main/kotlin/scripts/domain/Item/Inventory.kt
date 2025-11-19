@@ -1,7 +1,7 @@
 package scripts.domain.Item
 
 class Inventory(
-     val items: MutableList<ItemSlot> = mutableListOf()
+    val items: MutableList<ItemSlot> = mutableListOf()
 ) {
     fun allItems(): List<ItemSlot> = items.toList()
 
