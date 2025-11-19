@@ -20,28 +20,8 @@ class Inventory(
 
 //    private fun hasItems(required: ItemSlot): Boolean = items.hasItems(required)
 
-    fun addAll(newItems: List<ItemSlot>) {
-        newItems.forEach { newItem ->
-            addOrIncreaseItem(newItem)
-        }
-    }
-
-    private fun addOrIncreaseItem(newItem: ItemSlot) {
-        findItem(newItem)?.let { increaseItem(it, newItem.quantity) } ?: addNewItem(newItem)
-    }
-
-    private fun increaseItem(existingItem: ItemSlot, amount: Int) {
-        val updated = existingItem.increase(amount)
-        replaceItem(existingItem, updated)
-    }
-
-    private fun addNewItem(newItem: ItemSlot) {
-        items.add(newItem)
-    }
-
-    private fun replaceItem(oldItem: ItemSlot, newItem: ItemSlot) {
-        items.remove(oldItem)
-        items.add(newItem)
+    fun addItems(newItems: List<ItemSlot>) {
+        newItems.forEach { newItem -> items.add(newItem) }
     }
 
     fun removeItems(requiredItems: List<ItemSlot>) {

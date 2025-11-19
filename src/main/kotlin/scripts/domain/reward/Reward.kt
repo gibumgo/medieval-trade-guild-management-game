@@ -15,7 +15,7 @@ data class Reward private constructor(
         playerStatus.increase(gold, reputation)
 
     fun applyTo(inventory: Inventory) {
-        inventory.addAll(items)
+        inventory.addItems(items)
     }
 
     companion object {

@@ -17,6 +17,13 @@ data class ItemSlot private constructor(val item: Item, val quantity: Int) {
 
     fun isSameItem(other: ItemSlot) = this.item == other.item
 
+    fun increaseSameItem(otherItem: ItemSlot): ItemSlot {
+        if (this.isSameItem(otherItem)) {
+            return ItemSlot(this.item, this.quantity + otherItem.quantity)
+        }
+        return this
+    }
+
     fun increase(amount: Int): ItemSlot {
         return ItemSlot(this.item, this.quantity + amount)
     }

@@ -3,7 +3,6 @@ package scripts.domain.Item
 class ItemSlots private constructor(
     val items: List<ItemSlot>
 ) {
-
     fun hasItems(otherItems: List<ItemSlot>): Boolean =
         otherItems.isNotEmpty() && otherItems.all { hasFindItem(it) }
 
@@ -16,6 +15,14 @@ class ItemSlots private constructor(
         items.fold(Weight.empty()) { totalWeight, item ->
             totalWeight.plus(item.weight())
         }
+
+    fun add(newItem: ItemSlot): ItemSlots {
+        val updatedItems = items.map { it.increaseSameItem(newItem) }
+        val finalItems = updatedItems + listOfNotNull(
+            newItem.takeUnless { updatedItems.any { it.isSameItem(newItem) } }
+        )
+        return ItemSlots(finalItems)
+    }
 
     companion object {
         fun of(items: List<ItemSlot>): ItemSlots {
