@@ -19,7 +19,7 @@ class Player(
     }
 
     fun earnReward(reward: Reward) {
-        this.playerStatus = reward.applyTo(playerStatus)
+        this.playerStatus = this.playerStatus.apply(reward)
         reward.applyTo(this.inventory)
     }
 
