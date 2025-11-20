@@ -3,12 +3,15 @@ package scripts.domain.player
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.caravan.Caravan
+import scripts.domain.quest.ActiveQuests
+import scripts.domain.quest.AssignedQuest
 import scripts.domain.reward.Reward
 
 class Player(
     var playerStatus: PlayerStatus,
     var inventory: Inventory,
-    var caravans: List<Caravan> = emptyList()
+    var caravans: List<Caravan> = emptyList(),
+    var quests: ActiveQuests
 ) {
     fun pay(amount: Gold) {
         this.playerStatus = this.playerStatus.payGold(amount)
@@ -36,6 +39,25 @@ class Player(
     }
 
     fun allItems(): List<ItemSlot> = inventory.allItems()
+
+    fun addActiveQuests(assignedQuest: AssignedQuest) {
+        this.quests = quests.assign(assignedQuest)
+    }
+
+    fun activeQuests(): List<AssignedQuest> = quests.allQuests()
+
+    fun progressDay() {
+        this.quests = this.quests.progressOneDay()
+    }
+
+    fun completedQuests(): List<AssignedQuest> {
+        return quests.completedQuests()
+    }
+
+    fun removeCompletedQuests(){
+        this.quests = quests.removeCompleted()
+    }
+
 
     companion object {
         private const val MIN_SPEED = 1
