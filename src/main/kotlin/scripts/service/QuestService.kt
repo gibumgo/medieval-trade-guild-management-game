@@ -30,6 +30,5 @@ class QuestService {
             val reward = assignedQuest.getReward()
             player.earnReward(reward)
         }
-        player.removeCompletedQuests()
     }
 }

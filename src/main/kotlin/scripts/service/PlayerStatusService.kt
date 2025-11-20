@@ -47,7 +47,7 @@ class PlayerStatusService() {
         )
         return Player(
             PlayerStatus.of(10000, 0),
-            Inventory(ItemSlots.of(listOf()),Capacity.of(0,1000)),
+            Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
             mutableListOf(caravan1, caravan2),
             ActiveQuests.empty()
         )
@@ -72,7 +72,7 @@ class PlayerStatusService() {
         return player.activeQuests()
     }
 
-    fun receiveQuestReward(reward : Reward) {
-        player.earnReward(reward)
+    fun completeQuests(): List<AssignedQuest> {
+        return player.completedQuests()
     }
 }

@@ -44,6 +44,7 @@ class GameController(
 
         handleSupplyBoxPurchase()
         handleQuestAssignment(player)
+        progressAssignedQuest(player)
         endDay(player)
     }
 
@@ -86,17 +87,21 @@ class GameController(
         val caravan = caravans[selectCaravan - 1]
 
         val assignedQuest = selectedQuest.assignTo(player, caravan)
-        val assignedQuestDTO = AssignedQuestMapper.toDTO(assignedQuest)
-        outputView.printAssignedQuest(assignedQuestDTO)
+        outputView.printAssignedQuest(
+            AssignedQuestMapper.toDTO(assignedQuest)
+        )
         player.addActiveQuests(assignedQuest)
+    }
 
+    private fun progressAssignedQuest(player: Player) {
         outputView.printAssignedQuestProgress(
             AssignedQuestMapper.toDTOs(playerStatusService.activeQuests())
         )
-
         questService.processQuestProgress(player)
-
-        //완료된 퀘스트 출력문 추가
+        outputView.printCompleteQuests(
+            AssignedQuestMapper.toDTOs(playerStatusService.completeQuests())
+        )
+        player.removeCompletedQuests()
     }
 
     private fun endDay(player: Player) {

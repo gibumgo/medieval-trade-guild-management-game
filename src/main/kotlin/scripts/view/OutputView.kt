@@ -1,5 +1,6 @@
 package scripts.view
 
+import scripts.domain.quest.AssignedQuest
 import scripts.domain.time.GameTime
 import scripts.dto.AssignedQuestDTO
 import scripts.dto.CaravanDTO
@@ -113,6 +114,17 @@ class OutputView {
             printQuestStatusDetail(assignedQuest)
         }
         println("=======================")
+    }
+
+
+    fun printCompleteQuests(completeQuests: List<AssignedQuestDTO>) {
+        if (completeQuests.isEmpty()) return
+        println("[퀘스트 완료]")
+        completeQuests.forEach { quest ->
+            println("${quest.caravan.name}가 ${quest.quest.city}에서 귀환했습니다.")
+            println("보상: +${quest.quest.rewardGold}골드, +${quest.quest.rewardReputation}명성")
+            println()
+        }
     }
 
     private fun printQuestStatusDetail(assignedQuest: AssignedQuestDTO) {
