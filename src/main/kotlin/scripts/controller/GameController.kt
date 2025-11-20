@@ -24,10 +24,10 @@ class GameController(
 
     fun run() {
         gameTime = TurnBasedGameTime()
-
+        val player = playerStatusService.player()
 
         while (true) {
-            dailyRoutine()
+            dailyRoutine(player)
             if (!inputView.waitForEnterOnly()) break
         }
 
@@ -35,16 +35,16 @@ class GameController(
         Console.close()
     }
 
-    private fun dailyRoutine() {
+    private fun dailyRoutine(player: Player) {
         outputView.printCurrentDay(gameTime)
 
-        val playerDTO = PlayerMapper.toDTO(playerStatusService.player())
+        val playerDTO = PlayerMapper.toDTO(player)
         outputView.printPlayerStatus(playerDTO)
         outputView.printInventory(playerDTO.inventory)
 
         handleSupplyBoxPurchase()
-        handleQuestAssignment(playerStatusService.player())
-        endDay(playerStatusService.player())
+        handleQuestAssignment(player)
+        endDay(player)
     }
 
     private fun handleSupplyBoxPurchase() {
@@ -86,10 +86,17 @@ class GameController(
         val caravan = caravans[selectCaravan - 1]
 
         val assignedQuest = selectedQuest.assignTo(player, caravan)
-        outputView.printAssignedQuest(AssignedQuestMapper.toDTO(assignedQuest))
-        outputView.printAssignedQuestProgress(listOf())
-        questService.progressOneDay(assignedQuest)
-        questService.completedQuest(player)
+        val assignedQuestDTO = AssignedQuestMapper.toDTO(assignedQuest)
+        outputView.printAssignedQuest(assignedQuestDTO)
+        player.addActiveQuests(assignedQuest)
+
+        outputView.printAssignedQuestProgress(
+            AssignedQuestMapper.toDTOs(playerStatusService.activeQuests())
+        )
+
+        questService.processQuestProgress(player)
+
+        //완료된 퀘스트 출력문 추가
     }
 
     private fun endDay(player: Player) {

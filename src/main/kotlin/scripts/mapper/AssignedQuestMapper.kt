@@ -24,4 +24,8 @@ object AssignedQuestMapper {
             totalDays = assigned.totalDays()
         )
     }
+
+    fun toDTOs(quests: List<AssignedQuest>): List<AssignedQuestDTO> {
+        return quests.map { toDTO(it) }
+    }
 }

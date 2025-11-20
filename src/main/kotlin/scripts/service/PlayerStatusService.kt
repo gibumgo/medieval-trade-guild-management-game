@@ -10,8 +10,11 @@ import scripts.domain.Item.ItemSlots
 import scripts.domain.Item.Weight
 import scripts.domain.player.Player
 import scripts.domain.player.PlayerStatus
+import scripts.domain.quest.ActiveQuests
+import scripts.domain.quest.AssignedQuest
 import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBox
+import scripts.domain.testObject.TestQuest.quests
 
 
 class PlayerStatusService() {
@@ -46,6 +49,7 @@ class PlayerStatusService() {
             PlayerStatus.of(10000, 0),
             Inventory(ItemSlots.of(listOf()),Capacity.of(0,1000)),
             mutableListOf(caravan1, caravan2),
+            ActiveQuests.empty()
         )
     }
 
@@ -61,5 +65,13 @@ class PlayerStatusService() {
 
     fun availableCaravans(): List<Caravan> {
         return player.availableCaravans()
+    }
+
+    fun activeQuests(): List<AssignedQuest> {
+        return player.activeQuests()
+    }
+
+    fun receiveQuestReward(reward : Reward) {
+        player.earnReward(reward)
     }
 }

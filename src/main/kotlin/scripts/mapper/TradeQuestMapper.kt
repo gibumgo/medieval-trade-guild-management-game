@@ -14,8 +14,8 @@ object TradeQuestMapper {
             city = quest.city.name,
             status = quest.status.name,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
-            rewardGold = quest.gold.amount,
-            rewardReputation = quest.reputation.point,
+            rewardGold = quest.reward.gold.amount,
+            rewardReputation = quest.reward.reputation.point,
             durationDays = quest.calculateMaxDuration(player)
         )
     }
@@ -28,8 +28,8 @@ object TradeQuestMapper {
             city = quest.city.name,
             status = quest.status.name,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
-            rewardGold = quest.gold.amount,
-            rewardReputation = quest.reputation.point,
+            rewardGold = quest.reward.gold.amount,
+            rewardReputation = quest.reward.reputation.point,
             durationDays = 0
         )
     }
