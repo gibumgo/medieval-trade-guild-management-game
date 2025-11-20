@@ -1,16 +1,13 @@
 package scripts.domain.quest
 
 import scripts.domain.caravan.Caravan
-import scripts.domain.common.Gold
-import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
-
 
 
 class AssignedQuest private constructor(
     val quest: TradeQuest,
     val caravan: Caravan,
-    private var progressDay: Int = START_DAY,
+    var progressDay: Int = START_DAY,
 ) {
     fun progressOneDay() =
         AssignedQuest(quest, caravan, this.progressDay + DAY_STEP)
@@ -19,17 +16,18 @@ class AssignedQuest private constructor(
         return caravan.travelDaysFor(quest);
     }
 
-    // 문제 부분
-    fun completed(): Reward {
-        quest.transitionToCompleted()
-        caravan.finishTrip()
-        return Reward.ofQuestReward(Gold.empty(), ReputationPoint.empty())
+    fun isCompleted(): Boolean = progressDay >= totalDays()
+
+    fun checkComplete() {
+        if (progressDay == totalDays()) {
+            quest.complete()
+            caravan.complete()
+        }
     }
 
-    fun isCompleted(): Boolean = quest.isCompleted()
-
-    fun resetToReady() {
+    fun getReward(): Reward {
         caravan.resetToReady()
+        return quest.reward()
     }
 
     companion object {

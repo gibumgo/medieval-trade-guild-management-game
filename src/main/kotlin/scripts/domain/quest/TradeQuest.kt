@@ -12,7 +12,7 @@ class TradeQuest private constructor(
     val city: City,
     val requiredItems: ItemSlots,
     val reward: Reward,
-    private var status: QuestStatus
+    var status: QuestStatus
 ) {
     fun activateWith(inventoryItems: List<ItemSlot>) {
         if (canActivate(inventoryItems)) {
@@ -23,19 +23,16 @@ class TradeQuest private constructor(
     private fun canActivate(inventoryItems: List<ItemSlot>): Boolean =
         status.isInActive() && requiredItems.hasItems(inventoryItems)
 
-
-    fun canAssign(inventoryItems: List<ItemSlot>): Boolean =
-        status.isActive() && requiredItems.hasItems(inventoryItems)
-
     fun isActive(): Boolean = status.isActive()
 
     fun assignTo(player: Player, caravan: Caravan): AssignedQuest {
-        this.status = QuestStatus.IN_PROGRESS
+        startProgress()
         player.removeItems(requiredItems.allItems())
+        caravan.startTrip()
         return AssignedQuest.of(this, caravan)
     }
 
-    fun assign() {
+    private fun startProgress() {
         require(status.isActive()) { "활성화된 상태여야 합니다." }
         status = QuestStatus.IN_PROGRESS
     }
@@ -47,31 +44,7 @@ class TradeQuest private constructor(
 
     fun reward(): Reward = reward
 
-    fun tryToActivate(inventoryItems: List<ItemSlot>) {
-        if (this.status.isInActive() && hasAllRequiredItems(inventoryItems)) {
-            this.status = QuestStatus.ACTIVE
-        }
-    }
-
-    private fun hasAllRequiredItems(inventoryItems: List<ItemSlot>): Boolean {
-        return this.requiredItems.hasItems(inventoryItems) && inventoryItems.isNotEmpty()
-
-    }
-
     fun calculateDurationBy(speed: Int): Int = city.calculateTravelTime(speed)
-
-//    fun complete(): Reward {
-//        return reward
-//    }
-
-    fun transitionToCompleted() {
-        status = QuestStatus.COMPLETED
-    }
-
-
-    fun isCompleted(): Boolean {
-        return this.status == QuestStatus.COMPLETED
-    }
 
     fun calculateMaxDuration(player: Player): Int {
         val speed = player.availableCaravanMaxSpeed()

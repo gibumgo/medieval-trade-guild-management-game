@@ -24,7 +24,7 @@ class Caravan(
         return quest.calculateDurationBy(this.speed)
     }
 
-    fun finishTrip() {
+    fun complete() {
         this.status = CaravanStatus.COMPLETED
     }
 

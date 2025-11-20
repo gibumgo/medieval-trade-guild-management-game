@@ -2,8 +2,6 @@ package scripts.service
 
 import scripts.domain.Item.ItemSlot
 import scripts.domain.player.Player
-import scripts.domain.quest.ActiveQuests
-import scripts.domain.quest.AssignedQuest
 import scripts.domain.quest.TradeQuest
 import scripts.domain.testObject.TestQuest
 
@@ -24,17 +22,14 @@ class QuestService {
         availableQuest()[inputNumber - 1]
 
 
-    fun progressOneDay(assignedQuest: AssignedQuest) {
-        assignedQuests.add(assignedQuest)
-        assignedQuests.forEach { assignedQuest -> assignedQuest.progressOneDay() }
-    }
+    fun processQuestProgress(player: Player) {
+        player.progressDay()
+        val completed = player.completedQuests()
 
-    fun completedQuest(player: Player) {
-        val completedQuests = assignedQuests.filter { it.isCompleted() }
-
-        completedQuests.forEach { completedQuest ->
-            player.earnReward(completedQuest.completed())
-            completedQuest.resetToReady()
+        completed.forEach { assignedQuest ->
+            val reward = assignedQuest.getReward()
+            player.earnReward(reward)
         }
+        player.removeCompletedQuests()
     }
 }
