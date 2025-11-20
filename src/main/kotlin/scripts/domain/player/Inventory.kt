@@ -18,10 +18,12 @@ class Inventory(
 
     fun addItems(newItems: List<ItemSlot>) {
         newItems.forEach { newItem -> items = items.add(newItem) }
+        validMaxCapacity()
     }
 
     fun removeItems(newItems: List<ItemSlot>) {
         newItems.forEach { newItem -> items = items.remove(newItem) }
+        validMaxCapacity()
     }
 
     fun allItems(): List<ItemSlot> = items.allItems()
