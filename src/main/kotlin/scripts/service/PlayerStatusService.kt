@@ -55,6 +55,7 @@ class PlayerStatusService() {
 
     fun receiveSupplyBox(supplyBox: SupplyBox): Reward {
         val reward = supplyBox.purchaseBy(player.playerStatus)
+        player.pay(supplyBox.price())
         player.earnReward(reward)
         return reward
     }

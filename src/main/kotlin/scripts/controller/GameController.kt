@@ -55,7 +55,7 @@ class GameController(
             outputView.printNotSelectedSupplyBox()
             return
         }
-        val supplyBox = supplyService.openSupplyBox(selectedNumber, playerStatusService.status())
+        val supplyBox = supplyService.openSupplyBox(selectedNumber)
         val reward = playerStatusService.receiveSupplyBox(supplyBox)
         outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(reward))
         outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.player()))
