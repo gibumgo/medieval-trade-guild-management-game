@@ -23,7 +23,6 @@ class QuestService {
 
 
     fun processQuestProgress(player: Player) {
-        player.progressDay()
         val completed = player.completedQuests()
 
         completed.forEach { assignedQuest ->

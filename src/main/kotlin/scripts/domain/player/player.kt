@@ -54,8 +54,12 @@ class Player(
         return quests.completedQuests()
     }
 
-    fun removeCompletedQuests(){
-        this.quests = quests.removeCompleted()
+    fun removeCompletedQuests() {
+        val (activeQuests, readyCaravans) = quests.removeCompleted()
+        this.quests = activeQuests
+        readyCaravans.forEach { readyCaravan ->
+            updateCaravan(readyCaravan)
+        }
     }
 
 

@@ -131,7 +131,7 @@ class OutputView {
         println(
             "[${assignedQuest.caravan.status}]"
                     + "${assignedQuest.caravan.name} - ${assignedQuest.quest.city}"
-                    + "(남은 일수: ${assignedQuest.totalDays - assignedQuest.progressDay}일)"
+                    + "(남은 일수: ${assignedQuest.progressDay} / ${assignedQuest.totalDays}일)"
         )
         println(
             "보상: ${assignedQuest.quest.rewardGold}G,"

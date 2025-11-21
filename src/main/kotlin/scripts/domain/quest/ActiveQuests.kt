@@ -1,5 +1,7 @@
 package scripts.domain.quest
 
+import scripts.domain.caravan.Caravan
+
 class ActiveQuests private constructor(
     private val quests: List<AssignedQuest>
 ) {
@@ -7,8 +9,8 @@ class ActiveQuests private constructor(
         ActiveQuests(quests + assignedQuest)
 
     fun progressOneDay(): ActiveQuests {
-        quests.forEach { quest: AssignedQuest -> quest.checkComplete() }
-        return ActiveQuests(quests.map { it.progressOneDay() })
+        val endDayQuests = ActiveQuests(quests.map { it.progressOneDay() })
+        return endDayQuests
     }
 
     fun allQuests(): List<AssignedQuest> {
@@ -19,8 +21,13 @@ class ActiveQuests private constructor(
         return quests.filter { it.isCompleted() }
     }
 
-    fun removeCompleted(): ActiveQuests =
-        ActiveQuests(quests.filterNot { it.isCompleted() })
+    fun removeCompleted(): Pair<ActiveQuests, List<Caravan>> {
+        val completedQuests = completedQuests()
+
+        val readyCaravans = completedQuests.map { it.completeCaravan() }
+        val activeQuests = ActiveQuests(quests.filterNot { it.isCompleted() })
+        return Pair(activeQuests, readyCaravans)
+    }
 
     companion object {
         fun of(quests: List<AssignedQuest>): ActiveQuests {

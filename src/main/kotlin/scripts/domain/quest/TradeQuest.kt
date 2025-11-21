@@ -28,8 +28,10 @@ class TradeQuest private constructor(
     fun assignTo(player: Player, caravan: Caravan): AssignedQuest {
         startProgress()
         player.removeItems(requiredItems.allItems())
-        caravan.startTrip()
-        return AssignedQuest.of(this, caravan)
+
+        val travelingCaravan = caravan.startTrip()
+        player.updateCaravan(travelingCaravan)
+        return AssignedQuest.of(this, travelingCaravan)
     }
 
     private fun startProgress() {
