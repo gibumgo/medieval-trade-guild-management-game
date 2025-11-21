@@ -1,10 +1,7 @@
 package scripts.controller
 
 import camp.nextstep.edu.missionutils.Console
-import scripts.domain.common.Gold
 import scripts.domain.player.Player
-import scripts.domain.time.GameTime
-import scripts.domain.time.TurnBasedGameTime
 import scripts.dto.*
 import scripts.mapper.*
 import scripts.service.*
@@ -17,13 +14,9 @@ class GameController(
     private val playerStatusService: PlayerStatusService,
     private val supplyService: SupplyService,
     private val questService: QuestService,
+    private val dailyRoutineService: DailyRoutineService,
 ) {
-    private lateinit var gameTime: GameTime
-    private val WAREHOUSE_COST_PER_DAY = 50
-    private val TOTAL_CARAVAN_SALARY_PER_DAY = 100
-
     fun run() {
-        gameTime = TurnBasedGameTime()
         val player = playerStatusService.player()
 
         while (true) {
@@ -36,7 +29,7 @@ class GameController(
     }
 
     private fun dailyRoutine(player: Player) {
-        outputView.printCurrentDay(gameTime)
+        outputView.printCurrentDay(dailyRoutineService.today())
 
         val playerDTO = PlayerMapper.toDTO(player)
         outputView.printPlayerStatus(playerDTO)
@@ -107,15 +100,12 @@ class GameController(
     }
 
     private fun endDay(player: Player) {
-        val dailyCost = WAREHOUSE_COST_PER_DAY + TOTAL_CARAVAN_SALARY_PER_DAY
-        player.pay(Gold.of(dailyCost))
-
         outputView.printDaySummary(
-            gameTime.currentDay(),
-            dailyCost,
+            dailyRoutineService.today(),
+            dailyRoutineService.calculateDailyCost(player),
             player.currentGold(),
             null
         )
-        gameTime.advance()
+        dailyRoutineService.progressDay()
     }
 }

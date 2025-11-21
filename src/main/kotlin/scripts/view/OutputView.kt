@@ -1,7 +1,5 @@
 package scripts.view
 
-import scripts.domain.quest.AssignedQuest
-import scripts.domain.time.GameTime
 import scripts.dto.AssignedQuestDTO
 import scripts.dto.CaravanDTO
 import scripts.dto.ItemSlotDTO
@@ -10,9 +8,8 @@ import scripts.dto.SupplyBoxDTO
 import scripts.dto.TradeQuestDTO
 
 class OutputView {
-    fun printCurrentDay(gameTime: GameTime) {
-        println("[Day ${gameTime.currentDay()}]")
-        println("")
+    fun printCurrentDay(today: Int) {
+        println("[Day ${today}]")
     }
 
     fun printPlayerStatus(playerDTO: PlayerDTO) {

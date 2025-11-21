@@ -8,6 +8,8 @@ class Inventory(
     var items: ItemSlots,
     var capacity: Capacity
 ) {
+    private val BASE_INVENTORY_SALARY_PER_DAY = 5
+
     init {
         validMaxCapacity()
     }
@@ -27,4 +29,6 @@ class Inventory(
     }
 
     fun allItems(): List<ItemSlot> = items.allItems()
+
+    fun calculateCost(): Int = capacity.costOfCurrent(BASE_INVENTORY_SALARY_PER_DAY)
 }

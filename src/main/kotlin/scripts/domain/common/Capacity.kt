@@ -21,9 +21,11 @@ data class Capacity private constructor(val current: Weight, val max: Weight) {
 
     fun isFull(): Boolean = current.isOver(max)
 
-    companion object {
-        private const val MIN_CAPACITY = 0
+    fun costOfCurrent(cost : Int): Int {
+        return current.costIncurredBy(cost)
+    }
 
+    companion object {
         fun of(current: Int, max: Int): Capacity {
             return Capacity(Weight.of(current), Weight.of(max))
         }

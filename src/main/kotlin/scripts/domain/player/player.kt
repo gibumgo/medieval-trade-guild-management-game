@@ -74,6 +74,14 @@ class Player(
         return currentCaravan
     }
 
+    fun caravansLength(): Int {
+        return caravans.size
+    }
+
+    fun calculateCost(): Int {
+        return inventory.calculateCost()
+    }
+
     companion object {
         private const val MIN_SPEED = 1
     }

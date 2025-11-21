@@ -1,6 +1,7 @@
 package scripts
 
 import scripts.controller.GameController
+import scripts.service.DailyRoutineService
 import scripts.service.PlayerStatusService
 import scripts.service.QuestService
 import scripts.service.SupplyService
@@ -14,6 +15,7 @@ fun main() {
         playerStatusService = PlayerStatusService(),
         supplyService = SupplyService(),
         questService = QuestService(),
+        dailyRoutineService = DailyRoutineService(),
     )
 
     gameController.run()
