@@ -63,6 +63,17 @@ class Player(
     }
 
 
+    fun updateCaravan(otherCaravan: Caravan) {
+        this.caravans = this.caravans.map { replaceCaravan(it, otherCaravan) }
+    }
+
+    private fun replaceCaravan(currentCaravan: Caravan, otherCaravan: Caravan): Caravan {
+        if (currentCaravan.name == otherCaravan.name) {
+            return otherCaravan
+        }
+        return currentCaravan
+    }
+
     companion object {
         private const val MIN_SPEED = 1
     }
