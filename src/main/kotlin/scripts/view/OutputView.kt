@@ -140,13 +140,13 @@ class OutputView {
 
     fun printDaySummary(
         day: Int,
-        goldChange: Int,
+        cost: Int,
         currentGold: Int,
         specialEvent: String? = null
     ) {
         println("\n-----------------")
         println("=== Day $day ===")
-        println("창고 유지비 및 급료 지출: ${if (goldChange >= 0) "+" else ""}$goldChange 골드")
+        println("창고 유지비 및 급료 지출: -$cost 골드")
         println("현재 골드 : $currentGold 골드")
         if (!specialEvent.isNullOrBlank()) {
             println(specialEvent)
