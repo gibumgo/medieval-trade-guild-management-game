@@ -18,7 +18,7 @@ object AssignedQuestMapper {
                 speed = assigned.caravan.speed,
                 maxCapacity = assigned.caravan.maxCapacity.weight,
                 maintenanceCost = assigned.caravan.maintenanceCost.amount,
-                status = assigned.caravan.status.name,
+                status = assigned.caravan.status.displayName,
             ),
             progressDay = assigned.progressDay,
             totalDays = assigned.totalDays()

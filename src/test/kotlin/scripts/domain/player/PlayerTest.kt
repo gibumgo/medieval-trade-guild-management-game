@@ -22,7 +22,7 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        val caravan1 = Caravan(
+        val caravan1 = Caravan.of(
             name = "테스트1",
             leader = "A",
             speed = 3,
@@ -31,7 +31,7 @@ class PlayerTest {
             status = CaravanStatus.READY
         )
 
-        val caravan2 = Caravan(
+        val caravan2 = Caravan.of(
             name = "테스트2",
             leader = "B",
             speed = 5,

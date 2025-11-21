@@ -13,7 +13,7 @@ object CaravanMapper {
             speed = caravan.speed,
             maxCapacity = caravan.maxCapacity.weight,
             maintenanceCost = caravan.maintenanceCost.amount,
-            status = caravan.status.name
+            status = caravan.status.displayName
         )
     }
 

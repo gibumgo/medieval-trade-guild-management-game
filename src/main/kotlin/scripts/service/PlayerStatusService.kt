@@ -14,8 +14,6 @@ import scripts.domain.quest.ActiveQuests
 import scripts.domain.quest.AssignedQuest
 import scripts.domain.reward.Reward
 import scripts.domain.supply.SupplyBox
-import scripts.domain.testObject.TestQuest.quests
-
 
 class PlayerStatusService() {
     private val player = initPlayer()
@@ -28,7 +26,7 @@ class PlayerStatusService() {
     }
 
     private fun initPlayer(): Player {
-        val caravan1 = Caravan(
+        val caravan1 = Caravan.of(
             name = "로반의 행상대",
             leader = "로반",
             speed = 3,
@@ -37,7 +35,7 @@ class PlayerStatusService() {
             status = CaravanStatus.READY,
         )
 
-        val caravan2 = Caravan(
+        val caravan2 = Caravan.of(
             name = "리아의 행상대",
             leader = "리아",
             speed = 2,

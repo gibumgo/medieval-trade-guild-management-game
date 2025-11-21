@@ -90,7 +90,7 @@ class OutputView {
         println()
         println("배정할 행상대를 선택하세요")
         caravans.forEachIndexed { index, caravan ->
-            println("[${index + 1}] ${caravan.name}의 행상대")
+            println("[${index + 1}] ${caravan.name}")
         }
         print("> ")
     }
