@@ -85,16 +85,13 @@ class GameController(
     }
 
     private fun progressAssignedQuest(player: Player) {
-        questService.processQuestProgress(player)
         outputView.printAssignedQuestProgress(
-            AssignedQuestMapper.toDTOs(playerStatusService.activeQuests())
+            AssignedQuestMapper.toDTOs(questService.getInProgressQuests())
         )
         outputView.printCompleteQuests(
-            AssignedQuestMapper.toDTOs(playerStatusService.completeQuests())
+            AssignedQuestMapper.toDTOs(questService.collectCompletedQuests(player))
         )
-
-        player.removeCompletedQuests()
-        player.progressDay()
+        questService.rollDayForQuests()
     }
 
     private fun endDay(player: Player) {

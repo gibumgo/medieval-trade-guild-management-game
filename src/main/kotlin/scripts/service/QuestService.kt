@@ -25,19 +25,31 @@ class QuestService(
     fun assignQuest(player: Player, quest: TradeQuest, caravan: Caravan): AssignedQuest {
         quest.startProgress()
         player.submitItems(quest.itemsToDeliver())
-        player.updateCaravan(caravan.startTrip())
+        val travelingCaravan = caravan.startTrip()
+        player.updateCaravan(travelingCaravan)
 
-        val assignedQuest = AssignedQuest.of(quest, caravan)
+        val assignedQuest = AssignedQuest.of(quest, travelingCaravan)
         questRepository.save(assignedQuest)
         return assignedQuest
     }
 
-    fun processQuestProgress(player: Player) {
-        val completed = player.completedQuests()
+    fun getInProgressQuests(): List<AssignedQuest> {
+        return questRepository.findInProgress()
+    }
 
-        completed.forEach { assignedQuest ->
-            val reward = assignedQuest.getReward()
-            player.earnReward(reward)
+    fun collectCompletedQuests(player: Player): List<AssignedQuest> {
+        val completed = questRepository.findInProgress().filter { it.isCompleted() }
+        completed.forEach { quest ->
+            player.earnReward(quest.getReward())
+            player.updateCaravan(quest.completeCaravan())
         }
+        questRepository.removeCompletedQuests(completed)
+        return completed
+    }
+
+    fun rollDayForQuests() {
+        val updatedQuests = questRepository.findInProgress()
+            .map { it.progressOneDay() }
+        updatedQuests.forEach { questRepository.save(it) }
     }
 }
