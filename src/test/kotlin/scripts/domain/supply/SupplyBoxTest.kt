@@ -1,69 +1,40 @@
 package scripts.domain.supply
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import scripts.domain.player.Inventory
-import scripts.domain.common.Capacity
-import scripts.domain.common.Gold
-import scripts.domain.Item.ItemSlot
 import scripts.domain.Item.Item
-import scripts.domain.Item.ItemSlots
+import scripts.domain.Item.ItemSlot
+import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.player.Player
-import scripts.domain.player.PlayerStatus
 import scripts.domain.reward.Reward
-import kotlin.collections.listOf
+
 
 class SupplyBoxTest {
-    private lateinit var rewards: List<ItemSlot>
+    private lateinit var items: List<ItemSlot>
     private lateinit var box: SupplyBox
-    private lateinit var player: Player
 
     @BeforeEach
-    fun setUp() {
-        rewards = listOf(
-            ItemSlot.of(Item.of("밀", 1), 2)
-        )
+    fun setup() {
+        items = listOf(ItemSlot.of(Item.of("밀", 1), 2))
 
-        box = SupplyBox.of(
-            SupplyBoxType.BASIC,
-            { Reward.ofItems(rewards) }
-        )
-
-        player = Player(
-            playerStatus = PlayerStatus.of(Gold.of(1000), ReputationPoint.of(0)),
-            inventory = Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
-            caravans = emptyList(),
-        )
-    }
-
-    @Test
-    @DisplayName("골드 충분 시 박스 구매 성공")
-    fun purchaseSuccessTest() {
-        val reward = box.purchaseBy(player.playerStatus)
-        val wheat = Reward.ofItems(rewards)
-        assertEquals(
-            wheat,
-            reward
-        )
-    }
-
-    @Test
-    @DisplayName("골드 부족 시 예외 발생")
-    fun purchaseFailInsufficientGold() {
-        val poorPlayer = Player(
-            playerStatus = PlayerStatus.of(Gold.of(100), ReputationPoint.of(0)),
-            inventory = Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
-            caravans = emptyList(),
-        )
-
-        val exception = assertThrows<IllegalArgumentException> {
-            box.purchaseBy(poorPlayer.playerStatus)
+        box = SupplyBox.of(SupplyBoxType.BASIC) {
+            Reward.of(
+                gold = Gold.of(500),
+                point = ReputationPoint.of(10),
+                items = items,
+            )
         }
+    }
 
-        assertEquals("구매 불가", exception.message)
+    @Test
+    @DisplayName("골드, 명성, 아이템이 충분하면 보급 상자 구매 성공")
+    fun purchase() {
+        val reward = box.purchaseBy()
+
+        assertEquals(500, reward.gold.amount)
+        assertEquals(10, reward.reputation.point)
+        assertEquals(items, reward.items)
     }
 }
