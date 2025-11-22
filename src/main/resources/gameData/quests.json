@@ -1,0 +1,44 @@
+[
+  {
+    "city": "북부 도시",
+    "status": "INACTIVE",
+    "requiredItems": [
+      { "name": "밀", "weight": 1, "quantity": 10 },
+      { "name": "목재", "weight": 1, "quantity": 5 }
+    ],
+    "rewardGold": 120,
+    "rewardReputation": 2,
+    "durationDays": 3
+  },
+  {
+    "city": "항구 도시",
+    "status": "INACTIVE",
+    "requiredItems": [
+      { "name": "밀", "weight": 1, "quantity": 10 },
+      { "name": "목재", "weight": 1, "quantity": 5 }
+    ],
+    "rewardGold": 70,
+    "rewardReputation": 1,
+    "durationDays": 5
+  },
+  {
+    "city": "사막 도시",
+    "status": "INACTIVE",
+    "requiredItems": [
+      { "name": "목재", "weight": 1, "quantity": 5 }
+    ],
+    "rewardGold": 10,
+    "rewardReputation": 0,
+    "durationDays": 10
+  },
+  {
+    "city": "산악 도시",
+    "status": "INACTIVE",
+    "requiredItems": [
+      { "name": "철", "weight": 1, "quantity": 20 }
+    ],
+    "rewardGold": 150,
+    "rewardReputation": 3,
+    "durationDays": 10
+  }
+]

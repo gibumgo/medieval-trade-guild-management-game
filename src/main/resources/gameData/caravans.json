@@ -1,0 +1,4 @@
+[
+  { "name": "로반의 행상대", "leader": "로반", "speed": 3, "maxCapacity": 100, "maintenanceCost": 0, "status": "READY" },
+  { "name": "리아의 행상대", "leader": "리아", "speed": 2, "maxCapacity": 80, "maintenanceCost": 15, "status": "READY" }
+]
