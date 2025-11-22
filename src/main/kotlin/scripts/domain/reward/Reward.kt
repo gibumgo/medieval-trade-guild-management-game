@@ -23,15 +23,18 @@ data class Reward private constructor(
             gold: Gold,
             point: ReputationPoint,
             items: List<ItemSlot>
-        ): Reward = Reward(gold, point, items.toList())
+        ) = Reward(gold, point, items.toList())
 
         fun ofQuestReward(
             gold: Gold,
             point: ReputationPoint
-        ): Reward = Reward(gold, point, emptyList())
+        ) = Reward(gold, point, emptyList())
 
         fun ofItems(
             items: List<ItemSlot>
-        ): Reward = Reward(Gold.empty(), ReputationPoint.empty(), items.toList())
+        ) = Reward(Gold.empty(), ReputationPoint.empty(), items.toList())
+
+        fun of(gold: Int, point: Int) =
+            Reward(Gold.of(gold), ReputationPoint.of(point), emptyList())
     }
 }
