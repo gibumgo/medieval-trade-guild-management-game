@@ -14,9 +14,6 @@ class InputView {
 
     fun waitForEnterOnly(): Boolean {
         val input = Console.readLine().trim()
-        if (input.isEmpty()) {
-            return true
-        }
-        return waitForEnterOnly()
+        return input != "0"
     }
 }
