@@ -71,7 +71,6 @@ class GameController(
             outputView.printNotSelectedQuests()
             return
         }
-
         val selectedQuest = questService.selectedQuest(selectedNumber)
 
         val caravans = playerStatusService.availableCaravans()
@@ -79,11 +78,10 @@ class GameController(
         val selectCaravan = inputView.inputSelectNumber()
         val caravan = caravans[selectCaravan - 1]
 
-        val assignedQuest = selectedQuest.assignTo(player, caravan)
+        val assignedQuest = questService.assignQuest(player, selectedQuest, caravan)
         outputView.printAssignedQuest(
             AssignedQuestMapper.toDTO(assignedQuest)
         )
-        player.addActiveQuests(assignedQuest)
     }
 
     private fun progressAssignedQuest(player: Player) {

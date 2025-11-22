@@ -40,10 +40,6 @@ class Player(
 
     fun allItems(): List<ItemSlot> = inventory.allItems()
 
-    fun addActiveQuests(assignedQuest: AssignedQuest) {
-        this.quests = quests.assign(assignedQuest)
-    }
-
     fun activeQuests(): List<AssignedQuest> = quests.allQuests()
 
     fun progressDay() {

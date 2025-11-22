@@ -3,7 +3,6 @@ package scripts.domain.quest
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.Item.ItemSlots
-import scripts.domain.caravan.Caravan
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
 import scripts.domain.player.Player
@@ -23,18 +22,7 @@ class TradeQuest private constructor(
     private fun canActivate(inventoryItems: List<ItemSlot>): Boolean =
         status.isInActive() && requiredItems.hasItems(inventoryItems)
 
-    fun isActive(): Boolean = status.isActive()
-
-    fun assignTo(player: Player, caravan: Caravan): AssignedQuest {
-        startProgress()
-        player.removeItems(requiredItems.allItems())
-
-        val travelingCaravan = caravan.startTrip()
-        player.updateCaravan(travelingCaravan)
-        return AssignedQuest.of(this, travelingCaravan)
-    }
-
-    private fun startProgress() {
+    fun startProgress() {
         require(status.isActive()) { "활성화된 상태여야 합니다." }
         status = QuestStatus.IN_PROGRESS
     }
@@ -43,6 +31,10 @@ class TradeQuest private constructor(
         require(status.isInProgress()) { "진행중인 상태여야 완료할 수 있습니다." }
         status = QuestStatus.COMPLETED
     }
+
+    fun isActive(): Boolean = status.isActive()
+
+    fun deliveryItems(): List<ItemSlot> = requiredItems.allItems()
 
     fun reward(): Reward = reward
 
