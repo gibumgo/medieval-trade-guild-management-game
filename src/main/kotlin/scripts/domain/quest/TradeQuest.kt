@@ -5,7 +5,6 @@ import scripts.domain.Item.ItemSlot
 import scripts.domain.Item.ItemSlots
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Reward
-import scripts.domain.player.Player
 
 class TradeQuest private constructor(
     val city: City,
@@ -40,9 +39,8 @@ class TradeQuest private constructor(
 
     fun calculateDurationBy(speed: Int): Int = city.calculateTravelTime(speed)
 
-    fun calculateMaxDuration(player: Player): Int {
-        val speed = player.availableCaravanMaxSpeed()
-        return city.calculateTravelTime(speed)
+    fun minTravelDays(maxCaravanSpeed: Int): Int {
+        return city.calculateTravelTime(maxCaravanSpeed)
     }
 
     companion object {

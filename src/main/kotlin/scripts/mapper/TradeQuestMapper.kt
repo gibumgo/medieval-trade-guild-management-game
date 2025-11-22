@@ -20,7 +20,9 @@ object TradeQuestMapper {
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
             rewardGold = quest.reward.gold.amount,
             rewardReputation = quest.reward.reputation.point,
-            durationDays = quest.calculateMaxDuration(player)
+            durationDays = quest.minTravelDays(
+                player.availableCaravanMaxSpeed()
+            )
         )
     }
 
