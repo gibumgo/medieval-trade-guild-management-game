@@ -3,7 +3,6 @@ package scripts.domain.quest
 import scripts.domain.caravan.Caravan
 import scripts.domain.reward.Reward
 
-
 class AssignedQuest private constructor(
     val quest: TradeQuest,
     val caravan: Caravan,
@@ -18,23 +17,15 @@ class AssignedQuest private constructor(
         return AssignedQuest(quest, caravan, nextProgressDay)
     }
 
-    private fun isNextFinished(day: Int): Boolean = this.progressDay + DAY_STEP == totalDays()
+    fun totalDays(): Int = caravan.travelDaysFor(quest)
 
-    fun totalDays(): Int {
-        return caravan.travelDaysFor(quest);
-    }
+    private fun isNextFinished(day: Int): Boolean = day == totalDays()
 
-    fun isCompleted(): Boolean {
-        return progressDay == totalDays()
-    }
+    fun isCompleted(): Boolean = progressDay == totalDays()
 
-    fun completeCaravan(): Caravan {
-        return caravan.resetToReady()
-    }
+    fun completeCaravan(): Caravan = caravan.resetToReady()
 
-    fun getReward(): Reward {
-        return quest.reward()
-    }
+    fun getReward(): Reward = quest.reward()
 
     companion object {
         private const val DAY_STEP = 1

@@ -6,15 +6,9 @@ enum class QuestStatus(val description: String) {
     IN_PROGRESS("진행 중"),
     COMPLETED("완료");
 
-    fun isInActive(): Boolean {
-        return this == INACTIVE
-    }
+    fun isInActive(): Boolean = this == INACTIVE
 
-    fun isActive(): Boolean {
-        return this == ACTIVE
-    }
+    fun isActive(): Boolean = this == ACTIVE
 
-    fun isInProgress(): Boolean {
-        return this == IN_PROGRESS
-    }
+    fun isInProgress(): Boolean  = this == IN_PROGRESS
 }
