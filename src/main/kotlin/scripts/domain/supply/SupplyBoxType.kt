@@ -2,7 +2,6 @@ package scripts.domain.supply
 
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.player.PlayerStatus
 
 enum class SupplyBoxType(
     name: String,
@@ -16,10 +15,6 @@ enum class SupplyBoxType(
 
     val cost: Gold = Gold.of(cost);
     val minReputationPoint: ReputationPoint = ReputationPoint.of(minReputationPoint);
-
-    fun canPurchase(playerStatus: PlayerStatus): Boolean {
-        return playerStatus.isAffordable(this.cost,this.minReputationPoint)
-    }
 
     companion object {
         private const val SELECTION_START_NUMBER = 1
