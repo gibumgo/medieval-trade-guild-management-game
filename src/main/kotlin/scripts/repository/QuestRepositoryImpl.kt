@@ -17,23 +17,20 @@ class QuestRepositoryImpl : QuestRepository {
         quests.map { TradeQuestMapper.fromDTO(it) }.toMutableList()
     }
 
-    private val activeQuests: MutableList<AssignedQuest> = mutableListOf()
+    private val inProgressQuests: MutableList<AssignedQuest> = mutableListOf()
 
-    override fun findAll(): List<TradeQuest> {
-        return allQuests
-    }
+    override fun findAll(): List<TradeQuest> = allQuests
 
-    override fun findActive(): List<TradeQuest> {
-        return allQuests.filter { it.isActive() }
-    }
+    override fun findActive(): List<TradeQuest> = allQuests.filter { it.isActive() }
+
+    override fun findInProgress(): List<AssignedQuest> = inProgressQuests.toList()
 
     override fun save(assignedQuest: AssignedQuest) {
-        activeQuests.removeIf { it.quest == assignedQuest.quest }
-        activeQuests.add(assignedQuest)
+        inProgressQuests.removeIf { it.quest == assignedQuest.quest }
+        inProgressQuests.add(assignedQuest)
     }
 
-    fun removeCompletedQuests() {
-        val completed = activeQuests.filter { it.isCompleted() }
-        activeQuests.removeAll(completed)
+    override fun removeCompletedQuests(completed: List<AssignedQuest>) {
+        inProgressQuests.removeAll(completed)
     }
 }
