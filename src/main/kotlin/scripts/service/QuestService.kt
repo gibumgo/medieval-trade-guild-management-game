@@ -3,19 +3,19 @@ package scripts.service
 import scripts.domain.Item.ItemSlot
 import scripts.domain.player.Player
 import scripts.domain.quest.TradeQuest
-import scripts.domain.testObject.TestQuest
+import scripts.repository.QuestRepository
 
-class QuestService {
-    private val allQuests = TestQuest.quests
+class QuestService(
+    private val questRepository: QuestRepository
+) {
 
     fun fillerActive(inventory: List<ItemSlot>) {
-        allQuests.forEach { quest: TradeQuest ->
+        questRepository.findAll().forEach { quest: TradeQuest ->
             quest.activateWith(inventory)
         }
     }
 
-    fun availableQuest(): List<TradeQuest> =
-        allQuests.filter { quest: TradeQuest -> quest.isActive() }
+    fun availableQuest(): List<TradeQuest> = questRepository.findActive()
 
 
     fun selectedQuest(inputNumber: Int): TradeQuest =

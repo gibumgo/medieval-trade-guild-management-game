@@ -1,5 +1,8 @@
 package scripts.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class TradeQuestDTO(
     val city: String,
     val status: String,

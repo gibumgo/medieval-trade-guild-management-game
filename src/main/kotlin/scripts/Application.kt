@@ -1,6 +1,7 @@
 package scripts
 
 import scripts.controller.GameController
+import scripts.repository.QuestRepositoryImpl
 import scripts.service.DailyRoutineService
 import scripts.service.PlayerStatusService
 import scripts.service.QuestService
@@ -14,7 +15,7 @@ fun main() {
         outputView = OutputView(),
         playerStatusService = PlayerStatusService(),
         supplyService = SupplyService(),
-        questService = QuestService(),
+        questService = QuestService(QuestRepositoryImpl()),
         dailyRoutineService = DailyRoutineService(),
     )
 
