@@ -14,7 +14,6 @@ import scripts.domain.Item.ItemSlots
 import scripts.domain.common.ReputationPoint
 import scripts.domain.player.Player
 import scripts.domain.player.PlayerStatus
-import scripts.domain.quest.ActiveQuests
 import scripts.domain.reward.Reward
 import kotlin.collections.listOf
 
@@ -38,7 +37,6 @@ class SupplyBoxTest {
             playerStatus = PlayerStatus.of(Gold.of(1000), ReputationPoint.of(0)),
             inventory = Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
             caravans = emptyList(),
-            quests = ActiveQuests.empty()
         )
     }
 
@@ -60,7 +58,6 @@ class SupplyBoxTest {
             playerStatus = PlayerStatus.of(Gold.of(100), ReputationPoint.of(0)),
             inventory = Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
             caravans = emptyList(),
-            quests = ActiveQuests.empty()
         )
 
         val exception = assertThrows<IllegalArgumentException> {
