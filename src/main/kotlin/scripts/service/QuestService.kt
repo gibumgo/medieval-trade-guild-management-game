@@ -24,7 +24,7 @@ class QuestService(
 
     fun assignQuest(player: Player, quest: TradeQuest, caravan: Caravan): AssignedQuest {
         quest.startProgress()
-        player.removeItems(quest.deliveryItems())
+        player.submitItems(quest.itemsToDeliver())
         player.updateCaravan(caravan.startTrip())
 
         val assignedQuest = AssignedQuest.of(quest, caravan)

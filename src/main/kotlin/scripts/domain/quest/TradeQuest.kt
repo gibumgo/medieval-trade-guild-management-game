@@ -34,7 +34,7 @@ class TradeQuest private constructor(
 
     fun isActive(): Boolean = status.isActive()
 
-    fun deliveryItems(): List<ItemSlot> = requiredItems.allItems()
+    fun itemsToDeliver(): List<ItemSlot> = requiredItems.allItems()
 
     fun reward(): Reward = reward
 

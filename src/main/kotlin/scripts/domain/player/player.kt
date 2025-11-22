@@ -17,7 +17,7 @@ class Player(
         this.playerStatus = this.playerStatus.payGold(amount)
     }
 
-    fun removeItems(requiredItems: List<ItemSlot>) {
+    fun submitItems(requiredItems: List<ItemSlot>) {
         inventory.removeItems(requiredItems)
     }
 
