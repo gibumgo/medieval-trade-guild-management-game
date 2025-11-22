@@ -9,7 +9,7 @@ value class Weight private constructor(val weight: Int) {
     }
 
     private fun validPositive(weight : Int) {
-        require(weight >= INITIAL_LEGHT) { ErrorMessage.WEIGHT_ERROR }
+        require(weight >= INITIAL_LENGTH) { ErrorMessage.WEIGHT_ERROR }
     }
 
     fun plus(other: Weight) = Weight(weight + other.weight)
@@ -20,14 +20,14 @@ value class Weight private constructor(val weight: Int) {
 
     fun costIncurredBy(rate: Int): Int  = weight * rate
 
-    fun isZero(): Boolean = weight == INITIAL_LEGHT
+    fun isZero(): Boolean = weight == INITIAL_LENGTH
 
     fun isOver(max: Weight): Boolean  =  weight >= max.weight
 
-    fun isInRange(max: Weight): Boolean = weight in INITIAL_LEGHT..max.weight
+    fun isInRange(max: Weight): Boolean = weight in INITIAL_LENGTH..max.weight
 
     companion object {
-        private val INITIAL_LEGHT = 0
+        private val INITIAL_LENGTH = 0
 
         fun of(weight: Int): Weight {
             return Weight(weight)
