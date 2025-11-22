@@ -49,10 +49,20 @@ class PlayerStatusService() {
     }
 
     fun receiveSupplyBox(supplyBox: SupplyBox): Reward {
-        val reward = supplyBox.purchaseBy(player.playerStatus)
+        validPurchase(supplyBox)
+        val reward = supplyBox.purchaseBy()
         player.pay(supplyBox.price())
         player.earnReward(reward)
         return reward
+    }
+
+    private fun validPurchase(supplyBox: SupplyBox) {
+        require(
+            player.playerStatus.isAffordable(
+                supplyBox.price(),
+                supplyBox.minReputationPoint()
+            )
+        ) { " 구매 불가: 골드 또는 명성치 부족" }
     }
 
     fun currentInventory(): List<ItemSlot> {
