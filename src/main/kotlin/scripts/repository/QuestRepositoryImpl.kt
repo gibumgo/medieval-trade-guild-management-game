@@ -28,21 +28,7 @@ class QuestRepositoryImpl : QuestRepository {
     }
 
     override fun save(assignedQuest: AssignedQuest) {
-        findIndexOfQuest(assignedQuest)
-            .takeIf { it >= 0 }
-            ?.let { updateAssignedQuest(it, assignedQuest) }
-            ?: addAssignedQuest(assignedQuest)
-    }
-
-    private fun findIndexOfQuest(assignedQuest: AssignedQuest): Int {
-        return activeQuests.indexOfFirst { it == assignedQuest }
-    }
-
-    private fun updateAssignedQuest(index: Int, assignedQuest: AssignedQuest) {
-        activeQuests[index] = assignedQuest
-    }
-
-    private fun addAssignedQuest(assignedQuest: AssignedQuest) {
+        activeQuests.removeIf { it.quest == assignedQuest.quest }
         activeQuests.add(assignedQuest)
     }
 
