@@ -1,5 +1,8 @@
 package scripts.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CaravanDTO(
     val name: String,
     val leader: String,
