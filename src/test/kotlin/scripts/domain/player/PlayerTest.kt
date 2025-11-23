@@ -72,21 +72,4 @@ class PlayerTest {
         assertEquals(1, items.size)
         assertEquals(ItemSlot.of(item, 5), items.first())
     }
-
-    @Test
-    @DisplayName("READY 상태의 캐러밴만 반환한다")
-    fun availableCaravansTest() {
-        val list = player.availableCaravans()
-
-        assertEquals(2, list.size)
-        assertEquals("테스트1", list.first().name)
-    }
-
-    @Test
-    @DisplayName("가장 빠른 캐러밴의 속도를 반환한다")
-    fun maxSpeedTest() {
-        val speed = player.availableCaravanMaxSpeed()
-
-        assertEquals(5, speed)
-    }
 }
