@@ -15,7 +15,7 @@ class Caravan private constructor(
 
     fun isReady(): Boolean = status == CaravanStatus.READY
 
-    fun isComplete(): Boolean = status == CaravanStatus.READY
+    fun isComplete(): Boolean = status == CaravanStatus.COMPLETED
 
     fun travelDaysFor(quest: TradeQuest): Int {
         return quest.calculateDurationBy(this.speed)
