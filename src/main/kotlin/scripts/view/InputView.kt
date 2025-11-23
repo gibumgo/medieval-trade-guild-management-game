@@ -8,8 +8,10 @@ class InputView {
         return Console.readLine().trim().equals("Y", ignoreCase = true)
     }
 
-    fun inputSelectNumber(): Int {
-        return Console.readLine().trim().toInt()
+    fun inputSelectNumber(): Int = parseInt(Console.readLine())
+
+    private fun parseInt(input: String): Int {
+        return input.trim().toIntOrNull() ?: throw NumberFormatException("숫자를 입력해주세요.")
     }
 
     fun waitForEnterOnly(): Boolean {
