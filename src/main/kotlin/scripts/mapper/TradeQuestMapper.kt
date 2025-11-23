@@ -18,8 +18,8 @@ object TradeQuestMapper {
             city = quest.city.name,
             status = quest.status.name,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
-            rewardGold = quest.reward.gold.amount,
-            rewardReputation = quest.reward.reputation.point,
+            rewardGold = quest.totalRewardGold().amount,
+            rewardReputation = quest.totalRewardReputation().point,
             durationDays = quest.minTravelDays(
                 player.availableCaravanMaxSpeed()
             )
@@ -34,8 +34,8 @@ object TradeQuestMapper {
             city = quest.city.name,
             status = quest.status.name,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
-            rewardGold = quest.reward.gold.amount,
-            rewardReputation = quest.reward.reputation.point,
+            rewardGold = quest.totalRewardGold().amount,
+            rewardReputation = quest.totalRewardReputation().point,
             durationDays = 0
         )
     }
@@ -47,11 +47,6 @@ object TradeQuestMapper {
             gold = Gold.of(dto.rewardGold),
             reputation = ReputationPoint.of(dto.rewardReputation)
         )
-    }
-
-
-    fun toDTOs(quests: List<TradeQuest>): List<TradeQuestDTO> {
-        return quests.map { toDTO(it) }
     }
 
     fun toDTOs(quests: List<TradeQuest>, player: Player): List<TradeQuestDTO> {

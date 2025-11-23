@@ -11,21 +11,21 @@ class Inventory(
     private val BASE_INVENTORY_SALARY_PER_DAY = 5
 
     init {
-        validMaxCapacity()
+        updateCapacity()
     }
 
-    private fun validMaxCapacity() {
-        this.capacity = this.capacity.currentUpdate(items.totalWeight())
+    private fun updateCapacity() {
+        this.capacity = capacity.currentUpdate(items.totalWeight())
     }
 
     fun addItems(newItems: List<ItemSlot>) {
-        newItems.forEach { newItem -> items = items.add(newItem) }
-        validMaxCapacity()
+        items = items.addAll(newItems)
+        updateCapacity()
     }
 
     fun removeItems(newItems: List<ItemSlot>) {
-        newItems.forEach { newItem -> items = items.remove(newItem) }
-        validMaxCapacity()
+        items = items.removeAll(newItems)
+        updateCapacity()
     }
 
     fun allItems(): List<ItemSlot> = items.allItems()

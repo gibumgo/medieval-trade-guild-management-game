@@ -4,12 +4,12 @@ import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.Item.ItemSlots
 import scripts.domain.common.ReputationPoint
-import scripts.domain.reward.Reward
+import scripts.domain.reward.Rewards
 
 class TradeQuest private constructor(
     val city: City,
     val requiredItems: ItemSlots,
-    val reward: Reward,
+    val rewards: Rewards,
     var status: QuestStatus
 ) {
     fun activateWith(inventoryItems: List<ItemSlot>) {
@@ -31,11 +31,15 @@ class TradeQuest private constructor(
         status = QuestStatus.COMPLETED
     }
 
+    fun totalRewardGold(): Gold = rewards.totalGold()
+
+    fun totalRewardReputation()  = rewards.totalReputation()
+
     fun isActive(): Boolean = status.isActive()
 
     fun itemsToDeliver(): List<ItemSlot> = requiredItems.allItems()
 
-    fun reward(): Reward = reward
+    fun allReward(): Rewards = rewards
 
     fun calculateDurationBy(speed: Int): Int = city.calculateTravelTime(speed)
 
@@ -47,13 +51,13 @@ class TradeQuest private constructor(
         fun of(
             city: City, requiredItems: ItemSlots, gold: Gold, reputation: ReputationPoint, questStatus: QuestStatus
         ) = TradeQuest(
-            city, requiredItems, Reward.ofQuestReward(gold, reputation), questStatus
+            city, requiredItems, Rewards.of(gold, reputation), questStatus
         )
 
         fun of(
             city: City, requiredItems: ItemSlots, gold: Gold, reputation: ReputationPoint,
         ) = TradeQuest(
-            city, requiredItems, Reward.ofQuestReward(gold, reputation), QuestStatus.INACTIVE
+            city, requiredItems, Rewards.of(gold, reputation), QuestStatus.INACTIVE
         )
     }
 }

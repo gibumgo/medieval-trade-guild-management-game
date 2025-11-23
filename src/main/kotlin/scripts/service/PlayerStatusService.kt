@@ -11,6 +11,7 @@ import scripts.domain.Item.Weight
 import scripts.domain.player.Player
 import scripts.domain.player.PlayerStatus
 import scripts.domain.reward.Reward
+import scripts.domain.reward.Rewards
 import scripts.domain.supply.SupplyBox
 
 class PlayerStatusService() {
@@ -48,12 +49,12 @@ class PlayerStatusService() {
         )
     }
 
-    fun receiveSupplyBox(supplyBox: SupplyBox): Reward {
+    fun receiveSupplyBox(supplyBox: SupplyBox): Rewards {
         validPurchase(supplyBox)
-        val reward = supplyBox.purchaseBy()
+        val rewards = supplyBox.purchaseBy()
         player.pay(supplyBox.price())
-        player.earnReward(reward)
-        return reward
+        player.earnReward(rewards)
+        return rewards
     }
 
     private fun validPurchase(supplyBox: SupplyBox) {

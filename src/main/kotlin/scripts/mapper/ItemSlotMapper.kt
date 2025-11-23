@@ -3,7 +3,7 @@ package scripts.mapper
 import scripts.domain.Item.Item
 import scripts.domain.Item.ItemSlot
 import scripts.domain.Item.ItemSlots
-import scripts.domain.reward.Reward
+import scripts.domain.reward.Rewards
 import scripts.dto.ItemSlotDTO
 
 
@@ -16,8 +16,8 @@ object ItemSlotMapper {
         )
     }
 
-    fun toDTO(reward: Reward): List<ItemSlotDTO> {
-        return reward.items.map { toDTO(it) }
+    fun toDTO(rewards: Rewards): List<ItemSlotDTO> {
+        return rewards.itemSlots().map { toDTO(it) }
     }
 
     fun toDTO(items: ItemSlots): List<ItemSlotDTO> {

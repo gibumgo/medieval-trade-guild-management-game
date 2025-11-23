@@ -2,7 +2,7 @@ package scripts.controller
 
 import camp.nextstep.edu.missionutils.Console
 import scripts.domain.player.Player
-import scripts.domain.reward.Reward
+import scripts.domain.reward.Rewards
 import scripts.dto.*
 import scripts.mapper.*
 import scripts.service.*
@@ -50,17 +50,17 @@ class GameController(
         outputView.printSupplyBoxPrompt()
         outputView.printSupplyBoxOptions(supplyBoxDTOs)
         outputView.printSupplyBoxInputGuide()
-        val reward = InputRetry.retryWithDisplay(
+        val rewards = InputRetry.retryWithDisplay(
             display = { outputView.printSupplyBoxInputGuide() }
         ) {
             handleSupplyBoxInput()
         } ?: return
 
-        outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(reward))
+        outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(rewards))
         outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.player()))
     }
 
-    private fun handleSupplyBoxInput(): Reward? {
+    private fun handleSupplyBoxInput(): Rewards? {
         val inputNumber = inputView.inputSelectNumber()
 
         if (inputNumber == 0) {

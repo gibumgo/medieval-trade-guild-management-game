@@ -8,7 +8,7 @@ import scripts.domain.Item.Item
 import scripts.domain.Item.ItemSlot
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.reward.Reward
+import scripts.domain.reward.Rewards
 
 
 class SupplyBoxTest {
@@ -20,9 +20,9 @@ class SupplyBoxTest {
         items = listOf(ItemSlot.of(Item.of("밀", 1), 2))
 
         box = SupplyBox.of(SupplyBoxType.BASIC) {
-            Reward.of(
+            Rewards.of(
                 gold = Gold.of(500),
-                point = ReputationPoint.of(10),
+                reputation = ReputationPoint.of(10),
                 items = items,
             )
         }
@@ -33,8 +33,8 @@ class SupplyBoxTest {
     fun purchase() {
         val reward = box.purchaseBy()
 
-        assertEquals(500, reward.gold.amount)
-        assertEquals(10, reward.reputation.point)
-        assertEquals(items, reward.items)
+        assertEquals(Gold.of(500), reward.totalGold())
+        assertEquals(ReputationPoint.of(10), reward.totalReputation())
+        assertEquals(items, reward.itemSlots())
     }
 }

@@ -24,10 +24,14 @@ class ItemSlots private constructor(
         return ItemSlots(finalItems)
     }
 
-    fun remove(newItem: ItemSlot): ItemSlots {
-        val updatedItems = items.map { it.decreaseSameItem(newItem) }
-        return ItemSlots(updatedItems)
-    }
+    fun remove(newItem: ItemSlot): ItemSlots =
+        ItemSlots(items.map { it.decreaseSameItem(newItem) })
+
+    fun addAll(newItems: List<ItemSlot>): ItemSlots =
+        newItems.fold(this) { currentSlots, item -> currentSlots.add(item) }
+
+    fun removeAll(removalItems: List<ItemSlot>): ItemSlots =
+        removalItems.fold(this) { currentSlots, item -> currentSlots.remove(item) }
 
     companion object {
         fun of(items: List<ItemSlot>): ItemSlots {

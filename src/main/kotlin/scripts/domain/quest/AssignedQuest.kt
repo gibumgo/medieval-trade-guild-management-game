@@ -1,7 +1,7 @@
 package scripts.domain.quest
 
 import scripts.domain.caravan.Caravan
-import scripts.domain.reward.Reward
+import scripts.domain.reward.Rewards
 
 class AssignedQuest private constructor(
     val quest: TradeQuest,
@@ -25,7 +25,7 @@ class AssignedQuest private constructor(
 
     fun completeCaravan(): Caravan = caravan.resetToReady()
 
-    fun getReward(): Reward = quest.reward()
+    fun getReward(): Rewards = quest.rewards
 
     companion object {
         private const val DAY_STEP = 1

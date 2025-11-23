@@ -2,7 +2,6 @@ package scripts.domain.player
 
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.reward.Reward
 
 data class PlayerStatus private constructor(
     val gold: Gold,
@@ -15,10 +14,10 @@ data class PlayerStatus private constructor(
     fun isAffordable(otherGold: Gold, otherPoint: ReputationPoint): Boolean =
         gold.isAffordable(otherGold) && reputationPoint.isAffordable(otherPoint)
 
-    fun increase(otherGold: Gold, otherPoint: ReputationPoint) =
-        PlayerStatus(gold.plus(otherGold), reputationPoint.increase(otherPoint))
+    fun increaseGold(amount: Gold) = PlayerStatus(gold.plus(amount), reputationPoint)
 
-    fun apply(reward: Reward): PlayerStatus = reward.applyTo(this)
+    fun increaseReputation(amount: ReputationPoint) =
+        PlayerStatus(gold, reputationPoint.increase(amount))
 
     companion object {
         fun of(gold: Gold, reputationPoint: ReputationPoint): PlayerStatus {

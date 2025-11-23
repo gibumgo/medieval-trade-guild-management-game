@@ -2,14 +2,14 @@ package scripts.domain.supply
 
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.reward.Reward
 import scripts.domain.reward.RewardGenerator
+import scripts.domain.reward.Rewards
 
 class SupplyBox private constructor(
     val type: SupplyBoxType,
     val rewardGenerator: RewardGenerator
 ) {
-    fun purchaseBy(): Reward {
+    fun purchaseBy(): Rewards {
         return rewardGenerator.generate()
     }
 

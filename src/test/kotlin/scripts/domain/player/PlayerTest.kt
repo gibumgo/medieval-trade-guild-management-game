@@ -13,7 +13,7 @@ import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.Capacity
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.reward.Reward
+import scripts.domain.reward.Rewards
 
 class PlayerTest {
 
@@ -57,13 +57,13 @@ class PlayerTest {
     @DisplayName("보상 획득 시 Gold, Reputation 이 증가하고 아이템이 인벤토리에 추가된다")
     fun earnRewardTest() {
         val item = Item.of("밀", 1)
-        val reward = Reward.of(
+        val rewards = Rewards.of(
             gold = Gold.of(200),
-            point = ReputationPoint.of(3),
+            reputation = ReputationPoint.of(3),
             items = listOf(ItemSlot.of(item, 5))
         )
 
-        player.earnReward(reward)
+        player.earnReward(rewards)
 
         assertEquals(Gold.of(1200), player.playerStatus.gold)
         assertEquals(ReputationPoint.of(8), player.playerStatus.reputationPoint)

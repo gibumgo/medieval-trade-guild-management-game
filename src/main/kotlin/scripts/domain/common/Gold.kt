@@ -18,15 +18,13 @@ value class Gold private constructor(val amount: Int) {
 
     fun isAffordable(otherGold: Gold): Boolean = amount >= otherGold.amount
 
+    fun isPositive(): Boolean = amount >= MIN_AMOUNT
+
     companion object {
         private val MIN_AMOUNT: Int = 0
 
-         fun of(amount: Int): Gold {
-            return Gold(amount);
-        }
+        fun of(amount: Int) = Gold(amount)
 
-        fun empty(): Gold {
-            return Gold(MIN_AMOUNT);
-        }
+        fun empty() = Gold(MIN_AMOUNT)
     }
 }
