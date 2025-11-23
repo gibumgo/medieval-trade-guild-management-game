@@ -2,9 +2,11 @@ package scripts.controller
 
 import camp.nextstep.edu.missionutils.Console
 import scripts.domain.player.Player
+import scripts.domain.reward.Reward
 import scripts.dto.*
 import scripts.mapper.*
 import scripts.service.*
+import scripts.utils.InputRetry
 import scripts.view.InputView
 import scripts.view.OutputView
 
@@ -43,16 +45,30 @@ class GameController(
 
     private fun handleSupplyBoxPurchase() {
         val supplyBoxTypes = supplyService.allSupplyType()
-        outputView.printSupplyBoxPurchase(SupplyBoxMapper.toDTOs(supplyBoxTypes))
-        val selectedNumber = inputView.inputSelectNumber()
-        if (selectedNumber == 0) {
-            outputView.printNotSelectedSupplyBox()
-            return
-        }
-        val supplyBox = supplyService.openSupplyBox(selectedNumber)
-        val reward = playerStatusService.receiveSupplyBox(supplyBox)
+        val supplyBoxDTOs = SupplyBoxMapper.toDTOs(supplyBoxTypes)
+
+        outputView.printSupplyBoxPrompt()
+        outputView.printSupplyBoxOptions(supplyBoxDTOs)
+        outputView.printSupplyBoxInputGuide()
+        val reward = InputRetry.retryWithDisplay(
+            display = { outputView.printSupplyBoxInputGuide() }
+        ) {
+            handleSupplyBoxInput()
+        } ?: return
+
         outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(reward))
         outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.player()))
+    }
+
+    private fun handleSupplyBoxInput(): Reward? {
+        val inputNumber = inputView.inputSelectNumber()
+
+        if (inputNumber == 0) {
+            outputView.printNotSelectedSupplyBox()
+            return null
+        }
+        val supplyBox = supplyService.openSupplyBox(inputNumber)
+        return playerStatusService.receiveSupplyBox(supplyBox)
     }
 
     private fun handleQuestAssignment(player: Player) {
