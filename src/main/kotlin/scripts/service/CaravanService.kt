@@ -36,6 +36,16 @@ class CaravanService(
         return travelingCaravan
     }
 
+    fun returnCaravan(caravanLeader: String) {
+        val caravan = findCaravanByLeader(caravanLeader)
+        caravan?.let {
+            updateCaravan(it.resetToReady())
+        }
+    }
+
+    fun findCaravanByLeader(leader: String): Caravan? =
+        caravanRepository.findPlayerCaravans().firstOrNull { it.leader == leader }
+
     companion object {
         private const val DEFAULT_SPEED = 1
     }

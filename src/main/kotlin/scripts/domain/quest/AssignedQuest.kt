@@ -24,6 +24,8 @@ class AssignedQuest private constructor(
 
     fun getReward(): Rewards = quest.rewards
 
+    fun caravanLeader() : String = caravan.leader
+
     companion object {
         private const val DAY_STEP = 1
         private const val START_DAY = 0

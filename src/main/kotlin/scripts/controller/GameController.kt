@@ -111,8 +111,8 @@ class GameController(
         outputView.printCompleteQuests(AssignedQuestMapper.toDTOs(completedQuests))
 
         completedQuests.forEach { completedQuest ->
-            val returnedCaravan = completedQuest.caravan.resetToReady()
-            caravanService.updateCaravan(returnedCaravan)
+            val returnedCaravan = completedQuest.caravanLeader()
+            caravanService.returnCaravan(returnedCaravan)
         }
         questService.rollDayForQuests()
     }
