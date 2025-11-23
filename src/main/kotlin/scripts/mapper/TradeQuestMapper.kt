@@ -3,7 +3,6 @@ package scripts.mapper
 import scripts.domain.Item.ItemSlots
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.player.Player
 import scripts.domain.quest.City
 import scripts.domain.quest.TradeQuest
 import scripts.dto.TradeQuestDTO
@@ -11,18 +10,16 @@ import scripts.dto.TradeQuestDTO
 object TradeQuestMapper {
     fun toDTO(
         quest: TradeQuest,
-        player: Player,
+        speed: Int
     ): TradeQuestDTO {
 
         return TradeQuestDTO(
             city = quest.city.name,
-            status = quest.status.name,
+            status = quest.status.description,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
             rewardGold = quest.totalRewardGold().amount,
             rewardReputation = quest.totalRewardReputation().point,
-            durationDays = quest.minTravelDays(
-                player.availableCaravanMaxSpeed()
-            )
+            durationDays = quest.minTravelDays(speed)
         )
     }
 
@@ -32,7 +29,7 @@ object TradeQuestMapper {
 
         return TradeQuestDTO(
             city = quest.city.name,
-            status = quest.status.name,
+            status = quest.status.description,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
             rewardGold = quest.totalRewardGold().amount,
             rewardReputation = quest.totalRewardReputation().point,
@@ -49,7 +46,7 @@ object TradeQuestMapper {
         )
     }
 
-    fun toDTOs(quests: List<TradeQuest>, player: Player): List<TradeQuestDTO> {
-        return quests.map { toDTO(it, player) }
+    fun toDTOs(quests: List<TradeQuest>, speed: Int): List<TradeQuestDTO> {
+        return quests.map { toDTO(it, speed) }
     }
 }

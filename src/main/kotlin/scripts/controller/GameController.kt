@@ -5,6 +5,7 @@ import scripts.domain.player.Player
 import scripts.domain.reward.Rewards
 import scripts.dto.*
 import scripts.mapper.*
+import scripts.repository.CaravanRepository
 import scripts.service.*
 import scripts.utils.InputRetry
 import scripts.view.InputView
@@ -17,6 +18,7 @@ class GameController(
     private val supplyService: SupplyService,
     private val questService: QuestService,
     private val dailyRoutineService: DailyRoutineService,
+    private val caravanService: CaravanService
 ) {
     fun run() {
         val player = playerStatusService.player()
@@ -79,8 +81,9 @@ class GameController(
             return
         }
 
-        val questsDTO: List<TradeQuestDTO> = TradeQuestMapper.toDTOs(availableQuests, player)
-        outputView.printAvailableQuests(questsDTO)
+        val maxSpeed = caravanService.maxAvailableSpeed()
+        val questDTOs = TradeQuestMapper.toDTOs(availableQuests, maxSpeed)
+        outputView.printAvailableQuests(questDTOs)
 
         val selectedNumber = inputView.inputSelectNumber()
         if (selectedNumber == 0) {
@@ -89,10 +92,10 @@ class GameController(
         }
         val selectedQuest = questService.selectedQuest(selectedNumber)
 
-        val caravans = playerStatusService.availableCaravans()
+        val caravans = caravanService.availableCaravans()
         outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
         val selectCaravan = inputView.inputSelectNumber()
-        val caravan = caravans[selectCaravan - 1]
+        val caravan = caravanService.selectAndStartTrip(selectCaravan)
 
         val assignedQuest = questService.assignQuest(player, selectedQuest, caravan)
         outputView.printAssignedQuest(
@@ -101,12 +104,16 @@ class GameController(
     }
 
     private fun progressAssignedQuest(player: Player) {
-        outputView.printAssignedQuestProgress(
-            AssignedQuestMapper.toDTOs(questService.getInProgressQuests())
-        )
-        outputView.printCompleteQuests(
-            AssignedQuestMapper.toDTOs(questService.collectCompletedQuests(player))
-        )
+        val inProgressQuests = questService.getInProgressQuests()
+        outputView.printAssignedQuestProgress(AssignedQuestMapper.toDTOs(inProgressQuests))
+
+        val completedQuests = questService.collectCompletedQuests(player)
+        outputView.printCompleteQuests(AssignedQuestMapper.toDTOs(completedQuests))
+
+        completedQuests.forEach { completedQuest ->
+            val returnedCaravan = completedQuest.caravan.resetToReady()
+            caravanService.updateCaravan(returnedCaravan)
+        }
         questService.rollDayForQuests()
     }
 

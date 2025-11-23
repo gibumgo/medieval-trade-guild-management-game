@@ -132,7 +132,7 @@ class OutputView {
 
     private fun printQuestStatusDetail(assignedQuest: AssignedQuestDTO) {
         println(
-            "[${assignedQuest.caravan.status}]"
+            "[${assignedQuest.quest.status}]"
                     + "${assignedQuest.caravan.name} - ${assignedQuest.quest.city}"
                     + "(남은 일수: ${assignedQuest.progressDay} / ${assignedQuest.totalDays}일)"
         )

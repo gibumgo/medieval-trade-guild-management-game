@@ -1,7 +1,9 @@
 package scripts
 
 import scripts.controller.GameController
+import scripts.repository.CaravanRepositoryImpl
 import scripts.repository.QuestRepositoryImpl
+import scripts.service.CaravanService
 import scripts.service.DailyRoutineService
 import scripts.service.PlayerStatusService
 import scripts.service.QuestService
@@ -17,6 +19,7 @@ fun main() {
         supplyService = SupplyService(),
         questService = QuestService(QuestRepositoryImpl()),
         dailyRoutineService = DailyRoutineService(),
+        caravanService = CaravanService(CaravanRepositoryImpl()),
     )
 
     gameController.run()

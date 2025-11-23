@@ -3,7 +3,7 @@ package scripts.domain.quest
 enum class QuestStatus(val description: String) {
     INACTIVE("비활성화"),
     ACTIVE("활성화"),
-    IN_PROGRESS("진행 중"),
+    IN_PROGRESS("진행중"),
     COMPLETED("완료");
 
     fun isInActive(): Boolean = this == INACTIVE

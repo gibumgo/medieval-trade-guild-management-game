@@ -25,10 +25,8 @@ class QuestService(
     fun assignQuest(player: Player, quest: TradeQuest, caravan: Caravan): AssignedQuest {
         quest.startProgress()
         player.submitItems(quest.itemsToDeliver())
-        val travelingCaravan = caravan.startTrip()
-        player.updateCaravan(travelingCaravan)
 
-        val assignedQuest = AssignedQuest.of(quest, travelingCaravan)
+        val assignedQuest = AssignedQuest.of(quest, caravan)
         questRepository.save(assignedQuest)
         return assignedQuest
     }
@@ -41,7 +39,6 @@ class QuestService(
         val completed = questRepository.findInProgress().filter { it.isCompleted() }
         completed.forEach { quest ->
             player.earnReward(quest.getReward())
-            player.updateCaravan(quest.completeCaravan())
         }
         questRepository.removeCompletedQuests(completed)
         return completed
