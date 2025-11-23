@@ -25,14 +25,20 @@ class OutputView {
         printItems(inventoryDTO)
     }
 
-    fun printSupplyBoxPurchase(supplyBoxDTOs: List<SupplyBoxDTO>) {
+    fun printSupplyBoxPrompt() {
         println("길드 관리관이 찾아왔습니다.")
         println("“오늘도 행운을 빕니다. 무작위 보급 상자를 하나 구입하시겠습니까?”")
+    }
+
+    fun printSupplyBoxOptions(supplyBoxDTOs: List<SupplyBoxDTO>) {
         println("선택 가능한 보급 상자:")
         supplyBoxDTOs.forEachIndexed { index, type ->
             println("[${index + 1}] ${type.displayName} - 비용 : ${type.price}G, 필요 명성 : ${type.minReputation}")
             println("-------------------------------------")
         }
+    }
+
+    fun printSupplyBoxInputGuide() {
         print("(번호 선택, 0 = 모두 거절) > ")
     }
 
