@@ -12,7 +12,6 @@ class AssignedQuest private constructor(
         val nextProgressDay = this.progressDay + DAY_STEP
         if (isNextFinished(nextProgressDay)) {
             quest.complete()
-            return AssignedQuest(quest, caravan.complete(), nextProgressDay)
         }
         return AssignedQuest(quest, caravan, nextProgressDay)
     }
@@ -22,8 +21,6 @@ class AssignedQuest private constructor(
     private fun isNextFinished(day: Int): Boolean = day == totalDays()
 
     fun isCompleted(): Boolean = progressDay == totalDays()
-
-    fun completeCaravan(): Caravan = caravan.resetToReady()
 
     fun getReward(): Rewards = quest.rewards
 
