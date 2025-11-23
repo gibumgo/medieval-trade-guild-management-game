@@ -4,10 +4,6 @@ import camp.nextstep.edu.missionutils.Console
 
 
 class InputView {
-    fun isYesInput(): Boolean {
-        return Console.readLine().trim().equals("Y", ignoreCase = true)
-    }
-
     fun inputSelectNumber(): Int = parseInt(Console.readLine())
 
     private fun parseInt(input: String): Int {
