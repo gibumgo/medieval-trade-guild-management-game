@@ -25,27 +25,9 @@ class PlayerStatusService() {
     }
 
     private fun initPlayer(): Player {
-        val caravan1 = Caravan.of(
-            name = "로반의 행상대",
-            leader = "로반",
-            speed = 3,
-            maxCapacity = Weight.of(100),
-            maintenanceCost = Gold.of(0),
-            status = CaravanStatus.READY,
-        )
-
-        val caravan2 = Caravan.of(
-            name = "리아의 행상대",
-            leader = "리아",
-            speed = 2,
-            maxCapacity = Weight.of(80),
-            maintenanceCost = Gold.of(15),
-            status = CaravanStatus.READY
-        )
         return Player(
             PlayerStatus.of(10000, 0),
             Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
-            mutableListOf(caravan1, caravan2),
         )
     }
 

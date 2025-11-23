@@ -36,7 +36,7 @@ class GameController(
         outputView.printCurrentDay(dailyRoutineService.today())
 
         val playerDTO = PlayerMapper.toDTO(player)
-        outputView.printPlayerStatus(playerDTO)
+        outputView.printPlayerStatus(playerDTO, caravanService.availableCaravans().size)
         outputView.printInventory(playerDTO.inventory)
 
         handleSupplyBoxPurchase()

@@ -6,5 +6,4 @@ data class PlayerDTO(
     val capacityMax: Int,
     val capacityUsed: Int,
     val inventory: List<ItemSlotDTO>,
-    val caravans: List<CaravanDTO>
 )

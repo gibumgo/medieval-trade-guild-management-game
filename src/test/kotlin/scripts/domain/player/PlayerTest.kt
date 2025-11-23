@@ -21,28 +21,9 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        val caravan1 = Caravan.of(
-            name = "테스트1",
-            leader = "A",
-            speed = 3,
-            maxCapacity = Weight.of(50),
-            maintenanceCost = Gold.of(0),
-            status = CaravanStatus.READY
-        )
-
-        val caravan2 = Caravan.of(
-            name = "테스트2",
-            leader = "B",
-            speed = 5,
-            maxCapacity = Weight.of(80),
-            maintenanceCost = Gold.of(10),
-            status = CaravanStatus.READY
-        )
-
         player = Player(
             playerStatus = PlayerStatus.of(1000, 5),
             inventory = Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
-            caravans = listOf(caravan1, caravan2),
         )
     }
 
