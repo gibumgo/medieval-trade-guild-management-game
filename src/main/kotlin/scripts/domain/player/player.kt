@@ -3,7 +3,8 @@ package scripts.domain.player
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.caravan.Caravan
-import scripts.domain.reward.Reward
+import scripts.domain.common.ReputationPoint
+import scripts.domain.reward.Rewards
 
 class Player(
     var playerStatus: PlayerStatus,
@@ -18,9 +19,20 @@ class Player(
         inventory.removeItems(requiredItems)
     }
 
-    fun earnReward(reward: Reward) {
-        this.playerStatus = this.playerStatus.apply(reward)
-        reward.applyTo(this.inventory)
+    fun earnReward(rewards: Rewards) {
+        rewards.applyTo(this)
+    }
+
+    fun increaseGold(amount: Gold) {
+        playerStatus = playerStatus.increaseGold(amount)
+    }
+
+    fun increaseReputation(reputation: ReputationPoint) {
+        playerStatus = playerStatus.increaseReputation(reputation)
+    }
+
+    fun addItems(items: List<ItemSlot>) {
+        inventory.addItems(items)
     }
 
     fun availableCaravanMaxSpeed(): Int {

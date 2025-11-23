@@ -1,40 +1,50 @@
 package scripts.domain.reward
 
-import scripts.domain.player.Inventory
 import scripts.domain.Item.ItemSlot
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
-import scripts.domain.player.PlayerStatus
+import scripts.domain.player.Player
 
-data class Reward private constructor(
-    val gold: Gold,
-    val reputation: ReputationPoint,
-    val items: List<ItemSlot>
-) {
-    fun applyTo(playerStatus: PlayerStatus): PlayerStatus =
-        playerStatus.increase(gold, reputation)
+sealed class Reward {
+    data class GoldReward(val gold: Gold) : Reward()
 
-    fun applyTo(inventory: Inventory) {
-        inventory.addItems(items)
+    data class ReputationReward(val reputation: ReputationPoint) : Reward()
+
+    data class ItemReward(val items: List<ItemSlot>) : Reward()
+
+    data class CompositeReward(val rewards: List<Reward>) : Reward()
+
+    object None : Reward()
+
+    fun applyTo(player: Player) {
+        when (this) {
+            is GoldReward -> player.increaseGold(gold)
+            is ReputationReward -> player.increaseReputation(reputation)
+            is ItemReward -> player.addItems(items)
+            is CompositeReward -> rewards.forEach { it.applyTo(player) }
+            None -> Unit
+        }
     }
 
-    companion object {
+    companion object Factory {
         fun of(
-            gold: Gold,
-            point: ReputationPoint,
-            items: List<ItemSlot>
-        ) = Reward(gold, point, items.toList())
+            gold: Gold = Gold.empty(),
+            reputation: ReputationPoint = ReputationPoint.empty(),
+            items: List<ItemSlot> = emptyList()
+        ): List<Reward> =
+            listOfNotNull(
+                gold.toReward(),
+                reputation.toReward(),
+                items.toReward()
+            )
 
-        fun ofQuestReward(
-            gold: Gold,
-            point: ReputationPoint
-        ) = Reward(gold, point, emptyList())
+        private fun Gold.toReward(): Reward? =
+            takeIf { isPositive() }?.let { GoldReward(it) }
 
-        fun ofItems(
-            items: List<ItemSlot>
-        ) = Reward(Gold.empty(), ReputationPoint.empty(), items.toList())
+        private fun ReputationPoint.toReward(): Reward? =
+            takeIf { isPositive() }?.let { ReputationReward(it) }
 
-        fun of(gold: Int, point: Int) =
-            Reward(Gold.of(gold), ReputationPoint.of(point), emptyList())
+        private fun List<ItemSlot>.toReward(): Reward? =
+            takeIf { isNotEmpty() }?.let { ItemReward(it) }
     }
 }
