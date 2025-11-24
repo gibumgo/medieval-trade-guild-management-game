@@ -1,12 +1,14 @@
 package scripts.view
 
+import scripts.text.GameText
+
 class TextBuilder {
     private val lines = mutableListOf<String>()
 
     fun title(text: String): TextBuilder {
-        lines.add("==================================================")
+        lines.add(GameText.LINE_DOUBLE_SEPARATOR)
         lines.add("  $text")
-        lines.add("==================================================")
+        lines.add(GameText.LINE_DOUBLE_SEPARATOR)
         return this
     }
 
