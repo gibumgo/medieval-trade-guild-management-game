@@ -6,7 +6,7 @@ import scripts.dto.ItemSlotDTO
 import scripts.dto.PlayerDTO
 import scripts.dto.SupplyBoxDTO
 import scripts.dto.TradeQuestDTO
-import scripts.text.GameText
+import scripts.util.GameText
 
 class OutputView {
     fun printCurrentDay(today: Int) =

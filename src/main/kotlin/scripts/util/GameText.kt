@@ -1,4 +1,4 @@
-package scripts.text
+package scripts.util
 
 object GameText {
     //// 스타트 / 일일 보고

@@ -1,16 +1,11 @@
 package scripts.service
 
 import scripts.domain.player.Inventory
-import scripts.domain.caravan.Caravan
-import scripts.domain.caravan.CaravanStatus
 import scripts.domain.common.Capacity
-import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.Item.ItemSlots
-import scripts.domain.Item.Weight
 import scripts.domain.player.Player
 import scripts.domain.player.PlayerStatus
-import scripts.domain.reward.Reward
 import scripts.domain.reward.Rewards
 import scripts.domain.supply.SupplyBox
 

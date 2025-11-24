@@ -1,6 +1,6 @@
 package scripts.view
 
-import scripts.text.GameText
+import scripts.util.GameText
 
 class TextBuilder {
     private val lines = mutableListOf<String>()
