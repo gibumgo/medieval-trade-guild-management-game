@@ -21,7 +21,7 @@ class PlayerStatusService() {
 
     private fun initPlayer(): Player {
         return Player(
-            PlayerStatus.of(10000, 0),
+            PlayerStatus.of(5000, 0),
             Inventory(ItemSlots.of(listOf()), Capacity.of(0, 1000)),
         )
     }
@@ -46,4 +46,6 @@ class PlayerStatusService() {
     fun currentInventory(): List<ItemSlot> {
         return player.allItems()
     }
+
+    fun isBankrupt(): Boolean = player.currentGold() <= 0
 }

@@ -23,13 +23,29 @@ class GameController(
     fun run() {
         val player = playerStatusService.player()
 
+        try {
+            gameLoop(player)
+        } catch (e: IllegalArgumentException) {
+            handleGameException(e)
+        } finally {
+            println("game over")
+            Console.close()
+        }
+    }
+
+    private fun gameLoop(player: Player) {
         while (true) {
             dailyRoutine(player)
+            if (playerStatusService.isBankrupt()) {
+                println("골드가 바닥났습니다. 게임 종료!")
+                break
+            }
             if (!inputView.waitForEnterOnly()) break
         }
+    }
 
-        println("game over")
-        Console.close()
+    private fun handleGameException(e: IllegalArgumentException) {
+        println("[게임 종료] ${e.message}")
     }
 
     private fun dailyRoutine(player: Player) {
@@ -82,14 +98,14 @@ class GameController(
         val maxSpeed = caravanService.maxAvailableSpeed()
         val questDTOs = TradeQuestMapper.toDTOs(availableQuests, maxSpeed)
         outputView.printAvailableQuests(questDTOs)
-
+        outputView.printQuestSelectionGuide()
         val selectedQuest = InputRetry.retryWithDisplay(
             display = { outputView.printQuestSelectionGuide() }
         ) { handleQuestsInput() } ?: return
 
         val caravans = caravanService.availableCaravans()
         outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
-
+        outputView.printCaravanSelectionGuide()
         val caravan = InputRetry.retryWithDisplay(
             display = { outputView.printCaravanSelectionGuide() }
         ) { handleCaravanInput() }?: return
