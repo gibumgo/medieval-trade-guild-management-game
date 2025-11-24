@@ -16,10 +16,10 @@ class ApplicationTest : NsTest() {
         run(*input.toTypedArray())
 
         val output = output()
-        assert(output.contains("[Day 1]"))
-        assert(output.contains("[Day 2]"))
-        assert(output.contains("로반의 행상대가 북부 도시에서 귀환했습니다."))
-        assert(output.contains("보상: +120골드"))
+        assert(output.contains("DAY 1 : 상단 보고"))
+        assert(output.contains("DAY 2 : 상단 보고"))
+        assert(output.contains("로반의 행상대 가(이) 북부 도시 로 출정합니다."))
+        assert(output.contains("+ 120 G 획득"))
         assert(output.contains("game over"))
     }
 
