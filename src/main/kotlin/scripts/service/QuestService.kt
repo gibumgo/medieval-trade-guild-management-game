@@ -19,8 +19,10 @@ class QuestService(
 
     fun availableQuest(): List<TradeQuest> = questRepository.findActive()
 
-    fun selectedQuest(inputNumber: Int): TradeQuest =
-        availableQuest()[inputNumber - 1]
+    fun selectedQuest(inputNumber: Int): TradeQuest {
+        require(inputNumber in 1..availableQuest().size) { "번호 선택이 범위를 벗어났습니다." }
+        return availableQuest()[inputNumber - 1]
+    }
 
     fun assignQuest(player: Player, quest: TradeQuest, caravan: Caravan): AssignedQuest {
         quest.startProgress()

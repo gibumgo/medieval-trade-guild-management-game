@@ -12,7 +12,7 @@ class OutputView {
         println("[Day ${today}]")
     }
 
-    fun printPlayerStatus(playerDTO: PlayerDTO, CaravanCount : Int) {
+    fun printPlayerStatus(playerDTO: PlayerDTO, CaravanCount: Int) {
         println("[상단 현황]")
         println("골드(G): ${playerDTO.gold}")
         println("명성: ${playerDTO.reputation}")
@@ -68,7 +68,11 @@ class OutputView {
         quests.forEachIndexed { selectIndex, quest ->
             printQuestStatusDetail(quest, selectIndex)
         }
-        printQuestSelection()
+    }
+
+    fun printQuestSelectionGuide() {
+        println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
+        print(" > ")
     }
 
     private fun printQuestStatusDetail(quest: TradeQuestDTO, selectIndex: Int) {
@@ -78,11 +82,6 @@ class OutputView {
         println("   보상: ${quest.rewardGold}골드 / 명성 +${quest.rewardReputation}")
         println("   최소 소요 기간: ${quest.durationDays}일")
         println("-------------------------------------")
-    }
-
-    private fun printQuestSelection() {
-        println("수락할 주문 번호를 선택하세요 (0 = 모두 거절):")
-        print(" > ")
     }
 
     fun printNotSelectedQuests() {
@@ -95,6 +94,9 @@ class OutputView {
         caravans.forEachIndexed { index, caravan ->
             println("[${index + 1}] ${caravan.name}")
         }
+    }
+
+    fun printCaravanSelectionGuide() {
         print("> ")
     }
 

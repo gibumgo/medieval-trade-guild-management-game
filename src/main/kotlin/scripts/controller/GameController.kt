@@ -1,11 +1,11 @@
 package scripts.controller
 
 import camp.nextstep.edu.missionutils.Console
+import scripts.domain.caravan.Caravan
 import scripts.domain.player.Player
+import scripts.domain.quest.TradeQuest
 import scripts.domain.reward.Rewards
-import scripts.dto.*
 import scripts.mapper.*
-import scripts.repository.CaravanRepository
 import scripts.service.*
 import scripts.utils.InputRetry
 import scripts.view.InputView
@@ -54,9 +54,7 @@ class GameController(
         outputView.printSupplyBoxInputGuide()
         val rewards = InputRetry.retryWithDisplay(
             display = { outputView.printSupplyBoxInputGuide() }
-        ) {
-            handleSupplyBoxInput()
-        } ?: return
+        ) { handleSupplyBoxInput() } ?: return
 
         outputView.printSupplyBoxResult(ItemSlotMapper.toDTO(rewards))
         outputView.printUpdatedInventory(PlayerMapper.toDTO(playerStatusService.player()))
@@ -85,22 +83,35 @@ class GameController(
         val questDTOs = TradeQuestMapper.toDTOs(availableQuests, maxSpeed)
         outputView.printAvailableQuests(questDTOs)
 
-        val selectedNumber = inputView.inputSelectNumber()
-        if (selectedNumber == 0) {
-            outputView.printNotSelectedQuests()
-            return
-        }
-        val selectedQuest = questService.selectedQuest(selectedNumber)
+        val selectedQuest = InputRetry.retryWithDisplay(
+            display = { outputView.printQuestSelectionGuide() }
+        ) { handleQuestsInput() } ?: return
 
         val caravans = caravanService.availableCaravans()
         outputView.printAvailableCaravans(CaravanMapper.toDTOs(caravans))
-        val selectCaravan = inputView.inputSelectNumber()
-        val caravan = caravanService.selectAndStartTrip(selectCaravan)
+
+        val caravan = InputRetry.retryWithDisplay(
+            display = { outputView.printCaravanSelectionGuide() }
+        ) { handleCaravanInput() }?: return
 
         val assignedQuest = questService.assignQuest(player, selectedQuest, caravan)
         outputView.printAssignedQuest(
             AssignedQuestMapper.toDTO(assignedQuest)
         )
+    }
+
+    private fun handleCaravanInput(): Caravan {
+        val input = inputView.inputSelectNumber()
+        return caravanService.selectAndStartTrip(input)
+    }
+
+    private fun handleQuestsInput(): TradeQuest? {
+        val input = inputView.inputSelectNumber()
+        if (input == 0) {
+            outputView.printNotSelectedQuests()
+            return null
+        }
+        return questService.selectedQuest(input)
     }
 
     private fun progressAssignedQuest(player: Player) {
