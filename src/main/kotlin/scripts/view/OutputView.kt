@@ -53,7 +53,7 @@ class OutputView {
             })
             .print()
 
-    fun printSupplyBoxInputGuide() = print(GameText.SUPPLY_SELECT_PROMPT)
+    fun printSupplyBoxInputGuide() = print(GameText.SELECT_PROMPT)
 
     fun printSupplyBoxResult(items: List<ItemSlotDTO>) =
         TextBuilder()
@@ -72,7 +72,7 @@ class OutputView {
             .line("- 골드 : ${status.gold} G")
             .print()
 
-    fun printNotSelectedSupplyBox() = println(GameText.SUPPLY_SELECT_PROMPT)
+    fun printNotSelectedSupplyBox() = println(GameText.SUPPLY_BOX_REJECTED)
 
     fun printAvailableQuests(quests: List<TradeQuestDTO>) {
         if (quests.isEmpty()) {
@@ -90,7 +90,7 @@ class OutputView {
             .print()
     }
 
-    fun printQuestSelectionGuide() = print("> ")
+    fun printQuestSelectionGuide() = print(GameText.SELECT_PROMPT)
 
     fun printNotSelectedQuests() = println(GameText.QUEST_REJECTED)
 
@@ -100,7 +100,7 @@ class OutputView {
             .lines(caravans.mapIndexed { i, c -> "[${i + 1}] ${c.name}" })
             .print()
 
-    fun printCaravanSelectionGuide() = print("> ")
+    fun printCaravanSelectionGuide() = print(GameText.SELECT_PROMPT)
 
     fun printAssignedQuest(assignedQuest: AssignedQuestDTO) =
         TextBuilder()

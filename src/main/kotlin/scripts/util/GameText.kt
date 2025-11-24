@@ -9,12 +9,11 @@ object GameText {
 
     //// NPC
     const val GUILD_MASTER_NAME = "길드 관리관"
-    const val GUILD_MASTER_GREETING = "\"오늘도 행운을 빕니다. 보급 상자는 어떤 걸 드릴까요?\""
+    const val GUILD_MASTER_GREETING = "오늘도 행운을 빕니다. 보급 상자는 어떤 걸 드릴까요?"
 
     //// 보급 상자
     const val SUPPLY_BOX_OPTIONS = "선택 가능한 보급 상자:"
-    const val SUPPLY_SELECT_PROMPT = "(번호 선택, 0 = 모두 거절) >"
-    const val SUPPLY_WARNING_NOT_ENOUGH = "[경고] 귀하의 금화 혹은 명성이 부족합니다."
+    const val SUPPLY_BOX_REJECTED = "보급 상자 구매를 거절하였습니다."
     const val SUPPLY_OPEN_SUCCESS = "보급 상자를 열었습니다!"
     const val SUPPLY_ITEMS_RECEIVED = "획득: {items}"
 
@@ -41,6 +40,7 @@ object GameText {
     //// UI
     const val LINE_SEPARATOR = "--------------------------------------------------"
     const val LINE_DOUBLE_SEPARATOR = "=================================================="
+    const val SELECT_PROMPT = "(번호 선택, 0 = 모두 거절) >"
 
     //// 플레이어 상태 라벨
     const val LABEL_GOLD = "골드"
