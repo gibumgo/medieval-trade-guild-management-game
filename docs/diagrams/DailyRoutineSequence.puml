@@ -1,0 +1,115 @@
+@startuml
+actor Player
+participant GameController
+participant OutputView
+participant InputView
+participant DailyRoutineService
+participant PlayerStatusService
+participant SupplyService
+participant QuestService
+participant CaravanService
+participant QuestRepositoryImpl as QuestRepo
+participant CaravanRepositoryImpl as CaravanRepo
+
+== 하루 시작 ==
+GameController -> DailyRoutineService: today()
+OutputView <- DailyRoutineService: 현재 날짜
+GameController -> OutputView: printCurrentDay()
+
+GameController -> PlayerStatusService: player()
+GameController -> CaravanService: availableCaravans()
+GameController -> OutputView: printPlayerStatus(), printInventory()
+
+== 보급상자 구매 ==
+GameController -> SupplyService: allSupplyType()
+GameController -> OutputView: printSupplyBoxOptions()
+loop 입력 재시도
+  GameController -> InputView: inputSelectNumber()
+  alt 0 입력 (구매 안함)
+    GameController -> OutputView: 구매 안함 메시지
+  else 유효한 번호
+    GameController -> SupplyService: openSupplyBox(input)
+    activate SupplyService
+    SupplyService --> GameController: SupplyBox
+    deactivate SupplyService
+
+    GameController -> PlayerStatusService: receiveSupplyBox(supplyBox)
+    activate PlayerStatusService
+    PlayerStatusService -> Player: pay(), earnReward()
+    PlayerStatusService --> GameController: Rewards
+    deactivate PlayerStatusService
+
+    GameController -> OutputView: 구매 결과 + 인벤토리 갱신
+  end
+end
+
+== 퀘스트 배정 ==
+GameController -> QuestService: fillerActive(inventory)
+activate QuestService
+QuestService -> QuestRepo: findAll()
+QuestService --> GameController: 활성화 처리
+deactivate QuestService
+
+GameController -> QuestService: availableQuest()
+GameController -> OutputView: printAvailableQuests()
+
+alt 퀘스트가 없으면 스킵
+else 퀘스트 선택
+  loop 재시도
+    GameController -> InputView: inputSelectNumber()
+    alt 0 → 선택 안함
+    else
+      GameController -> QuestService: selectedQuest(input)
+      QuestService --> GameController: TradeQuest
+    end
+  end
+
+  GameController -> CaravanService: availableCaravans()
+  GameController -> OutputView: printAvailableCaravans()
+
+  loop 재시도
+    GameController -> InputView: inputSelectNumber()
+    GameController -> CaravanService: selectAndStartTrip(input)
+    activate CaravanService
+    CaravanService -> CaravanRepo: update(traveling)
+    CaravanService --> GameController: Caravan (여행 중)
+    deactivate CaravanService
+  end
+
+  GameController -> QuestService: assignQuest(player, quest, caravan)
+  activate QuestService
+  QuestService -> Player: submitItems()
+  QuestService -> QuestRepo: save(AssignedQuest)
+  QuestService --> GameController: AssignedQuest
+  deactivate QuestService
+
+  GameController -> OutputView: 배정 결과 출력
+end
+
+== 진행 중 퀘스트 처리 ==
+GameController -> QuestService: getInProgressQuests()
+GameController -> OutputView: 진행 상황 출력
+
+GameController -> QuestService: collectCompletedQuests(player)
+activate QuestService
+QuestService -> Player: earnReward() (완료된 것들)
+QuestService -> CaravanService: returnCaravan() (내부 호출)
+QuestService -> QuestRepo: removeCompletedQuests()
+deactivate QuestService
+
+GameController -> QuestService: rollDayForQuests()
+activate QuestService
+QuestService -> QuestRepo: save() 각각
+deactivate QuestService
+
+== 하루 마무리 ==
+GameController -> DailyRoutineService: calculateDailyCost(player)
+activate DailyRoutineService
+DailyRoutineService -> Player: pay(일일 비용)
+DailyRoutineService --> GameController: 비용
+deactivate DailyRoutineService
+
+GameController -> OutputView: printDaySummary()
+GameController -> DailyRoutineService: progressDay()
+
+@enduml

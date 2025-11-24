@@ -1,0 +1,125 @@
+@startuml
+
+skinparam dpi 200
+skinparam backgroundColor #FEFEFE
+skinparam shadowing false
+skinparam roundCorner 12
+skinparam classFontSize 13
+
+
+class Player {
+  +PlayerStatus playerStatus
+  +Inventory inventory
+  +pay(amount: Int)
+  +addItems(items: List<ItemSlot>)
+}
+
+class PlayerStatus {
+  +gold: Int
+  +reputationPoint: Int
+}
+
+class Inventory {
+  +ItemSlots items
+  +Capacity capacity
+  +addItems(items: List<ItemSlot>)
+  +removeItems(items: List<ItemSlot>)
+}
+
+class ItemSlots {
+  +List<ItemSlot> items
+}
+
+class ItemSlot {
+  +item: Item
+  +quantity: Int
+  +hasQuantity(other: ItemSlot): Boolean
+  +isSameItem(other: ItemSlot): Boolean
+  +increaseSameItem(other: ItemSlot): ItemSlot
+  +decreaseSameItem(other: ItemSlot): ItemSlot
+  +weight(): Weight
+}
+
+class Item {
+  +name: String
+  +weight: Weight
+  +weight(quantity: Int): Weight
+}
+
+class Capacity {
+  +current: Weight
+  +max: Weight
+}
+
+class Caravan {
+  +name: String
+  +leader: String
+  +speed: Int
+  +maxCapacity: Weight
+  +status: CaravanStatus
+  +travelDaysFor(quest: TradeQuest): Int
+}
+
+enum CaravanStatus {
+  READY
+  TRAVELING
+  COMPLETED
+}
+
+class AssignedQuest {
+  +quest: TradeQuest
+  +caravan: Caravan
+  +progressDay: Int
+  +progressOneDay()
+  +isCompleted(): Boolean
+}
+
+class TradeQuest {
+  +city: City
+  +requiredItems: ItemSlots
+  +status: QuestStatus
+}
+
+enum QuestStatus {
+  INACTIVE
+  ACTIVE
+  IN_PROGRESS
+  COMPLETED
+}
+
+class City
+
+class SupplyBox {
+  +type: SupplyBoxType
+  +purchaseBy(): ItemSlots
+  +price(): Int
+  +minReputationPoint(): Int
+}
+
+class SupplyBoxType {
+  +cost: Int
+  +minReputationPoint: Int
+}
+
+class RewardGenerator {
+  +generate(): ItemSlots
+}
+
+' ------------------------------
+Player --> PlayerStatus
+Player --> Inventory
+Player --> "*" AssignedQuest
+Inventory --> "1" ItemSlots
+Inventory --> Capacity
+ItemSlots --> "*" ItemSlot
+ItemSlot --> "1" Item
+
+
+AssignedQuest --> TradeQuest
+AssignedQuest --> Caravan
+TradeQuest --> City
+
+SupplyBox --> SupplyBoxType
+SupplyBox --> RewardGenerator
+
+@enduml

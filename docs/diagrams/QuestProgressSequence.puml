@@ -1,0 +1,131 @@
+@startuml
+title QuestProgressSequence - 하루 마무리 시 퀘스트 진행/완료 처리
+
+actor Player
+participant GameController as GC
+participant QuestService as QS
+participant QuestRepository as QR
+participant AssignedQuest as AQ
+participant TradeQuest as TQ
+participant Caravan as C
+participant CaravanService as CS
+participant Player as P
+
+skinparam backgroundColor #FEFEFE
+skinparam shadowing false
+skinparam arrowColor #333
+skinparam noteBorderColor #D64933
+skinparam noteBackgroundColor #FFE6E6
+
+== 1. 하루 마무리 시작 ==
+GC -> QS: getInProgressQuests()
+QS -> QR: findInProgress()
+QR --> QS: List<AssignedQuest>
+QS --> GC: inProgressQuests
+GC -> OutputView: 진행 중 퀘스트 출력
+
+== 2. 완료된 퀘스트 수집 및 보상 정산 ==
+GC -> QS: collectCompletedQuests(player)
+activate QS
+
+note right of QS #FFE6E6
+  문제점 1 : 상태 변경 + 부작용 혼재
+  - 여기서 earnReward() (사이드 이펙트)
+  - 동시에 TradeQuest 상태 변경까지 책임
+  → DDD 위반, 트랜잭션 일관성 위험
+end note
+
+QS -> QR: findInProgress()
+QR --> QS: List<AssignedQuest>
+
+loop 각 AssignedQuest
+    QS -> AQ: isCompleted()
+    alt 아직 미완료
+        AQ --> QS: false
+    else 오늘 딱 완료됨
+        AQ --> QS: true
+        QS -> P: earnReward(AQ.getReward())
+
+        note right of P #FFE6E6
+          문제점 2 : 보상이 여기서 바로 지급됨
+          → 상태 변경 전에 부작용 발생
+          → 예외 시 롤백 불가능
+        end note
+    end
+end
+
+QS -> QR: removeCompletedQuests(completedList)
+deactivate QS
+
+== 3. 완료된 캐러밴 복귀 처리 ==
+loop 모든 완료된 AssignedQuest
+    GC -> AQ: caravanLeader()
+    AQ --> GC: leader 이름
+
+    note right of GC #FFE6E6
+      문제점 3 : Controller가 도메인 내부 정보(caravanLeader)와
+       상태 변경(returnCaravan)을 직접 수행
+      → Controller가 너무 많은 책임을 짐
+      → QuestService가 처리해야 함
+    end note
+
+    GC -> CS: returnCaravan(leaderName)
+    activate CS
+    CS -> C: resetToReady()
+    C --> CS: READY 상태
+    CS -> CaravanRepository: update()
+    deactivate CS
+end
+
+== 4. 남은 진행 중 퀘스트들 하루씩 전진 ==
+GC -> QS: rollDayForQuests()
+activate QS
+
+note right of QS #FFE6E6
+  문제점 4 : findInProgress() 두 번 호출
+  - collectCompletedQuests()에서 이미 한 번
+  - rollDayForQuests()에서 또 한 번
+  → 동일 데이터를 두 번 조회 → 비효율 + 일관성 위험
+end note
+
+note right of AQ #FFE6E6
+  문제점 5 : progressOneDay() 책임 모호
+  - 함수 이름은 "하루 이동"인데
+  - 내부에서 완료 체크 + TradeQuest.complete()까지 수행
+  → 단일 책임 원칙(SRP) 위반
+  → 이름과 실제 동작 불일치
+end note
+
+QS -> QR: findInProgress()
+QR --> QS: 남은 AssignedQuest 리스트
+
+loop 각 남은 AssignedQuest
+    QS -> AQ: progressOneDay()
+    activate AQ
+    AQ -> AQ: progressDay += 1
+
+    alt 이번에 도착
+        AQ -> TQ: complete()
+        TQ -> TQ: status = COMPLETED
+        note right: 다음날 정산됨
+    end
+
+    AQ --> QS: 업데이트된 AssignedQuest
+    deactivate AQ
+    QS -> QR: save(updatedQuest)
+end
+deactivate QS
+
+note right of QS
+핵심 개선 방향
+1. 상태 전이 먼저 → 부작용 나중에
+2. QuestService가 모든 도메인 로직 책임
+3. Controller는 오케스트레이션만
+4. findInProgress()는 하루에 한 번만
+5. progressOneDay()은 오직 progressDay 증가만
+end note
+
+== 하루 종료 ==
+GC -> DailyRoutineService: progressDay()
+
+@enduml
