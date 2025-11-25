@@ -104,4 +104,37 @@ class TradeQuestTest {
         quest.startProgress()
         assertEquals(QuestStatus.IN_PROGRESS, quest.status)
     }
+
+    @Test
+    @DisplayName("진행중이 아닐 때 complete 호출 시 예외 발생")
+    fun completeFails() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(wheat10),
+            gold = Gold.of(50),
+            reputation = ReputationPoint.of(1),
+            questStatus = QuestStatus.ACTIVE
+        )
+
+        val exception = assertThrows<IllegalArgumentException> {
+            quest.complete()
+        }
+        assertEquals("진행중인 상태여야 완료할 수 있습니다.", exception.message)
+    }
+
+    @Test
+    @DisplayName("진행중일 때 complete 호출 시 COMPLETED 로 변경")
+    fun complete() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(listOf()),
+            gold = Gold.of(50),
+            reputation = ReputationPoint.of(1),
+            questStatus = QuestStatus.IN_PROGRESS
+        )
+
+        quest.complete()
+        assertEquals(QuestStatus.COMPLETED, quest.status)
+    }
+
 }
