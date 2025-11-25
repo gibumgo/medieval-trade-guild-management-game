@@ -19,7 +19,7 @@ class TradeQuest private constructor(
     }
 
     private fun canActivate(inventoryItems: List<ItemSlot>): Boolean =
-        status.isInActive() && requiredItems.hasItems(inventoryItems)
+        status.isInActive() && requiredItems.isFulfilledBy(inventoryItems)
 
     fun startProgress() {
         require(status.isActive()) { "활성화된 상태여야 합니다." }

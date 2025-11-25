@@ -38,6 +38,22 @@ class ItemSlotsTest {
     }
 
     @Test
+    @DisplayName("isFulfilledBy - 충분한 재고가 있으면 true")
+    fun isFulfilledByTest() {
+        val request = ItemSlots.of(listOf(
+            ItemSlot.of(wheat, 5),
+            ItemSlot.of(wood, 3)
+        ))
+
+        val inventory = listOf(
+            ItemSlot.of(wheat, 10),
+            ItemSlot.of(wood, 5)
+        )
+
+        assertTrue(request.isFulfilledBy(inventory))
+    }
+
+    @Test
     @DisplayName("hasItems - 수량이 부족하면 false")
     fun failQuantity() {
         val inventory = ItemSlots.of(

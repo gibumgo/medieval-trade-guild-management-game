@@ -73,7 +73,7 @@ class TradeQuestTest {
             requiredItems = ItemSlots.of(wheat10)
         )
 
-        val inventory = listOf(ItemSlot.of(wheat, 8))
+        val inventory = listOf(ItemSlot.of(wheat, 3))
         quest.activateWith(inventory)
 
         assertFalse(quest.isActive())
@@ -98,7 +98,6 @@ class TradeQuestTest {
         val quest = QuestFixture.testQuest(
             status = QuestStatus.ACTIVE
         )
-
         quest.startProgress()
         assertEquals(QuestStatus.IN_PROGRESS, quest.status)
     }

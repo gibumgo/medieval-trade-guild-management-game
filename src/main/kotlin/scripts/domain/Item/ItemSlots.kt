@@ -6,6 +6,12 @@ class ItemSlots private constructor(
     fun hasItems(otherItems: List<ItemSlot>): Boolean =
         otherItems.isNotEmpty() && otherItems.all { hasFindItem(it) }
 
+    fun isFulfilledBy(inventory: List<ItemSlot>): Boolean {
+        return items.all { requiredItem ->
+            inventory.any { it.hasQuantity(requiredItem) }
+        }
+    }
+
     private fun hasFindItem(otherItem: ItemSlot): Boolean =
         items.any { it.hasQuantity(otherItem) }
 
