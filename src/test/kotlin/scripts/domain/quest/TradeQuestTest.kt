@@ -161,6 +161,26 @@ class TradeQuestTest {
         assertEquals(ReputationPoint.of(7), quest.totalRewardReputation())
     }
 
+
+    @Test
+    @DisplayName("itemsToDeliver 는 요구 아이템 목록을 정확히 반환")
+    fun itemsToDeliverReturnsRequiredItems() {
+        val required = ItemSlots.of(
+            items = wheat10
+        ).addAll(wood5)
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = required,
+            gold = Gold.of(100),
+            reputation = ReputationPoint.of(2)
+        )
+
+        val delivered = quest.itemsToDeliver()
+
+        assertEquals(2, delivered.size)
+
+    }
+
     @Test
     @DisplayName("minTravelDays - 최대 캐러밴 속도로 계산한 최소 일수")
     fun minTravelDaysWithMaxSpeed() {
