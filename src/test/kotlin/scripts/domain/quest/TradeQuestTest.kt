@@ -137,4 +137,28 @@ class TradeQuestTest {
         assertEquals(QuestStatus.COMPLETED, quest.status)
     }
 
+    @Test
+    @DisplayName("총 골드 보상이 정확히 반환되는지 확인")
+    fun totalRewardGoldCorrect() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(wheat10),
+            gold = Gold.of(250),
+            reputation = ReputationPoint.of(5)
+        )
+        assertEquals(Gold.of(250), quest.totalRewardGold())
+    }
+
+    @Test
+    @DisplayName("총 명성 보상이 정확히 반환되는지 확인")
+    fun totalRewardReputationCorrect() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(wheat10),
+            gold = Gold.of(100),
+            reputation = ReputationPoint.of(7)
+        )
+        assertEquals(ReputationPoint.of(7), quest.totalRewardReputation())
+    }
+
 }
