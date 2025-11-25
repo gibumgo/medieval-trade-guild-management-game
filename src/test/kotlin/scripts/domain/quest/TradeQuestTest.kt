@@ -161,4 +161,19 @@ class TradeQuestTest {
         assertEquals(ReputationPoint.of(7), quest.totalRewardReputation())
     }
 
+    @Test
+    @DisplayName("minTravelDays - 최대 캐러밴 속도로 계산한 최소 일수")
+    fun minTravelDaysWithMaxSpeed() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(wheat10),
+            gold = Gold.of(100),
+            reputation = ReputationPoint.of(1)
+        )
+
+        assertEquals(3, quest.minTravelDays(2))
+        assertEquals(2, quest.minTravelDays(4))
+        assertEquals(1, quest.minTravelDays(6))
+        assertEquals(1, quest.minTravelDays(100))
+    }
 }
