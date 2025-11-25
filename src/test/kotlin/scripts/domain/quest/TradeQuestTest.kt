@@ -73,4 +73,21 @@ class TradeQuestTest {
         assertFalse(quest.isActive())
         assertEquals(QuestStatus.INACTIVE, quest.status)
     }
+
+    @Test
+    @DisplayName("비활성 상태에서 startProgress 호출 시 예외 발생")
+    fun startProgressFails() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(wheat10),
+            gold = Gold.of(50),
+            reputation = ReputationPoint.of(1)
+        )
+
+        val exception = assertThrows<IllegalArgumentException> {
+            quest.startProgress()
+        }
+        assertEquals("활성화된 상태여야 합니다.", exception.message)
+    }
+
 }
