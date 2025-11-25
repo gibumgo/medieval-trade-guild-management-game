@@ -90,4 +90,18 @@ class TradeQuestTest {
         assertEquals("활성화된 상태여야 합니다.", exception.message)
     }
 
+    @Test
+    @DisplayName("활성화된 상태에서 startProgress 호출 시 IN_PROGRESS 로 변경")
+    fun startProgress() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(wheat10),
+            gold = Gold.of(50),
+            reputation = ReputationPoint.of(1),
+            questStatus = QuestStatus.ACTIVE
+        )
+
+        quest.startProgress()
+        assertEquals(QuestStatus.IN_PROGRESS, quest.status)
+    }
 }
