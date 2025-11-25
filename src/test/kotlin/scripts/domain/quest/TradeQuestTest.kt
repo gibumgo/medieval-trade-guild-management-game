@@ -37,4 +37,40 @@ class TradeQuestTest {
         )
         assertEquals(QuestStatus.INACTIVE, quest.status)
     }
+
+    @Test
+    @DisplayName("인벤토리에 필요한 아이템이 충분하면 퀘스트 활성화")
+    fun activate() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(wheat10),
+            gold = Gold.of(120),
+            reputation = ReputationPoint.of(3)
+        )
+
+        val inventory = listOf(
+            ItemSlot.of(wheat, 10)
+        )
+        quest.activateWith(inventory)
+
+        assertTrue(quest.isActive())
+        assertEquals(QuestStatus.ACTIVE, quest.status)
+    }
+
+    @Test
+    @DisplayName("아이템이 부족하면 퀘스트 활성화되지 않음")
+    fun notActivate() {
+        val quest = TradeQuest.of(
+            city = northCity,
+            requiredItems = ItemSlots.of(listOf()),
+            gold = Gold.of(120),
+            reputation = ReputationPoint.of(3)
+        )
+
+        val inventory = listOf(ItemSlot.of(wheat, 8))
+        quest.activateWith(inventory)
+
+        assertFalse(quest.isActive())
+        assertEquals(QuestStatus.INACTIVE, quest.status)
+    }
 }
