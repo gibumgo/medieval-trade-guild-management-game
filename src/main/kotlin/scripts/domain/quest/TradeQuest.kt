@@ -39,8 +39,6 @@ class TradeQuest private constructor(
 
     fun itemsToDeliver(): List<ItemSlot> = requiredItems.allItems()
 
-    fun calculateDurationBy(speed: Int): Int = city.calculateTravelTime(speed)
-
     fun minTravelDays(maxCaravanSpeed: Int): Int {
         return city.calculateTravelTime(maxCaravanSpeed)
     }
