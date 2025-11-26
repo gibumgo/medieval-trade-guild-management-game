@@ -49,3 +49,33 @@ supply_reward_config.json or SupplyBox_config 통합
 
 - 플레이어 객체 역할 -> 레파지토리로 나누기
 - - json 파싱 스케쥴 확인하기
+
+
+11.26
+-퀘스트 객체 - 단순 위임 메소드 리펙터링
+    totalRewardGold(): Gold = rewards.totalGold()
+    totalRewardReputation()  = rewards.totalReputation()
+이런 메서드가 많아지면 도메인의 책임이 불필요하게 커지고
+View/DTO 편의를 위해 도메인이 오염될 위험이 커질거라 예상된다.
+
+게터를 사용하지 않는 다고 단순히 넘어갔던 위임 메소드
+퀘스트 테스트 코드를 모든 함수마다 만들고 리펙토링하는 과정에서
+퀘스트는 이렇게 거대한 객체가  아닌데 테스트할 게 많아졌지? 라는 생각이 들었다.
+그래서 함수 하나씩 어떤 역할 때문에 만들어졌는지 고민하기 시작했다.
+
+dto에서 게터를 쓰지 않으려고 만들어진 함수, 결국 도메인에 View 관심사가 섞임
+게터를 쓰지 않는다고 상관 없던 게 아니었다.
+보상 관련 책임은 Reward에게 전체 값이니까 일급컬렉션으로 위임.
+
+베드 스멜
+1. 뷰 요구가 늘어남 → 도메인에 또다른 편의 메서드가 추가
+예: 화면에서 요구 아이템 수량도 화면에 바로 띄우고 싶다 → 도메인에 이런 메서드가 생김
+fun requiredItemCount(): Int = requiredItems.count()
+
+2. 다른 화면에서 “포맷팅된 문자열”이 필요해짐
+   fun formattedReward(): String = "${totalRewardGold()} G / ${totalRewardReputation()} RP"
+이 순간, 도메인이 문자열을 다루기 시작한다.
+→ 화면 변경이 도메인 변경을 야기하게 됨
+
+- 퀘스트 객체 불변 객체로 만들기
+- QuestRepositoryImpl 모든 퀘스트 불러와서 업데이트 메소드 만들기
