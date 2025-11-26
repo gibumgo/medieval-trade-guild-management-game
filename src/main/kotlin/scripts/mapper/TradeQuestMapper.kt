@@ -17,8 +17,8 @@ object TradeQuestMapper {
             city = quest.city.name,
             status = quest.status.description,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
-            rewardGold = quest.totalRewardGold().amount,
-            rewardReputation = quest.totalRewardReputation().point,
+            rewardGold = quest.rewards.totalGold().amount,
+            rewardReputation = quest.rewards.totalReputation().point,
             durationDays = quest.minTravelDays(speed)
         )
     }
@@ -31,8 +31,8 @@ object TradeQuestMapper {
             city = quest.city.name,
             status = quest.status.description,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
-            rewardGold = quest.totalRewardGold().amount,
-            rewardReputation = quest.totalRewardReputation().point,
+            rewardGold = quest.rewards.totalGold().amount,
+            rewardReputation = quest.rewards.totalReputation().point,
             durationDays = 0
         )
     }

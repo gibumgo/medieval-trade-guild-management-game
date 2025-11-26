@@ -31,10 +31,6 @@ class TradeQuest private constructor(
         status = QuestStatus.COMPLETED
     }
 
-    fun totalRewardGold(): Gold = rewards.totalGold()
-
-    fun totalRewardReputation()  = rewards.totalReputation()
-
     fun isActive(): Boolean = status.isActive()
 
     fun itemsToDeliver(): List<ItemSlot> = requiredItems.allItems()
