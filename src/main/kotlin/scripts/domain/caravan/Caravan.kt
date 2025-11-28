@@ -7,7 +7,7 @@ import scripts.domain.quest.TradeQuest
 class Caravan private constructor(
     val name: String,
     val leader: String,
-    val speed: Int,
+    val speed: CaravanSpeed,
     val maxCapacity: Weight,
     val maintenanceCost: Gold,
     val status: CaravanStatus
@@ -18,18 +18,21 @@ class Caravan private constructor(
     fun isComplete(): Boolean = status == CaravanStatus.COMPLETED
 
     fun travelDaysFor(quest: TradeQuest): Int {
-        return quest.minTravelDays(this.speed)
+        return quest.minTravelDays(this.speed.speed)
     }
 
-    fun startTrip(): Caravan =
-        Caravan(name, leader, speed, maxCapacity, maintenanceCost, CaravanStatus.TRAVELING)
+    fun currentSpeed(): Int {
+        return speed.travelPerDay()
+    }
 
-    fun complete(): Caravan =
-        Caravan(name, leader, speed, maxCapacity, maintenanceCost, CaravanStatus.COMPLETED)
+    fun startTrip(): Caravan = copyWithStatus(CaravanStatus.TRAVELING)
 
-    fun resetToReady(): Caravan =
-        Caravan(name, leader, speed, maxCapacity, maintenanceCost, CaravanStatus.READY)
+    fun complete(): Caravan = copyWithStatus(CaravanStatus.COMPLETED)
 
+    fun resetToReady(): Caravan = copyWithStatus(CaravanStatus.READY)
+
+    private fun copyWithStatus(newStatus: CaravanStatus) =
+        Caravan(name, leader, speed, maxCapacity, maintenanceCost, newStatus)
 
     companion object {
         fun of(
@@ -40,7 +43,7 @@ class Caravan private constructor(
             maintenanceCost: Gold,
             status: CaravanStatus
         ): Caravan {
-            return Caravan(name, leader, speed, maxCapacity, maintenanceCost, status)
+            return Caravan(name, leader, CaravanSpeed.from(speed), maxCapacity, maintenanceCost, status)
         }
 
     }
