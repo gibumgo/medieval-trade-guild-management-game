@@ -79,3 +79,8 @@ fun requiredItemCount(): Int = requiredItems.count()
 
 - 퀘스트 객체 불변 객체로 만들기
 - QuestRepositoryImpl 모든 퀘스트 불러와서 업데이트 메소드 만들기
+
+
+11.29
+- 배달 용량 초과시 처리 문제 고민 -> 예외처리, 메세지, 혹은 선택 비활성화
+- QuestRepository 분리 -> 전체 퀘스트, 플레이어 퀘스트 (퀘스트 히스토리 따로 저장할지 고민)
