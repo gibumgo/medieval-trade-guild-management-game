@@ -1,7 +1,6 @@
 package scripts.domain.quest
 
 import scripts.domain.caravan.Caravan
-import kotlin.math.ceil
 
 class QuestDelivery private constructor(
     val quest: Quest,
@@ -22,11 +21,8 @@ class QuestDelivery private constructor(
 
     companion object {
         fun of(quest: Quest, caravan: Caravan): QuestDelivery {
-            val totalDay = getTotalDay(quest, caravan)
+            val totalDay = quest.calculateTravelTime(caravan.currentSpeed())
             return QuestDelivery(quest, caravan, QuestProgressDay.start(totalDay))
         }
-
-        private fun getTotalDay(quest: Quest, caravan: Caravan): Int =
-            ceil(quest.city.distance.toDouble() / caravan.speed).toInt()
     }
 }
