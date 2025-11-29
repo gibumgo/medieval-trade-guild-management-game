@@ -11,7 +11,7 @@ class CaravanService(
         caravanRepository.findPlayerCaravans().filter { it.isReady() }
 
     fun maxAvailableSpeed(): Int =
-        availableCaravans().maxOfOrNull { it.speed } ?: DEFAULT_SPEED
+        availableCaravans().maxOfOrNull { it.speed.speed } ?: DEFAULT_SPEED
 
     fun updateCaravan(caravan: Caravan) = caravanRepository.update(caravan)
 

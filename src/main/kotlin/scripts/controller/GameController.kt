@@ -3,7 +3,7 @@ package scripts.controller
 import camp.nextstep.edu.missionutils.Console
 import scripts.domain.caravan.Caravan
 import scripts.domain.player.Player
-import scripts.domain.quest.TradeQuest
+import scripts.domain.quest.Quest
 import scripts.domain.reward.Rewards
 import scripts.mapper.*
 import scripts.service.*
@@ -96,7 +96,7 @@ class GameController(
         }
 
         val maxSpeed = caravanService.maxAvailableSpeed()
-        val questDTOs = TradeQuestMapper.toDTOs(availableQuests, maxSpeed)
+        val questDTOs = QuestMapper.toDTOs(availableQuests, maxSpeed)
         outputView.printAvailableQuests(questDTOs)
         outputView.printQuestSelectionGuide()
         val selectedQuest = InputRetry.retryWithDisplay(
@@ -112,7 +112,7 @@ class GameController(
 
         val assignedQuest = questService.assignQuest(player, selectedQuest, caravan)
         outputView.printAssignedQuest(
-            AssignedQuestMapper.toDTO(assignedQuest)
+            QuestDeliveryMapper.toDTO(assignedQuest)
         )
     }
 
@@ -121,7 +121,7 @@ class GameController(
         return caravanService.selectAndStartTrip(input)
     }
 
-    private fun handleQuestsInput(): TradeQuest? {
+    private fun handleQuestsInput(): Quest? {
         val input = inputView.inputSelectNumber()
         if (input == 0) {
             outputView.printNotSelectedQuests()
@@ -132,13 +132,13 @@ class GameController(
 
     private fun progressAssignedQuest(player: Player) {
         val inProgressQuests = questService.getInProgressQuests()
-        outputView.printAssignedQuestProgress(AssignedQuestMapper.toDTOs(inProgressQuests))
+        outputView.printAssignedQuestProgress(QuestDeliveryMapper.toDTOs(inProgressQuests))
 
         val completedQuests = questService.collectCompletedQuests(player)
-        outputView.printCompleteQuests(AssignedQuestMapper.toDTOs(completedQuests))
+        outputView.printCompleteQuests(QuestDeliveryMapper.toDTOs(completedQuests))
 
         completedQuests.forEach { completedQuest ->
-            val returnedCaravan = completedQuest.caravanLeader()
+            val returnedCaravan = completedQuest.caravan.leader
             caravanService.returnCaravan(returnedCaravan)
         }
         questService.rollDayForQuests()

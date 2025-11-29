@@ -13,7 +13,7 @@ object CaravanMapper {
         return CaravanDTO(
             name = caravan.name,
             leader = caravan.leader,
-            speed = caravan.speed,
+            speed = caravan.speed.speed,
             maxCapacity = caravan.maxCapacity.weight,
             maintenanceCost = caravan.maintenanceCost.amount,
             status = caravan.status.displayName

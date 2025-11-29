@@ -3,6 +3,7 @@ package scripts.domain.quest
 import scripts.domain.common.Gold
 import scripts.domain.Item.ItemSlot
 import scripts.domain.Item.ItemSlots
+import scripts.domain.Item.Weight
 import scripts.domain.common.ReputationPoint
 import scripts.domain.reward.Rewards
 
@@ -39,7 +40,9 @@ class Quest private constructor(
 
     fun itemsToDeliver(): List<ItemSlot> = requiredItems.allItems()
 
-    fun minTravelDays(maxCaravanSpeed: Int): Int {
+    fun calculateTotalItemsWeight(): Weight = requiredItems.totalWeight()
+
+    fun calculateTravelTime(maxCaravanSpeed: Int): Int {
         return city.calculateTravelTime(maxCaravanSpeed)
     }
 

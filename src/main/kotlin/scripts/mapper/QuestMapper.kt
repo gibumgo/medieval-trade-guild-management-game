@@ -4,30 +4,30 @@ import scripts.domain.Item.ItemSlots
 import scripts.domain.common.Gold
 import scripts.domain.common.ReputationPoint
 import scripts.domain.quest.City
-import scripts.domain.quest.TradeQuest
-import scripts.dto.TradeQuestDTO
+import scripts.domain.quest.Quest
+import scripts.dto.QuestDTO
 
-object TradeQuestMapper {
+object QuestMapper {
     fun toDTO(
-        quest: TradeQuest,
+        quest: Quest,
         speed: Int
-    ): TradeQuestDTO {
+    ): QuestDTO {
 
-        return TradeQuestDTO(
+        return QuestDTO(
             city = quest.city.name,
             status = quest.status.description,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
             rewardGold = quest.rewards.totalGold().amount,
             rewardReputation = quest.rewards.totalReputation().point,
-            durationDays = quest.minTravelDays(speed)
+            durationDays = quest.calculateTravelTime(speed)
         )
     }
 
     fun toDTO(
-        quest: TradeQuest,
-    ): TradeQuestDTO {
+        quest: Quest,
+    ): QuestDTO {
 
-        return TradeQuestDTO(
+        return QuestDTO(
             city = quest.city.name,
             status = quest.status.description,
             requiredItems = ItemSlotMapper.toDTO(quest.requiredItems),
@@ -37,8 +37,8 @@ object TradeQuestMapper {
         )
     }
 
-    fun fromDTO(dto: TradeQuestDTO): TradeQuest {
-        return TradeQuest.of(
+    fun fromDTO(dto: QuestDTO): Quest {
+        return Quest.of(
             city = City(dto.city, dto.durationDays),
             requiredItems = ItemSlots.of(ItemSlotMapper.fromDTOs(dto.requiredItems)),
             gold = Gold.of(dto.rewardGold),
@@ -46,7 +46,7 @@ object TradeQuestMapper {
         )
     }
 
-    fun toDTOs(quests: List<TradeQuest>, speed: Int): List<TradeQuestDTO> {
+    fun toDTOs(quests: List<Quest>, speed: Int): List<QuestDTO> {
         return quests.map { toDTO(it, speed) }
     }
 }

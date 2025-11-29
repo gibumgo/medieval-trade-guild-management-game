@@ -1,11 +1,11 @@
 package scripts.view
 
-import scripts.dto.AssignedQuestDTO
+import scripts.dto.QuestDeliveryDTO
 import scripts.dto.CaravanDTO
 import scripts.dto.ItemSlotDTO
 import scripts.dto.PlayerDTO
 import scripts.dto.SupplyBoxDTO
-import scripts.dto.TradeQuestDTO
+import scripts.dto.QuestDTO
 import scripts.util.GameText
 
 class OutputView {
@@ -74,7 +74,7 @@ class OutputView {
 
     fun printNotSelectedSupplyBox() = println(GameText.SUPPLY_BOX_REJECTED)
 
-    fun printAvailableQuests(quests: List<TradeQuestDTO>) {
+    fun printAvailableQuests(quests: List<QuestDTO>) {
         if (quests.isEmpty()) {
             println(GameText.QUEST_NO_SELECTION)
             return
@@ -102,14 +102,14 @@ class OutputView {
 
     fun printCaravanSelectionGuide() = print(GameText.SELECT_PROMPT)
 
-    fun printAssignedQuest(assignedQuest: AssignedQuestDTO) =
+    fun printAssignedQuest(assignedQuest: QuestDeliveryDTO) =
         TextBuilder()
             .line("${assignedQuest.caravan.name} 가(이) ${assignedQuest.quest.city} 로 출정합니다.")
             .line(GameText.ASSIGNED_QUEST_DEPART)
             .line(GameText.LINE_SEPARATOR)
             .print()
 
-    fun printAssignedQuestProgress(assignedQuests: List<AssignedQuestDTO>) {
+    fun printAssignedQuestProgress(assignedQuests: List<QuestDeliveryDTO>) {
         if (assignedQuests.isEmpty()) {
             println(GameText.NO_ONGOING_QUESTS)
             return
@@ -125,7 +125,7 @@ class OutputView {
             .print()
     }
 
-    fun printCompleteQuests(completeQuests: List<AssignedQuestDTO>) {
+    fun printCompleteQuests(completeQuests: List<QuestDeliveryDTO>) {
         if (completeQuests.isEmpty()) return
         TextBuilder()
             .line(GameText.QUEST_COMPLETE)

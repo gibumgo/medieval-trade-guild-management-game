@@ -2,7 +2,6 @@ package scripts.domain.caravan
 
 import scripts.domain.common.Gold
 import scripts.domain.Item.Weight
-import scripts.domain.quest.TradeQuest
 
 class Caravan private constructor(
     val name: String,
@@ -17,12 +16,13 @@ class Caravan private constructor(
 
     fun isComplete(): Boolean = status == CaravanStatus.COMPLETED
 
-    fun travelDaysFor(quest: TradeQuest): Int {
-        return quest.minTravelDays(this.speed.speed)
-    }
-
     fun currentSpeed(): Int {
         return speed.travelPerDay()
+    }
+
+    fun isOverCapacity(deliveryItemWeight: Weight): Boolean {
+        require(maxCapacity.isEnough(deliveryItemWeight)) { "최대 운송 가능한 용량을 초과 하였습니다." }
+        return maxCapacity.isEnough(deliveryItemWeight)
     }
 
     fun startTrip(): Caravan = copyWithStatus(CaravanStatus.TRAVELING)

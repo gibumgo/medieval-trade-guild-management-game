@@ -24,6 +24,8 @@ value class Weight private constructor(val weight: Int) {
 
     fun isOver(max: Weight): Boolean  =  weight >= max.weight
 
+    fun isEnough(carriedWeight: Weight): Boolean = this.weight >= carriedWeight.weight
+
     fun isInRange(max: Weight): Boolean = weight in INITIAL_LENGTH..max.weight
 
     companion object {
