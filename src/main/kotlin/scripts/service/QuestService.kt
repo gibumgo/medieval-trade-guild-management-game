@@ -31,8 +31,10 @@ class QuestService(
         // 플레이어 상태 서비스로 이동
         player.submitItems(quest.itemsToDeliver())
         val progressQuest = quest.startProgress()
+        val delivery = QuestDelivery.of(progressQuest, caravan)
         questRepository.update(progressQuest)
-        return QuestDelivery.of(progressQuest, caravan)
+        questDeliveryRepository.save(delivery)
+        return delivery
     }
 
     fun getInProgressQuests(): List<QuestDelivery> = questDeliveryRepository.findAll()
@@ -49,13 +51,8 @@ class QuestService(
     }
 
     fun rollDayForQuests() {
-        val deliveries = questDeliveryRepository.findAll()
-        deliveries.forEach { delivery ->
-            val progressed = delivery.progressOneDay()
-            if (progressed.isCompletedProgress()) {
-                questDeliveryRepository.save(progressed.completedQuest())
-            }
-            questDeliveryRepository.save(progressed)
-        }
+        questDeliveryRepository.findAll()
+            .map { it.progressOneDay() }
+            .forEach(questDeliveryRepository::save)
     }
 }

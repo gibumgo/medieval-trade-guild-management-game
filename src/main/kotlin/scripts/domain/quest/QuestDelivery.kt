@@ -7,13 +7,17 @@ class QuestDelivery private constructor(
     val caravan: Caravan,
     val progressDay: QuestProgressDay,
 ) {
-    fun progressOneDay(): QuestDelivery = QuestDelivery(quest, caravan, progressDay.nextDay())
-
-    fun completedQuest(): QuestDelivery {
-        require(progressDay.isCompleted()) { "퀘스트가 아직 진행중 입니다." }
-        require(progressDay.isCompleted()) { "쿼스트가 아직 진행중 입니다." }
-        return QuestDelivery(quest.complete(), caravan.complete(), progressDay)
+    fun progressOneDay(): QuestDelivery {
+        if (isCompletedProgress()) {
+            return completedQuest()
+        }
+        return QuestDelivery(quest, caravan, progressDay.nextDay())
     }
+
+    private fun completedQuest() =
+        QuestDelivery(quest.complete(), caravan.complete(), progressDay)
+
+    fun returnCaravan() = caravan.resetToReady()
 
     fun isCompletedProgress(): Boolean = progressDay.isCompleted()
 
