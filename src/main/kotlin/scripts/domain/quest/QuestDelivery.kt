@@ -7,15 +7,14 @@ class QuestDelivery private constructor(
     val caravan: Caravan,
     val progressDay: QuestProgressDay,
 ) {
-    fun progressOneDay(): QuestDelivery {
-        if (isCompletedProgress()) {
-            return completedQuest()
-        }
-        return QuestDelivery(quest, caravan, progressDay.nextDay())
-    }
+    fun progressOneDay(): QuestDelivery = QuestDelivery(quest, caravan, progressDay.nextDay())
 
-    private fun completedQuest() =
-        QuestDelivery(quest.complete(), caravan.complete(), progressDay)
+    fun completedQuest(): QuestDelivery {
+        if (isCompletedProgress()){
+            return QuestDelivery(quest.complete(), caravan.complete(), progressDay)
+        }
+        return this
+    }
 
     fun returnCaravan() = caravan.resetToReady()
 
