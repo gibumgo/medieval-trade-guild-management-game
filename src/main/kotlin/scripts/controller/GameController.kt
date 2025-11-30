@@ -108,7 +108,7 @@ class GameController(
         outputView.printCaravanSelectionGuide()
         val caravan = InputRetry.retryWithDisplay(
             display = { outputView.printCaravanSelectionGuide() }
-        ) { handleCaravanInput() }?: return
+        ) { handleCaravanInput() } ?: return
 
         val assignedQuest = questService.assignQuest(player, selectedQuest, caravan)
         outputView.printAssignedQuest(
@@ -138,8 +138,7 @@ class GameController(
         outputView.printCompleteQuests(QuestDeliveryMapper.toDTOs(completedQuests))
 
         completedQuests.forEach { completedQuest ->
-            val returnedCaravan = completedQuest.caravan.leader
-            caravanService.returnCaravan(returnedCaravan)
+            caravanService.returnCaravan(completedQuest.returnCaravan())
         }
         questService.rollDayForQuests()
     }

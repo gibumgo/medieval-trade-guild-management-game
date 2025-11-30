@@ -13,8 +13,6 @@ class CaravanService(
     fun maxAvailableSpeed(): Int =
         availableCaravans().maxOfOrNull { it.speed.speed } ?: DEFAULT_SPEED
 
-    fun updateCaravan(caravan: Caravan) = caravanRepository.update(caravan)
-
     fun addPlayerCaravan(caravan: Caravan) = caravanRepository.addToPlayer(caravan)
 
     fun removePlayerCaravan(caravan: Caravan) = caravanRepository.removeFromPlayer(caravan)
@@ -32,19 +30,13 @@ class CaravanService(
 
     private fun startTrip(caravan: Caravan): Caravan {
         val travelingCaravan = caravan.startTrip()
-        updateCaravan(travelingCaravan)
+        caravanRepository.update(travelingCaravan)
         return travelingCaravan
     }
 
-    fun returnCaravan(caravanLeader: String) {
-        val caravan = findCaravanByLeader(caravanLeader)
-        caravan?.let {
-            updateCaravan(it.resetToReady())
-        }
+    fun returnCaravan(completeCaravan: Caravan) {
+        caravanRepository.update(completeCaravan)
     }
-
-    fun findCaravanByLeader(leader: String): Caravan? =
-        caravanRepository.findPlayerCaravans().firstOrNull { it.leader == leader }
 
     companion object {
         private const val DEFAULT_SPEED = 1
