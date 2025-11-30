@@ -28,30 +28,34 @@ class QuestService(
     }
 
     fun assignQuest(player: Player, quest: Quest, caravan: Caravan): QuestDelivery {
-        quest.startProgress()
+        // 플레이어 상태 서비스로 이동
         player.submitItems(quest.itemsToDeliver())
-
-        val assignedQuest = QuestDelivery.of(quest, caravan)
-        questRepository.save(assignedQuest)
-        return assignedQuest
+        val progressQuest = quest.startProgress()
+        questRepository.update(progressQuest)
+        return QuestDelivery.of(progressQuest, caravan)
     }
 
-    fun getInProgressQuests(): List<QuestDelivery> {
-        return questRepository.findInProgress()
-    }
+    fun getInProgressQuests(): List<QuestDelivery> = questDeliveryRepository.findAll()
 
     fun collectCompletedQuests(player: Player): List<QuestDelivery> {
-        val completed = questRepository.findInProgress().filter { it.quest.status.isInProgress() }
-        completed.forEach { quest ->
+        val completedQuest = questDeliveryRepository.findComplete()
+
+        completedQuest.forEach { quest ->
             player.earnReward(quest.quest.rewards)
+            questRepository.update(quest.quest)
+            questDeliveryRepository.remove(quest)
         }
-        questRepository.removeCompletedQuests(completed)
-        return completed
+        return completedQuest
     }
 
     fun rollDayForQuests() {
-        val updatedQuests = questRepository.findInProgress()
-            .map { it.progressOneDay() }
-        updatedQuests.forEach { questRepository.save(it) }
+        val deliveries = questDeliveryRepository.findAll()
+        deliveries.forEach { delivery ->
+            val progressed = delivery.progressOneDay()
+            if (progressed.isCompletedProgress()) {
+                questDeliveryRepository.save(progressed.completedQuest())
+            }
+            questDeliveryRepository.save(progressed)
+        }
     }
 }
