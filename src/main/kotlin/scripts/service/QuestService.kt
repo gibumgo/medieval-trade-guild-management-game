@@ -5,10 +5,10 @@ import scripts.domain.caravan.Caravan
 import scripts.domain.player.Player
 import scripts.domain.quest.Quest
 import scripts.domain.quest.QuestDelivery
-import scripts.repository.QuestRepository
+import scripts.repository.QuestsRepository
 
 class QuestService(
-    private val questRepository: QuestRepository
+    private val questRepository: QuestsRepository
 ) {
 
     fun fillerActive(inventory: List<ItemSlot>) {

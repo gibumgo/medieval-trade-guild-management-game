@@ -1,12 +1,11 @@
 package scripts.repository
 
 import scripts.domain.quest.Quest
-import scripts.domain.quest.QuestDelivery
+import scripts.domain.quest.QuestStatus
 
 interface QuestRepository {
     fun findAll(): List<Quest>
-    fun findActive(): List<Quest>
-    fun findInProgress(): List<QuestDelivery>
-    fun save(QuestDelivery: QuestDelivery)
-    fun removeCompletedQuests(completed: List<QuestDelivery>)
+    fun findByState(state: QuestStatus): List<Quest>
+    fun update(quest: Quest)
+    fun remove(quest: Quest)
 }

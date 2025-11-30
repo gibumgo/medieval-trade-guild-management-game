@@ -2,7 +2,7 @@ package scripts.repository
 
 import kotlinx.serialization.json.Json
 import scripts.domain.quest.Quest
-import scripts.domain.quest.QuestDelivery
+import scripts.domain.quest.QuestStatus
 import scripts.dto.QuestDTO
 import scripts.mapper.QuestMapper
 import java.io.File
@@ -17,20 +17,18 @@ class QuestRepositoryImpl : QuestRepository {
         quests.map { QuestMapper.fromDTO(it) }.toMutableList()
     }
 
-    private val inProgressQuests: MutableList<QuestDelivery> = mutableListOf()
+    override fun findAll(): List<Quest> = allQuests.toList()
 
-    override fun findAll(): List<Quest> = allQuests
-
-    override fun findActive(): List<Quest> = allQuests.filter { it.isActive() }
-
-    override fun findInProgress(): List<QuestDelivery> = inProgressQuests.toList()
-
-    override fun save(questDelivery: QuestDelivery) {
-        inProgressQuests.removeIf { it.quest == questDelivery.quest }
-        inProgressQuests.add(questDelivery)
+    override fun findByState(state: QuestStatus): List<Quest> {
+        return allQuests.filter { quest -> quest.status == state }.toList()
     }
 
-    override fun removeCompletedQuests(completed: List<QuestDelivery>) {
-        inProgressQuests.removeAll(completed)
+    override fun update(quest: Quest) {
+        allQuests.removeIf { it.city.name == quest.city.name }
+        allQuests.add(quest)
+    }
+
+    override fun remove(quest: Quest) {
+        allQuests.removeIf { it.city.name == quest.city.name }
     }
 }
