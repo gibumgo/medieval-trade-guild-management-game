@@ -25,11 +25,20 @@ class Caravan private constructor(
         return maxCapacity.isEnough(deliveryItemWeight)
     }
 
-    fun startTrip(): Caravan = copyWithStatus(CaravanStatus.TRAVELING)
+    fun startTrip(): Caravan {
+        check(status.isReady()) { "대기 상태여야 합니다." }
+        return copyWithStatus(CaravanStatus.TRAVELING)
+    }
 
-    fun complete(): Caravan = copyWithStatus(CaravanStatus.COMPLETED)
+    fun complete(): Caravan {
+        check(status.isTravel()) { "이동중인 상태여야 합니다." }
+        return copyWithStatus(CaravanStatus.COMPLETED)
+    }
 
-    fun resetToReady(): Caravan = copyWithStatus(CaravanStatus.READY)
+    fun resetToReady(): Caravan {
+        check(status.isCompleted()) { "완료 상태여야 합니다." }
+        return copyWithStatus(CaravanStatus.READY)
+    }
 
     private fun copyWithStatus(newStatus: CaravanStatus) =
         Caravan(name, leader, speed, maxCapacity, maintenanceCost, newStatus)
