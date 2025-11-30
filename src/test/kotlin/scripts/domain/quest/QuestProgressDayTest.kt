@@ -28,9 +28,8 @@ class QuestProgressDayTest {
     fun `잘못된 생성 시 예외 발생`() {
         val exception = assertThrows<IllegalArgumentException> {
             val questDay = QuestProgressDay.start(1)
-            questDay.nextDay()
-            questDay.nextDay()
+            questDay.nextDay().nextDay()
         }
-        assertEquals("진행 날짜는 총 여행일 보다 미만 이여야 합니다.", exception.message)
+        assertEquals("진행 날짜는 총 여행일 보다 초과하면 합니다.", exception.message)
     }
 }
