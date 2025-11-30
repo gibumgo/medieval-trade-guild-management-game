@@ -3,7 +3,8 @@ package scripts
 import scripts.controller.GameController
 import scripts.domain.time.TurnBasedGameTime
 import scripts.repository.CaravanRepositoryImpl
-import scripts.repository.QuestsRepositoryImpl
+import scripts.repository.QuestDeliveryRepositoryImpl
+import scripts.repository.QuestRepositoryImpl
 import scripts.service.CaravanService
 import scripts.service.DailyRoutineService
 import scripts.service.PlayerStatusService
@@ -14,7 +15,8 @@ import scripts.view.OutputView
 
 fun main() {
     val caravanRepo = CaravanRepositoryImpl()
-    val questRepo = QuestsRepositoryImpl()
+    val questRepo = QuestRepositoryImpl()
+    val deliveryRepo = QuestDeliveryRepositoryImpl()
     val time = TurnBasedGameTime()
 
     val gameController = GameController(
@@ -22,7 +24,7 @@ fun main() {
         outputView = OutputView(),
         playerStatusService = PlayerStatusService(),
         supplyService = SupplyService(),
-        questService = QuestService(questRepo),
+        questService = QuestService(questRepo, deliveryRepo),
         dailyRoutineService = DailyRoutineService(time, caravanRepo),
         caravanService = CaravanService(caravanRepo),
     )
