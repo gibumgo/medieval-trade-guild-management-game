@@ -20,6 +20,7 @@ value class GameDay private constructor(
     fun isBefore(other: GameDay): Boolean = this.day < other.day
     fun isAfter(other: GameDay): Boolean = this.day > other.day
     fun isSameDay(other: GameDay): Boolean = this == other
+    fun isNotAfter(other: GameDay): Boolean = this.day <= other.day
 
     companion object {
         private const val START_DAY = 0

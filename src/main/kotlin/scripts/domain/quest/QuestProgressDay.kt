@@ -11,7 +11,7 @@ class QuestProgressDay private constructor(
     }
 
     private fun validateTravelLength() {
-        require(currentDay.isBefore(totalTravelDays)) { "진행 날짜는 총 여행일 보다 미만 이여야 합니다." }
+        require(currentDay.isNotAfter(totalTravelDays)) { "진행 날짜는 총 여행일 보다 미만 이여야 합니다." }
     }
 
     fun nextDay(): QuestProgressDay = QuestProgressDay(currentDay.nextDay(), totalTravelDays)
