@@ -9,15 +9,13 @@ class QuestDelivery private constructor(
 ) {
     fun progressOneDay(): QuestDelivery = QuestDelivery(quest, caravan, progressDay.nextDay())
 
-    fun completedQuest(): Quest {
+    fun completedQuest(): QuestDelivery {
         require(progressDay.isCompleted()) { "퀘스트가 아직 진행중 입니다." }
-        return quest.complete()
+        require(progressDay.isCompleted()) { "쿼스트가 아직 진행중 입니다." }
+        return QuestDelivery(quest.complete(), caravan.complete(), progressDay)
     }
 
-    fun completedCaravan(): Caravan {
-        require(progressDay.isCompleted()) { "쿼스트가 아직 진행중 입니다." }
-        return caravan.complete()
-    }
+    fun isCompletedProgress(): Boolean = progressDay.isCompleted()
 
     companion object {
         fun of(quest: Quest, caravan: Caravan): QuestDelivery {
