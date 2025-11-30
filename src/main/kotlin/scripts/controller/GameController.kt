@@ -131,7 +131,7 @@ class GameController(
     }
 
     private fun progressAssignedQuest(player: Player) {
-        val inProgressQuests = questService.getInProgressQuests()
+        val inProgressQuests = questService.updateAllDeliveries()
         outputView.printAssignedQuestProgress(QuestDeliveryMapper.toDTOs(inProgressQuests))
 
         val completedQuests = questService.collectCompletedQuests(player)

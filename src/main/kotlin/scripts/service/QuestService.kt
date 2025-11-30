@@ -37,7 +37,13 @@ class QuestService(
         return delivery
     }
 
-    fun getInProgressQuests(): List<QuestDelivery> = questDeliveryRepository.findAll()
+    fun updateAllDeliveries(): List<QuestDelivery> {
+        val updated = questDeliveryRepository.findAll()
+            .map { it.completedQuest() }
+
+        updated.forEach(questDeliveryRepository::save)
+        return updated
+    }
 
     fun collectCompletedQuests(player: Player): List<QuestDelivery> {
         val completedQuest = questDeliveryRepository.findComplete()
